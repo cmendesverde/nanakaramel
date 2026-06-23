@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acceso — Nana Karamel</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Oswald:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #FFF6E0;
+      font-family: 'Lora', Georgia, serif;
+      color: #3A1418;
+      padding: 1rem;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(122,18,40,.10);
+      padding: 2.5rem 2rem;
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+    }
+
+    .logo {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      margin-bottom: 1.25rem;
+    }
+
+    h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #7A1228;
+      margin-bottom: .25rem;
+    }
+
+    .subtitle {
+      font-size: .875rem;
+      color: #8a5a2b;
+      margin-bottom: 2rem;
+    }
+
+    label {
+      display: block;
+      font-family: 'Oswald', sans-serif;
+      font-size: .8rem;
+      font-weight: 500;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: #7A1228;
+      text-align: left;
+      margin-bottom: .4rem;
+    }
+
+    input[type="password"] {
+      width: 100%;
+      padding: .75rem 1rem;
+      border: 1.5px solid #F3E8CC;
+      border-radius: 8px;
+      font-family: 'Lora', serif;
+      font-size: 1rem;
+      color: #3A1418;
+      background: #FFF6E0;
+      outline: none;
+      transition: border-color .15s;
+      margin-bottom: 1.5rem;
+    }
+    input[type="password"]:focus { border-color: #7A1228; background: #fff; }
+
+    button {
+      width: 100%;
+      padding: .85rem;
+      background: #7A1228;
+      color: #FFF6E0;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    button:hover  { background: #8E1B30; }
+    button:active { background: #5a0d1e; }
+    button:disabled { opacity: .6; cursor: default; }
+
+    .error {
+      display: none;
+      margin-top: 1rem;
+      padding: .65rem 1rem;
+      background: #fde8ec;
+      border-radius: 8px;
+      color: #7A1228;
+      font-size: .875rem;
+    }
+    .error.visible { display: block; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <img src="/logo.png" alt="Nana Karamel" class="logo">
+    <h1>Panel de gestión</h1>
+    <p class="subtitle">Acceso solo para el obrador</p>
+
+    <form id="form" novalidate>
+      <label for="pwd">Contraseña</label>
+      <input type="password" id="pwd" name="password" autocomplete="current-password"
+             placeholder="••••••••••••" required>
+      <button type="submit" id="btn">Entrar</button>
+    </form>
+    <div class="error" id="err">Contraseña incorrecta. Inténtalo de nuevo.</div>
+  </div>
+
+  <script>
+    document.getElementById('form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('btn');
+      const err = document.getElementById('err');
+      const pwd = document.getElementById('pwd').value;
+
+      btn.disabled = true;
+      btn.textContent = 'Comprobando…';
+      err.classList.remove('visible');
+
+      try {
+        const r = await fetch('/api/admin-auth', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'same-origin',
+          body: JSON.stringify({ password: pwd })
+        });
+
+        if (r.ok) {
+          window.location.replace('/admin');
+        } else {
+          err.classList.add('visible');
+          btn.disabled = false;
+          btn.textContent = 'Entrar';
+        }
+      } catch {
+        err.textContent = 'Error de red. Inténtalo de nuevo.';
+        err.classList.add('visible');
+        btn.disabled = false;
+        btn.textContent = 'Entrar';
+      }
+    });
+  </script>
+</body>
+</html>

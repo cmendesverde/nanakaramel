@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Lobster+Two:ital,wght@0,400;0,700;1,700&family=Oswald:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="favicon.png">
+<script src="logo-data.js"></script>
+<link rel="apple-touch-icon" href="logo.png">
+<style>
+  @font-face{font-family:'Quick Beach';src:url('fonts/QuickBeach.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:#FFF6E0;color:#3A1418;font-family:'Lora',Georgia,serif;-webkit-font-smoothing:antialiased}
+  h1,h2{font-family:'Quick Beach','Lilita One','Arial Black','Oswald',sans-serif !important;letter-spacing:.01em}
+  section[id]{scroll-margin-top:84px}
+  ::selection{background:#F2A8B8;color:#7A1228}
+  @keyframes nkfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+  @keyframes nkwiggle{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+  @keyframes nkpop{0%{transform:scale(.6);opacity:0}60%{transform:scale(1.12)}100%{transform:scale(1);opacity:1}}
+  @keyframes nkrise{0%{opacity:0;transform:translateY(18px)}100%{opacity:1;transform:translateY(0)}}
+  @keyframes nkbadge{0%{transform:scale(0) rotate(-12deg)}70%{transform:scale(1.18) rotate(3deg)}100%{transform:scale(1) rotate(0)}}
+  [data-reveal]{opacity:0}
+  [data-reveal].nk-in{animation:nkrise .7s cubic-bezier(.22,1,.36,1) both}
+  button{transition:transform .16s ease, background .2s ease, box-shadow .2s ease}
+  button:active{transform:scale(.95)}
+  a{transition:transform .16s ease, background .2s ease, color .2s ease}
+  @media (prefers-reduced-motion: reduce){
+    [data-reveal]{opacity:1 !important;animation:none !important}
+    *{animation-duration:.001ms !important}
+  }
+  /* ---- responsive nav ---- */
+  .nk-hamburger{display:none}
+  @media (max-width:780px){
+    .nk-nav-links{display:none !important}
+    .nk-cta-desktop{display:none !important}
+    .nk-hamburger{display:inline-flex !important}
+  }
+  /* ---- menu grid: 2-up on phones ---- */
+  @media (max-width:600px){
+    .nk-menu-grid{grid-template-columns:1fr 1fr !important;gap:12px !important}
+    .nk-menu-grid article{border-radius:11px !important;box-shadow:0 3px 0 #e4cfa0 !important}
+    .nk-menu-grid h3{font-size:19px !important;margin-bottom:3px !important}
+    .nk-menu-grid p{font-size:12px !important;line-height:1.4 !important;margin-bottom:11px !important}
+    .nk-menu-grid .nk-card-body{padding:11px 12px 12px !important}
+    .nk-menu-grid .nk-tag{font-size:9.5px !important;padding:4px 8px !important}
+    .nk-menu-grid .nk-addbtn{padding:9px !important;font-size:11.5px !important}
+    .nk-menu-grid .nk-qtybtn{width:30px !important;height:30px !important}
+  }
+  /* ---- hamburger drawer ---- */
+  .nk-drawer{position:fixed;top:0;right:0;bottom:0;z-index:80;width:min(310px,86vw);background:#FFF6E0;border-left:2px solid #7A1228;box-shadow:-12px 0 40px rgba(58,20,24,.25);transition:transform .32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;padding:18px;overflow-y:auto}
+  .nk-scrim{position:fixed;inset:0;z-index:79;background:rgba(58,20,24,.5);transition:opacity .3s}
+</style>
+</helmet>
+
+<div id="nk-root" style="overflow-x:hidden;max-width:100vw">
+
+<!-- ===================== NAV ===================== -->
+<header style="position:sticky;top:0;z-index:60;background:rgba(250,242,220,.94);backdrop-filter:blur(8px);border-bottom:2px solid #7A1228">
+  <div style="max-width:1180px;margin:0 auto;padding:10px 22px;display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+    <a href="#top" aria-label="Nana Karamel · obrador artesano" style="display:flex;align-items:center;text-decoration:none;flex:0 0 auto">
+      <img src="wordmark.png" alt="Nana Karamel · obrador artesano" style="height:44px;width:auto;display:block" />
+    </a>
+    <nav class="nk-nav-links" style="flex:1 1 auto;display:flex;gap:6px;justify-content:center;flex-wrap:wrap;min-width:0">
+      <a href="#mes" style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.08em;font-size:13px;font-weight:600;color:#3A1418;text-decoration:none;padding:8px 12px;border-radius:999px" style-hover="background:#F3E8CC">Del mes</a>
+      <a href="#menu" style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.08em;font-size:13px;font-weight:600;color:#3A1418;text-decoration:none;padding:8px 12px;border-radius:999px" style-hover="background:#F3E8CC">Menú</a>
+      <a href="#tarta" style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.08em;font-size:13px;font-weight:600;color:#3A1418;text-decoration:none;padding:8px 12px;border-radius:999px" style-hover="background:#F3E8CC">Tu tarta</a>
+      <a href="#como" style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.08em;font-size:13px;font-weight:600;color:#3A1418;text-decoration:none;padding:8px 12px;border-radius:999px" style-hover="background:#F3E8CC">Cómo funciona</a>
+    </nav>
+    <button onClick="{{ pedirWA }}" class="nk-cta-desktop" style="flex:0 0 auto;background:#94A487;color:#FAF2DC;border:none;padding:11px 18px;border-radius:999px;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:8px" style-hover="background:#82917A">
+      <span style="width:17px;height:17px;display:block">{{ waGlyph }}</span> Pedir
+    </button>
+    <button onClick="{{ openNav }}" class="nk-hamburger" aria-label="Abrir menú" style="flex:0 0 auto;margin-left:auto;width:46px;height:46px;border-radius:13px;border:2px solid #7A1228;background:#FFF6E0;cursor:pointer;align-items:center;justify-content:center;flex-direction:column;gap:5px">
+      <span style="width:21px;height:2.5px;background:#7A1228;border-radius:2px;display:block"></span>
+      <span style="width:21px;height:2.5px;background:#7A1228;border-radius:2px;display:block"></span>
+      <span style="width:21px;height:2.5px;background:#7A1228;border-radius:2px;display:block"></span>
+    </button>
+  </div>
+</header>
+
+<!-- ===================== DRAWER MÓVIL ===================== -->
+<div onClick="{{ closeNav }}" class="nk-scrim" style="opacity:{{ navScrimOpacity }};pointer-events:{{ navEvents }}"></div>
+<aside class="nk-drawer" style="transform:translateX({{ navX }})">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+    <span style="display:flex;align-items:center;gap:10px">
+      <span style="width:40px;height:40px;display:block">{{ nanaMini }}</span>
+      <span style="font-family:'Lilita One','Arial Black','Oswald',sans-serif;color:#7A1228;font-size:19px;line-height:.9">Nana<br>Karamel</span>
+    </span>
+    <button onClick="{{ closeNav }}" aria-label="Cerrar" style="width:42px;height:42px;border-radius:11px;border:2px solid #7A1228;background:#FFF6E0;color:#7A1228;font-size:24px;cursor:pointer;line-height:1;transition:transform .2s ease" style-hover="transform:rotate(90deg)">×</button>
+  </div>
+  <div style="height:2px;background:#7A1228;margin:8px 0 14px;opacity:.15"></div>
+  <nav style="display:flex;flex-direction:column;gap:8px">
+    <a href="#mes" onClick="{{ closeNav }}" style="display:flex;align-items:center;gap:13px;text-decoration:none;padding:13px 14px;border-radius:14px;background:#F3E8CC;border:1.5px solid #e4cfa0;transition:transform .16s ease,background .16s ease" style-hover="background:#F6DCE2;transform:translateX(3px)">
+      <span style="width:30px;height:30px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;border-radius:9px;background:#fff;border:1.5px solid #e4cfa0;color:#7A1228"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="9" r="1.1" fill="currentColor"/><circle cx="15" cy="10" r="1.1" fill="currentColor"/><circle cx="13" cy="15" r="1.1" fill="currentColor"/><circle cx="8.5" cy="14" r="1.1" fill="currentColor"/></svg></span>
+      <span style="flex:1;font-family:'Lilita One','Arial Black','Oswald',sans-serif;color:#7A1228;font-size:21px;line-height:1">Cookie del mes</span>
+      <span style="font-family:'Oswald',sans-serif;color:#C0875A;font-size:20px;font-weight:600">›</span>
+    </a>
+    <a href="#menu" onClick="{{ closeNav }}" style="display:flex;align-items:center;gap:13px;text-decoration:none;padding:13px 14px;border-radius:14px;background:#F3E8CC;border:1.5px solid #e4cfa0;transition:transform .16s ease,background .16s ease" style-hover="background:#F6DCE2;transform:translateX(3px)">
+      <span style="width:30px;height:30px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;border-radius:9px;background:#fff;border:1.5px solid #e4cfa0;color:#7A1228"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4.5h6v2.5H9z"/><path d="M8.5 11h7M8.5 14.5h7M8.5 18h4"/></svg></span>
+      <span style="flex:1;font-family:'Lilita One','Arial Black','Oswald',sans-serif;color:#7A1228;font-size:21px;line-height:1">Menú</span>
+      <span style="font-family:'Oswald',sans-serif;color:#C0875A;font-size:20px;font-weight:600">›</span>
+    </a>
+    <a href="#tarta" onClick="{{ closeNav }}" style="display:flex;align-items:center;gap:13px;text-decoration:none;padding:13px 14px;border-radius:14px;background:#F3E8CC;border:1.5px solid #e4cfa0;transition:transform .16s ease,background .16s ease" style-hover="background:#F6DCE2;transform:translateX(3px)">
+      <span style="width:30px;height:30px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;border-radius:9px;background:#fff;border:1.5px solid #e4cfa0;color:#7A1228"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M4 20h16v-7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2z"/><path d="M4 15q4 2.5 8 0t8 0"/><path d="M12 4v5"/><circle cx="12" cy="3" r="1" fill="currentColor"/></svg></span>
+      <span style="flex:1;font-family:'Lilita One','Arial Black','Oswald',sans-serif;color:#7A1228;font-size:21px;line-height:1">Tu tarta</span>
+      <span style="font-family:'Oswald',sans-serif;color:#C0875A;font-size:20px;font-weight:600">›</span>
+    </a>
+    <a href="#como" onClick="{{ closeNav }}" style="display:flex;align-items:center;gap:13px;text-decoration:none;padding:13px 14px;border-radius:14px;background:#F3E8CC;border:1.5px solid #e4cfa0;transition:transform .16s ease,background .16s ease" style-hover="background:#F6DCE2;transform:translateX(3px)">
+      <span style="width:30px;height:30px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;border-radius:9px;background:#fff;border:1.5px solid #e4cfa0;color:#7A1228"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M12 21s-6.5-5-6.5-10a6.5 6.5 0 0 1 13 0c0 5-6.5 10-6.5 10z"/><circle cx="12" cy="11" r="2.3"/></svg></span>
+      <span style="flex:1;font-family:'Lilita One','Arial Black','Oswald',sans-serif;color:#7A1228;font-size:21px;line-height:1">Cómo funciona</span>
+      <span style="font-family:'Oswald',sans-serif;color:#C0875A;font-size:20px;font-weight:600">›</span>
+    </a>
+  </nav>
+  <div style="margin-top:18px;background:#FFF6E0;border:1.5px dashed #C0875A;border-radius:14px;padding:14px 15px">
+    <p style="margin:0 0 4px;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.08em;font-size:10.5px;font-weight:600;color:#8a5a2b">Horario · solo recogida</p>
+    <p style="margin:0;font-size:14px;line-height:1.5;color:#3A1418">Mar–Vie · 11–13:30 / 17:30–20<br>Sáb · 11–13:30</p>
+    <a href="https://instagram.com/nanakaramelbakery" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;margin-top:9px;color:#7A1228;text-decoration:none;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-size:12px;font-weight:600"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r="1.1" fill="currentColor"/></svg> @nanakaramelbakery</a>
+  </div>
+  <button onClick="{{ navOrder }}" style="margin-top:auto;background:#94A487;color:#FAF2DC;border:none;padding:16px;border-radius:999px;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 5px 0 #6b7860;transition:transform .16s ease" style-hover="transform:translateY(-2px)"><span style="width:19px;height:19px;display:block">{{ waGlyph }}</span> Pedir por WhatsApp</button>
+</aside>
+
+<a id="top"></a>
+
+<!-- ===================== HERO ===================== -->
+<sc-if value="{{ heroSplit }}" hint-placeholder-val="{{ true }}">
+<section style="max-width:1180px;margin:0 auto;padding:54px 22px 30px;display:flex;gap:48px;flex-wrap:wrap;align-items:center">
+  <div style="flex:1 1 360px;min-width:300px;animation:nkrise .7s ease both">
+    <p style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.22em;font-size:14px;font-weight:600;color:#C0875A;margin:0 0 14px">Obrador artesano · Barrio del Pilar, Madrid</p>
+    <h1 style="font-family:'Lilita One','Arial Black','Oswald',sans-serif;color:#7A1228;font-size:clamp(40px,6vw,68px);line-height:1;margin:0 0 18px">Cookies y tartas<br>con alma<br><span style="position:relative;white-space:nowrap">de barrio.<span style="position:absolute;left:-2%;right:-2%;bottom:8%;height:30%;background:#F2A8B8;z-index:-1;transform:rotate(-1.2deg);border-radius:3px"></span></span></h1>
+    <p style="font-size:clamp(17px,2vw,20px);line-height:1.55;max-width:30em;margin:0 0 26px;color:#3A1418">Cookies que se hornean cada mañana y tartas por encargo que hacemos a tu gusto. Sin pedido mínimo en cookies. <strong>Dale rienda suelta a tu imaginación :)</strong></p>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
+      <button onClick="{{ pedirWA }}" style="background:#94A487;color:#FAF2DC;border:none;padding:16px 26px;border-radius:999px;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:15px;cursor:pointer;display:inline-flex;align-items:center;gap:10px;box-shadow:0 6px 0 #6b7860" style-hover="background:#82917A">
+        <span style="width:19px;height:19px;display:block">{{ waGlyph }}</span> Pedir por WhatsApp
+      </button>
+      <a href="#menu" style="background:transparent;color:#7A1228;border:2px solid #7A1228;padding:14px 24px;border-radius:999px;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:15px;cursor:pointer;text-decoration:none" style-hover="background:#7A1228;color:#FAF2DC">Ver menú</a>
+    </div>
+    <div style="display:inline-flex;align-items:center;gap:9px;margin-top:22px;background:#F3E8CC;border:1.5px dashed #C0875A;padding:8px 15px;border-radius:999px">
+      <span style="display:flex;color:#C0875A"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 21s-6-5-6-10a6 6 0 0 1 12 0c0 5-6 10-6 10z"/><circle cx="12" cy="11" r="2"/></svg></span>
+      <span style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.07em;font-size:12.5px;font-weight:600;color:#8a5a2b">Recogida en tienda · No enviamos</span>
+    </div>
+  </div>
+  <div style="flex:1 1 340px;min-width:300px;position:relative">
+    <div style="position:relative;border:3px solid #7A1228;border-radius:14px;padding:12px;background:#F3E8CC;box-shadow:0 14px 30px rgba(122,18,40,.18)">
+      <div style="position:relative;aspect-ratio:4/5;border-radius:7px;overflow:hidden;background:linear-gradient(135deg,#E7D2A4,#F3E8CC)">
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:.5">{{ cookieArt }}</div>
+        <div role="img" aria-label="Cookies recién horneadas de Nana Karamel" style="position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1571165841024-2ce92069301d?fm=jpg&q=70&w=1100&auto=format&fit=crop');background-size:cover;background-position:center"></div>
+      </div>
+      <span style="position:absolute;top:-20px;right:-14px;width:78px;height:78px;animation:nkfloat 5s ease-in-out infinite">{{ nanaMini }}</span>
+      <div style="position:absolute;bottom:24px;left:-16px;background:#F4A9B4;color:#3A1418;font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:13px;padding:9px 16px;border-radius:8px;transform:rotate(-5deg);box-shadow:0 5px 12px rgba(0,0,0,.18)">Recién horneado</div>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<sc-if value="{{ heroCentrado }}" hint-placeholder-val="{{ false }}">
+<section style="max-width:980px;margin:0 auto;padding:60px 22px 24px;text-align:center;animation:nkrise .7s ease both">
+  <span style="width:216px;height:216px;display:inline-block;animation:nkfloat 5s ease-in-out infinite">{{ nanaMini }}</span>
+  <p style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.24em;font-size:14px;font-weight:600;color:#C0875A;margin:16px 0 10px">Obrador artesano · Madrid</p>
+  <h1 style="font-family:'Lilita One','Arial Black','Oswald',sans-serif;color:#7A1228;font-size:clamp(42px,7vw,76px);line-height:.98;margin:0 auto 16px;max-width:13em">Cookies y tartas con <span style="position:relative;white-space:nowrap">alma<span style="position:absolute;left:-3%;right:-3%;bottom:8%;height:32%;background:#F2A8B8;z-index:-1;transform:rotate(-1.5deg);border-radius:3px"></span></span> de barrio</h1>
+  <p style="font-size:20px;line-height:1.55;max-width:34em;margin:0 auto 26px">Cookies horneadas cada mañana y tartas por encargo hechas a tu gusto. Dale rienda suelta a tu imaginación :)</p>
+  <div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center">
+    <button onClick="{{ pedirWA }}" style="background:#94A487;color:#FAF2DC;border:none;padding:16px 26px;border-radius:999px;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:15px;cursor:pointer;display:inline-flex;align-items:center;gap:10px;box-shadow:0 6px 0 #6b7860" style-hover="background:#82917A"><span style="width:19px;height:19px;display:block">{{ waGlyph }}</span> Pedir por WhatsApp</button>
+    <a href="#menu" style="background:transparent;color:#7A1228;border:2px solid #7A1228;padding:14px 24px;border-radius:999px;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:15px;text-decoration:none" style-hover="background:#7A1228;color:#FAF2DC">Ver menú</a>
+  </div>
+  <div style="display:inline-flex;align-items:center;gap:9px;margin-top:22px;background:#F3E8CC;border:1.5px dashed #C0875A;padding:8px 15px;border-radius:999px"><span style="display:flex;color:#C0875A"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 21s-6-5-6-10a6 6 0 0 1 12 0c0 5-6 10-6 10z"/><circle cx="12" cy="11" r="2"/></svg></span><span style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.07em;font-size:12.5px;font-weight:600;color:#8a5a2b">Recogida en tienda · No enviamos</span></div>
+  <div style="margin-top:40px;border:3px solid #7A1228;border-radius:14px;overflow:hidden;aspect-ratio:21/9;position:relative;background:linear-gradient(135deg,#E7D2A4,#F3E8CC)">
+    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:.45">{{ cookieArt }}</div>
+    <div role="img" aria-label="Cookies de Nana Karamel" style="position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1571165841024-2ce92069301d?fm=jpg&q=70&w=1100&auto=format&fit=crop');background-size:cover;background-position:center"></div>
+  </div>
+</section>
+</sc-if>
+
+<sc-if value="{{ heroEditorial }}" hint-placeholder-val="{{ false }}">
+<section style="max-width:1180px;margin:0 auto;padding:48px 22px 24px;animation:nkrise .7s ease both">
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px;align-items:end;border-bottom:3px solid #7A1228;padding-bottom:26px">
+    <div>
+      <p style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.2em;font-size:13px;font-weight:600;color:#C0875A;margin:0 0 8px">Est. en el Barrio del Pilar</p>
+      <h1 style="font-family:'Lilita One','Arial Black','Oswald',sans-serif;color:#7A1228;font-size:clamp(48px,9vw,104px);line-height:.92;margin:0">Nana<br>Karamel</h1>
+    </div>
+    <p style="font-size:19px;line-height:1.55;margin:0">Obrador artesano de cookies y tartas en Madrid. <span style="background:#F2A8B8;padding:0 4px;border-radius:2px">Recién hecho, sin atajos.</span> Pídelo por WhatsApp y recógelo en tienda.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px;margin-top:24px;align-items:center">
+    <div style="position:relative;border:3px solid #7A1228;border-radius:12px;overflow:hidden;aspect-ratio:1/1;background:linear-gradient(135deg,#E7D2A4,#F3E8CC)">
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:.5">{{ cookieArt }}</div>
+      <div role="img" aria-label="Cookies" style="position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1571165841024-2ce92069301d?fm=jpg&q=70&w=1100&auto=format&fit=crop');background-size:cover;background-position:center"></div>
+      <span style="position:absolute;bottom:-10px;right:-10px;width:84px;height:84px;animation:nkwiggle 4s ease-in-out infinite">{{ nanaMini }}</span>
+    </div>
+    <div style="grid-column:span 2;min-width:0">
+      <p style="font-family:'Lobster Two',Georgia,serif;color:#8E1B30;font-size:clamp(26px,3.4vw,38px);margin:0 0 16px;font-style:italic">Dale rienda suelta a tu imaginación :)</p>
+      <div style="display:flex;gap:14px;flex-wrap:wrap">
+        <button onClick="{{ pedirWA }}" style="background:#94A487;color:#FAF2DC;border:none;padding:16px 26px;border-radius:999px;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:15px;cursor:pointer;display:inline-flex;align-items:center;gap:10px;box-shadow:0 6px 0 #6b7860" style-hover="background:#82917A"><span style="width:19px;height:19px;display:block">{{ waGlyph }}</span> Pedir por WhatsApp</button>
+        <a href="#menu" style="background:transparent;color:#7A1228;border:2px solid #7A1228;padding:14px 24px;border-radius:999px;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:15px;text-decoration:none" style-hover="background:#7A1228;color:#FAF2DC">Ver menú</a>
+      </div>
+      <div style="display:inline-flex;align-items:center;gap:9px;margin-top:20px;background:#F3E8CC;border:1.5px dashed #C0875A;padding:8px 15px;border-radius:999px"><span style="display:flex;color:#C0875A"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 21s-6-5-6-10a6 6 0 0 1 12 0c0 5-6 10-6 10z"/><circle cx="12" cy="11" r="2"/></svg></span><span style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.07em;font-size:12.5px;font-weight:600;color:#8a5a2b">Recogida en tienda · No enviamos</span></div>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<!-- ===================== DESTACADOS DEL MES ===================== -->
+<section id="mes" style="background:#7A1228;color:#FAF2DC;margin-top:30px;padding:56px 22px;position:relative;overflow:hidden">
+  <div style="max-width:1180px;margin:0 auto">
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:30px">
+      <span style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.16em;font-size:13px;font-weight:600;background:#F4A9B4;color:#3A1418;padding:6px 14px;border-radius:999px">Junio 2026</span>
+      <h2 style="font-family:'Lilita One','Arial Black','Oswald',sans-serif;font-size:clamp(30px,4.6vw,52px);margin:0;color:#FAF2DC">Lo de esta temporada</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:26px">
+      <!-- cookie del mes -->
+      <article style="background:#FFF6E0;color:#3A1418;border-radius:16px;overflow:hidden;display:flex;flex-direction:column">
+        <div style="position:relative;aspect-ratio:16/10;background:linear-gradient(135deg,#E7D2A4,#F3E8CC)">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:.5">{{ cookieArt }}</div>
+          <div role="img" aria-label="{{ featuredCookie.name }}" style="position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1551106652-a5bcf4b29ab6?fm=jpg&q=70&w=640&h=420&fit=crop');background-size:cover;background-position:center"></div>
+          <span style="position:absolute;top:14px;left:14px;background:#F4A9B4;color:#3A1418;font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:12px;padding:6px 13px;border-radius:999px">Cookie del mes</span>
+        </div>
+        <div style="padding:22px 24px;flex:1;display:flex;flex-direction:column">
+          <h3 style="font-family:'Lobster Two',Georgia,serif;font-size:38px;color:#7A1228;margin:0 0 6px">{{ featuredCookie.name }}</h3>
+          <p style="margin:0 0 18px;font-size:16px;line-height:1.5;flex:1">{{ featuredCookie.desc }}</p>
+          <button onClick="{{ featuredCookie.add }}" style="align-self:flex-start;background:#7A1228;color:#FAF2DC;border:none;padding:13px 22px;border-radius:999px;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:14px;cursor:pointer" style-hover="background:#8E1B30">+ Añadir al pedido</button>
+        </div>
+      </article>
+      <!-- tarta estrella -->
+      <article style="background:#FFF6E0;color:#3A1418;border-radius:16px;overflow:hidden;display:flex;flex-direction:column">
+        <div style="position:relative;aspect-ratio:16/10;background:linear-gradient(135deg,#E7D2A4,#F3E8CC)">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:.5">{{ cakeArt }}</div>
+          <div role="img" aria-label="{{ featuredTarta.name }}" style="position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1567171466295-4afa63d45416?fm=jpg&q=70&w=640&h=420&fit=crop');background-size:cover;background-position:center"></div>
+          <span style="position:absolute;top:14px;left:14px;background:#F2A8B8;color:#7A1228;font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:12px;padding:6px 13px;border-radius:999px">Tarta estrella</span>
+        </div>
+        <div style="padding:22px 24px;flex:1;display:flex;flex-direction:column">
+          <h3 style="font-family:'Lobster Two',Georgia,serif;font-size:38px;color:#7A1228;margin:0 0 6px">{{ featuredTarta.name }}</h3>
+          <p style="margin:0 0 18px;font-size:16px;line-height:1.5;flex:1">{{ featuredTarta.desc }}</p>
+          <a href="#tarta" style="align-self:flex-start;background:transparent;color:#7A1228;border:2px solid #7A1228;padding:11px 20px;border-radius:999px;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:14px;text-decoration:none" style-hover="background:#7A1228;color:#FAF2DC">Encargar tarta →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== MENÚ ===================== -->
+<section id="menu" style="max-width:1180px;margin:0 auto;padding:58px 22px">
+  <div style="text-align:center;margin-bottom:14px">
+    <p style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.2em;font-size:13px;font-weight:600;color:#C0875A;margin:0 0 8px">Productos disponibles para recoger en tienda</p>
+    <h2 style="font-family:'Lilita One','Arial Black','Oswald',sans-serif;font-size:clamp(34px,5vw,56px);color:#7A1228;margin:0">El menú</h2>
+  </div>
+  <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:26px 0 34px">
+    <sc-for list="{{ categories }}" as="c" hint-placeholder-count="5">
+      <button onClick="{{ c.choose }}" style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.07em;font-size:13px;font-weight:600;padding:10px 18px;border-radius:999px;cursor:pointer;border:2px solid #7A1228;background:{{ c.bg }};color:{{ c.color }}">{{ c.label }}</button>
+    </sc-for>
+  </div>
+  <div class="nk-menu-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:24px">
+    <sc-for list="{{ menuItems }}" as="item" hint-placeholder-count="6">
+      <article style="background:#fff;border:2px solid #7A1228;border-radius:14px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 4px 0 #e4cfa0;transition:transform .22s cubic-bezier(.22,1,.36,1),box-shadow .22s ease" style-hover="transform:translateY(-5px);box-shadow:0 12px 0 #e4cfa0">
+        <!-- IMG / ILUSTRACIÓN -->
+        <div style="position:relative;aspect-ratio:5/4;background:linear-gradient(135deg,#E7D2A4,#F3E8CC)">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:.5">{{ item.art }}</div>
+          <sc-if value="{{ item.showPhoto }}" hint-placeholder-val="{{ true }}">
+            <div role="img" aria-label="{{ item.name }}" style="position:absolute;inset:0;background-image:url({{ item.img }});background-size:cover;background-position:center"></div>
+          </sc-if>
+          <span class="nk-tag" style="position:absolute;top:11px;left:11px;font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.04em;font-size:11px;padding:5px 11px;border-radius:999px;background:{{ item.tagBg }};color:{{ item.tagColor }}">{{ item.tagLabel }}</span>
+          <sc-if value="{{ item.overlayName }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;left:0;right:0;bottom:0;padding:34px 16px 12px;background:linear-gradient(transparent,rgba(58,20,24,.82))">
+              <h3 style="font-family:'Lobster Two',Georgia,serif;font-size:30px;color:#FAF2DC;margin:0">{{ item.name }}</h3>
+            </div>
+          </sc-if>
+        </div>
+        <!-- BODY -->
+        <div class="nk-card-body" style="padding:16px 18px 18px;flex:1;display:flex;flex-direction:column">
+          <sc-if value="{{ item.showName }}" hint-placeholder-val="{{ true }}">
+            <h3 style="font-family:'Lobster Two',Georgia,serif;font-size:29px;color:#7A1228;margin:0 0 6px;line-height:1">{{ item.name }}</h3>
+          </sc-if>
+          <p style="margin:0 0 16px;font-size:14.5px;line-height:1.5;color:#3A1418;flex:1">{{ item.desc }}</p>
+          <!-- add control -->
+          <sc-if value="{{ item.inCart }}" hint-placeholder-val="{{ false }}">
+            <div class="nk-addbtn" style="display:flex;align-items:center;justify-content:center;gap:16px;background:#F3E8CC;border:2px solid #7A1228;border-radius:999px;padding:4px">
+              <button onClick="{{ item.dec }}" class="nk-qtybtn" aria-label="Quitar uno" style="width:36px;height:36px;flex:0 0 auto;border-radius:50%;border:none;background:#7A1228;color:#FAF2DC;font-size:22px;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center">–</button>
+              <span style="font-family:'Oswald',sans-serif;font-weight:700;font-size:19px;color:#7A1228;min-width:24px;text-align:center">{{ item.qty }}</span>
+              <button onClick="{{ item.inc }}" class="nk-qtybtn" aria-label="Añadir uno" style="width:36px;height:36px;flex:0 0 auto;border-radius:50%;border:none;background:#7A1228;color:#FAF2DC;font-size:22px;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center">+</button>
+            </div>
+          </sc-if>
+          <sc-if value="{{ item.notInCart }}" hint-placeholder-val="{{ true }}">
+            <button onClick="{{ item.add }}" class="nk-addbtn" style="width:100%;background:#7A1228;color:#FAF2DC;border:2px solid #7A1228;padding:12px;border-radius:999px;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:13px;cursor:pointer" style-hover="background:#8E1B30">Añadir al carrito</button>
+          </sc-if>
+        </div>
+      </article>
+    </sc-for>
+  </div>
+  <p style="text-align:center;margin:30px auto 0;max-width:40em;font-size:14.5px;color:#8a5a2b;font-style:italic">Las tartas, mini cookies y extras son <strong>por encargo</strong> — los tamaños se confirman por WhatsApp. Las cookies no tienen pedido mínimo: combina las que quieras.</p>
+</section>
+
+<!-- ===================== TARTA PERSONALIZADA ===================== -->
+<section id="tarta" style="background:#F3E8CC;padding:58px 22px;border-top:2px solid #7A1228;border-bottom:2px solid #7A1228">
+  <div style="max-width:920px;margin:0 auto">
+    <div style="display:flex;align-items:flex-start;gap:18px;flex-wrap:wrap;margin-bottom:8px">
+      <span style="width:78px;height:78px;display:block;flex:0 0 auto">{{ nanaLine }}</span>
+      <div style="flex:1;min-width:240px">
+        <h2 style="font-family:'Lilita One','Arial Black','Oswald',sans-serif;font-size:clamp(30px,4.6vw,50px);color:#7A1228;margin:0 0 6px">Pide tu tarta personalizada</h2>
+        <p style="margin:0;font-size:17px;line-height:1.5;max-width:36em">En tres pasos. Sin formularios eternos. Tú me cuentas y yo te la hago. <em>No copiamos tartas: las usamos como inspiración.</em></p>
+      </div>
+    </div>
+
+    <div style="background:#FFF6E0;border:2px solid #7A1228;border-radius:18px;padding:clamp(20px,3vw,34px);margin-top:24px">
+      <!-- PROGRESS (solo modo pasos) -->
+      <sc-if value="{{ flowPasos }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;gap:8px;margin-bottom:24px">
+          <sc-for list="{{ stepDots }}" as="d" hint-placeholder-count="3">
+            <div style="flex:1;height:7px;border-radius:999px;background:{{ d.bg }}"></div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <!-- PASO 1 -->
+      <sc-if value="{{ showStep1 }}" hint-placeholder-val="{{ true }}">
+        <div style="animation:nkrise .4s ease both">
+          <p style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.14em;font-size:13px;font-weight:600;color:#C0875A;margin:0 0 4px">Paso 1 de 3</p>
+          <h3 style="font-family:'Lilita One','Arial Black','Oswald',sans-serif;font-size:26px;color:#7A1228;margin:0 0 16px">¿Para cuántos?</h3>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px">
+            <sc-for list="{{ comensalesOpts }}" as="o" hint-placeholder-count="5">
+              <button onClick="{{ o.choose }}" style="font-family:'Oswald',sans-serif;font-weight:600;font-size:15px;padding:12px 20px;border-radius:12px;cursor:pointer;border:2px solid #7A1228;background:{{ o.bg }};color:{{ o.color }}">{{ o.label }}</button>
+            </sc-for>
+          </div>
+          <sc-if value="{{ showComensalesCustom }}" hint-placeholder-val="{{ false }}">
+            <input name="comensales-custom" onChange="{{ setComensalesCustom }}" value="{{ cake.comensalesCustom }}" placeholder="Indícame el número exacto de personas (ej. 35)" style="width:100%;max-width:420px;margin-bottom:22px;border:2px solid #7A1228;border-radius:12px;padding:12px 14px;font-family:'Lora',serif;font-size:16px;background:#fff;color:#3A1418" />
+          </sc-if>
+          <div style="height:8px"></div>
+          <p style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.1em;font-size:12.5px;font-weight:600;color:#8a5a2b;margin:0 0 10px">¿Para quién es?</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <sc-for list="{{ edadOpts }}" as="o" hint-placeholder-count="3">
+              <button onClick="{{ o.choose }}" style="font-family:'Oswald',sans-serif;font-weight:600;font-size:15px;padding:12px 20px;border-radius:12px;cursor:pointer;border:2px solid #7A1228;background:{{ o.bg }};color:{{ o.color }}">{{ o.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- PASO 2 -->
+      <sc-if value="{{ showStep2 }}" hint-placeholder-val="{{ false }}">
+        <div style="animation:nkrise .4s ease both">
+          <p style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.14em;font-size:13px;font-weight:600;color:#C0875A;margin:0 0 4px">Paso 2 de 3</p>
+          <h3 style="font-family:'Lilita One','Arial Black','Oswald',sans-serif;font-size:26px;color:#7A1228;margin:0 0 16px">Cuéntame tu idea</h3>
+          <textarea name="idea-tarta" onChange="{{ setIdea }}" value="{{ cake.idea }}" placeholder="Ej.: cumpleaños vintage en tonos pastel, con flores y el nombre 'Lola'…" style="width:100%;min-height:120px;resize:vertical;border:2px solid #7A1228;border-radius:12px;padding:14px;font-family:'Lora',serif;font-size:16px;background:#fff;color:#3A1418"></textarea>
+          <div style="margin-top:14px;display:flex;align-items:flex-start;gap:11px;background:#E8EFE3;border:1.5px solid #94A487;border-radius:12px;padding:13px 16px">
+            <span style="width:22px;height:22px;flex:0 0 auto;display:block;color:#566b4c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 8h4l2-2.5h6L17 8h4v11H3z"/><circle cx="12" cy="13" r="3.5"/></svg></span>
+            <p style="margin:0;font-size:13.5px;line-height:1.55;color:#3A1418">¿Tienes una <strong>foto de referencia</strong>? Adjúntala directamente en el chat de WhatsApp al enviar el pedido — la usamos como inspiración, no la copiamos.</p>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- PASO 3 -->
+      <sc-if value="{{ showStep3 }}" hint-placeholder-val="{{ false }}">
+        <div style="animation:nkrise .4s ease both">
+          <p style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.14em;font-size:13px;font-weight:600;color:#C0875A;margin:0 0 4px">Paso 3 de 3</p>
+          <h3 style="font-family:'Lilita One','Arial Black','Oswald',sans-serif;font-size:26px;color:#7A1228;margin:0 0 16px">El sabor</h3>
+          <p style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.1em;font-size:12.5px;font-weight:600;color:#8a5a2b;margin:0 0 10px">Bizcocho</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px">
+            <sc-for list="{{ bizcochoOpts }}" as="o" hint-placeholder-count="5">
+              <button onClick="{{ o.choose }}" style="font-family:'Oswald',sans-serif;font-weight:600;font-size:15px;padding:11px 18px;border-radius:12px;cursor:pointer;border:2px solid #7A1228;background:{{ o.bg }};color:{{ o.color }}">{{ o.label }}</button>
+            </sc-for>
+          </div>
+          <p style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.1em;font-size:12.5px;font-weight:600;color:#8a5a2b;margin:0 0 10px">Buttercream</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px">
+            <sc-for list="{{ buttercreamOpts }}" as="o" hint-placeholder-count="2">
+              <button onClick="{{ o.choose }}" style="font-family:'Oswald',sans-serif;font-weight:600;font-size:15px;padding:11px 18px;border-radius:12px;cursor:pointer;border:2px solid #7A1228;background:{{ o.bg }};color:{{ o.color }}">{{ o.label }}</button>
+            </sc-for>
+          </div>
+          <p style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.1em;font-size:12.5px;font-weight:600;color:#8a5a2b;margin:0 0 10px">Color del buttercream</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <sc-for list="{{ colorOpts }}" as="o" hint-placeholder-count="6">
+              <button onClick="{{ o.choose }}" style="font-family:'Oswald',sans-serif;font-weight:600;font-size:15px;padding:11px 18px;border-radius:12px;cursor:pointer;border:2px solid #7A1228;background:{{ o.bg }};color:{{ o.color }}">{{ o.label }}</button>
+            </sc-for>
+          </div>
+          <sc-if value="{{ showColorCustom }}" hint-placeholder-val="{{ false }}">
+            <input name="color-custom" onChange="{{ setColorCustom }}" value="{{ cake.colorCustom }}" placeholder="Dime el color o la combinación que quieres (ej. lila + dorado)" style="width:100%;max-width:480px;margin-top:12px;border:2px solid #7A1228;border-radius:12px;padding:12px 14px;font-family:'Lora',serif;font-size:16px;background:#fff;color:#3A1418" />
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <!-- AVISO -->
+      <div style="margin-top:24px;background:#F6DCE2;border-left:5px solid #F2A8B8;border-radius:8px;padding:13px 16px;font-size:13.5px;line-height:1.5;color:#7A1228">
+        <strong>Ojo:</strong> no trabajamos con fondant ni impresiones en cartulina. Reserva con antelación — las tartas son por encargo.
+      </div>
+
+      <!-- RESUMEN + NAV -->
+      <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between">
+        <sc-if value="{{ flowPasos }}" hint-placeholder-val="{{ true }}">
+          <button onClick="{{ cakeBack }}" style="background:transparent;color:#7A1228;border:2px solid #7A1228;padding:13px 22px;border-radius:999px;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:14px;cursor:pointer;opacity:{{ backOpacity }}" style-hover="background:#7A1228;color:#FAF2DC">← Atrás</button>
+        </sc-if>
+        <sc-if value="{{ flowUnaPantalla }}" hint-placeholder-val="{{ false }}"><span></span></sc-if>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <sc-if value="{{ showNext }}" hint-placeholder-val="{{ true }}">
+            <button onClick="{{ cakeNext }}" style="background:#7A1228;color:#FAF2DC;border:none;padding:14px 26px;border-radius:999px;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:14px;cursor:pointer;opacity:{{ nextOpacity }}" style-hover="background:#8E1B30">Siguiente →</button>
+          </sc-if>
+          <sc-if value="{{ showFinish }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ cakeFinish }}" style="background:#94A487;color:#FAF2DC;border:none;padding:14px 26px;border-radius:999px;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:9px;opacity:{{ finishOpacity }}" style-hover="background:#82917A"><span style="width:18px;height:18px;display:block">{{ waGlyph }}</span> Enviar tarta por WhatsApp</button>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CÓMO FUNCIONA ===================== -->
+<section id="como" style="max-width:1180px;margin:0 auto;padding:58px 22px">
+  <h2 style="font-family:'Lilita One','Arial Black','Oswald',sans-serif;font-size:clamp(30px,4.6vw,50px);color:#7A1228;margin:0 0 30px;text-align:center">Reserva y recoge</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px">
+    <sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
+      <div style="background:#F6DCE2;border:2px solid #7A1228;border-radius:14px;padding:24px 22px;text-align:center;box-shadow:0 4px 0 #E7B9C6;transition:transform .22s cubic-bezier(.22,1,.36,1),box-shadow .22s ease" style-hover="transform:translateY(-5px);box-shadow:0 12px 0 #E7B9C6">
+        <div style="width:54px;height:54px;margin:0 auto 14px;border-radius:50%;background:#7A1228;color:#FAF2DC;font-family:'Lilita One','Arial Black','Oswald',sans-serif;font-size:24px;display:flex;align-items:center;justify-content:center">{{ s.n }}</div>
+        <h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-size:17px;color:#7A1228;margin:0 0 8px">{{ s.title }}</h3>
+        <p style="margin:0;font-size:15px;line-height:1.5">{{ s.body }}</p>
+      </div>
+    </sc-for>
+  </div>
+  <div style="background:#F3E8CC;border:2px solid #7A1228;border-radius:14px;margin-top:30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));overflow:hidden">
+    <div style="padding:28px 24px;text-align:center;border-right:2px solid #7A1228;display:flex;flex-direction:column;justify-content:center">
+      <h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.06em;font-size:15px;color:#7A1228;margin:0 0 12px">Horario</h3>
+      <p style="margin:0;font-size:16px;line-height:1.7">Martes a Viernes<br><strong>11:00 – 13:30</strong> y <strong>17:30 – 20:00</strong><br>Sábado<br><strong>11:00 – 13:30</strong><br><span style="color:#8a5a2b">Domingo y lunes: cerrado</span></p>
+    </div>
+    <div style="padding:28px 24px;text-align:center">
+      <h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.06em;font-size:15px;color:#7A1228;margin:0 0 12px">Dónde estamos</h3>
+      <p style="margin:0 0 16px;font-size:16px;line-height:1.6">Avenida Monforte de Lemos, 170<br>Barrio del Pilar, Madrid</p>
+      <a href="https://www.google.com/maps/search/?api=1&query=Avenida%20Monforte%20de%20Lemos%2C%20170%2C%20Madrid" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" style="display:block;position:relative;border:2px solid #7A1228;border-radius:12px;overflow:hidden;aspect-ratio:5/3;max-width:340px;margin:0 auto 14px">
+        <svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;display:block">
+          <rect width="320" height="180" fill="#EBD9AE"/>
+          <rect x="14" y="16" width="120" height="70" rx="3" fill="#E2CB97"/>
+          <rect x="196" y="14" width="110" height="58" rx="3" fill="#E2CB97"/>
+          <rect x="206" y="104" width="100" height="64" rx="3" fill="#E2CB97"/>
+          <path d="M150 -10 L168 190" stroke="#C9A86A" stroke-width="13"/>
+          <path d="M-10 92 L330 78" stroke="#C9A86A" stroke-width="13"/>
+          <path d="M52 -10 L70 190" stroke="#D8BE84" stroke-width="6"/>
+          <path d="M-10 140 L330 132" stroke="#D8BE84" stroke-width="6"/>
+          <path d="M250 -10 L262 190" stroke="#D8BE84" stroke-width="6"/>
+          <path d="M16 110 q40 18 90 8 q60 -12 120 16 q40 22 90 6" fill="none" stroke="#A9C29A" stroke-width="9" opacity="0.7"/>
+          <g transform="translate(159,86)">
+            <path d="M0 -22 C12 -22 20 -13 20 -3 C20 10 0 26 0 26 C0 26 -20 10 -20 -3 C-20 -13 -12 -22 0 -22 Z" fill="#7A1228" stroke="#FFF6E0" stroke-width="2.5"/>
+            <circle cx="0" cy="-2" r="6.5" fill="#FFF6E0"/>
+          </g>
+        </svg>
+        <span style="position:absolute;left:10px;bottom:10px;background:rgba(122,18,40,.92);color:#FFF6E0;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.06em;font-size:10.5px;font-weight:600;padding:5px 10px;border-radius:999px">Barrio del Pilar</span>
+      </a>
+      <a href="https://www.google.com/maps/search/?api=1&query=Avenida%20Monforte%20de%20Lemos%2C%20170%2C%20Madrid" target="_blank" rel="noopener" style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-size:13px;font-weight:600;color:#7A1228;text-decoration:underline">Ver en el mapa →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer style="background:#3A1418;color:#FAF2DC;padding:48px 22px 30px">
+  <div style="max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:30px;align-items:start">
+    <div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+        <span style="width:52px;height:52px;display:block">{{ nanaMini }}</span>
+        <span style="font-family:'Lilita One','Arial Black','Oswald',sans-serif;font-size:24px;line-height:.9">Nana Karamel</span>
+      </div>
+      <p style="margin:0;font-size:15px;line-height:1.6;color:#e9d9b8">Obrador artesano de cookies y tartas en el Barrio del Pilar. Hecho a mano, cada día.</p>
+    </div>
+    <div>
+      <h4 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.08em;font-size:13px;color:#F4A9B4;margin:0 0 12px">Visítanos</h4>
+      <p style="margin:0;font-size:15px;line-height:1.7;color:#e9d9b8">Av. Monforte de Lemos, 170<br>Madrid<br>Mar–Vie · 11–13:30 / 17:30–20<br>Sáb · 11–13:30</p>
+    </div>
+    <div>
+      <h4 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.08em;font-size:13px;color:#F4A9B4;margin:0 0 12px">Síguenos</h4>
+      <a href="https://instagram.com/nanakaramelbakery" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;color:#FAF2DC;text-decoration:none;font-size:15px;margin-bottom:14px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r="1.1" fill="currentColor"/></svg> @nanakaramelbakery</a>
+      <button onClick="{{ pedirWA }}" style="display:flex;align-items:center;gap:9px;background:#94A487;color:#FAF2DC;border:none;padding:12px 20px;border-radius:999px;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:13px;cursor:pointer;margin-top:6px" style-hover="background:#82917A"><span style="width:17px;height:17px;display:block">{{ waGlyph }}</span> Pedir por WhatsApp</button>
+    </div>
+  </div>
+  <p style="max-width:1180px;margin:30px auto 0;padding-top:20px;border-top:1px solid rgba(250,242,220,.2);font-size:12.5px;color:#b89a86;text-align:center">Solo recogida en tienda · No hacemos envíos · © {{ year }} Nana Karamel</p>
+</footer>
+
+<!-- ===================== FAB: WHATSAPP + CARRITO ===================== -->
+<button onClick="{{ pedirWA }}" title="Pedir por WhatsApp" style="position:fixed;left:20px;bottom:22px;z-index:55;width:60px;height:60px;border-radius:50%;border:none;background:#94A487;color:#fff;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.28);display:flex;align-items:center;justify-content:center" style-hover="background:#82917A">
+  <span style="width:30px;height:30px;display:block">{{ waGlyph }}</span>
+</button>
+
+<button onClick="{{ toggleCart }}" title="Tu pedido" style="position:fixed;right:20px;bottom:22px;z-index:55;height:60px;padding:0 22px 0 18px;border-radius:999px;border:none;background:#7A1228;color:#FAF2DC;cursor:pointer;box-shadow:0 8px 22px rgba(122,18,40,.35);display:flex;align-items:center;gap:11px;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:14px" style-hover="background:#8E1B30">
+  <span style="width:26px;height:26px;display:block">{{ bagGlyph }}</span>
+  Pedido
+  <span style="min-width:26px;height:26px;padding:0 7px;border-radius:999px;background:#F4A9B4;color:#3A1418;display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:700">{{ cartCount }}</span>
+</button>
+
+<!-- ===================== CART PANEL ===================== -->
+<div onClick="{{ closeCart }}" style="position:fixed;inset:0;z-index:70;background:rgba(58,20,24,.5);transition:opacity .3s;opacity:{{ overlayOpacity }};pointer-events:{{ overlayEvents }}"></div>
+<aside style="position:fixed;top:0;right:0;bottom:0;z-index:71;width:min(420px,92vw);background:#FFF6E0;box-shadow:-12px 0 40px rgba(0,0,0,.25);transform:translateX({{ panelX }});transition:transform .32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:2px solid #7A1228;background:#7A1228;color:#FAF2DC">
+    <span style="font-family:'Lilita One','Arial Black','Oswald',sans-serif;font-size:22px">Tu pedido</span>
+    <button onClick="{{ closeCart }}" style="background:none;border:none;color:#FAF2DC;font-size:28px;cursor:pointer;line-height:1;padding:0">×</button>
+  </div>
+  <div style="flex:1;overflow-y:auto;padding:18px 22px">
+    <sc-if value="{{ cartEmpty }}" hint-placeholder-val="{{ true }}">
+      <div style="text-align:center;padding:40px 10px;color:#8a5a2b">
+        <span style="width:110px;height:110px;display:inline-block">{{ nanaLine }}</span>
+        <p style="font-family:'Lobster Two',Georgia,serif;font-size:26px;color:#7A1228;margin:16px 0 6px">Aún no has elegido nada</p>
+        <p style="margin:0;font-size:15px">Añade cookies del menú o configura tu tarta. Yo te lo preparo :)</p>
+        <a href="#menu" onClick="{{ closeCart }}" style="display:inline-block;margin-top:18px;background:#7A1228;color:#FAF2DC;padding:12px 22px;border-radius:999px;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:13px;text-decoration:none">Ver el menú</a>
+      </div>
+    </sc-if>
+    <sc-if value="{{ cartHasItems }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <sc-for list="{{ cartLines }}" as="l" hint-placeholder-count="3">
+          <div style="display:flex;gap:12px;align-items:center;padding:13px 0;border-bottom:1px solid #e4cfa0">
+            <div style="flex:1;min-width:0">
+              <p style="font-family:'Lobster Two',Georgia,serif;font-size:22px;color:#7A1228;margin:0;line-height:1.05">{{ l.name }}</p>
+              <p style="margin:2px 0 0;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-size:11px;color:#8a5a2b">{{ l.catLabel }}</p>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <button onClick="{{ l.dec }}" style="width:30px;height:30px;border-radius:50%;border:none;background:#F3E8CC;color:#7A1228;font-size:18px;cursor:pointer">–</button>
+              <span style="font-family:'Oswald',sans-serif;font-weight:700;font-size:16px;color:#7A1228;min-width:18px;text-align:center">{{ l.qty }}</span>
+              <button onClick="{{ l.inc }}" style="width:30px;height:30px;border-radius:50%;border:none;background:#F3E8CC;color:#7A1228;font-size:18px;cursor:pointer">+</button>
+            </div>
+          </div>
+        </sc-for>
+        <button onClick="{{ clearCart }}" style="margin-top:14px;background:none;border:none;color:#8a5a2b;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.06em;font-size:12px;cursor:pointer;text-decoration:underline">Vaciar pedido</button>
+        <div style="margin-top:18px;background:#fff;border:1.5px dashed #C0875A;border-radius:12px;padding:14px">
+          <p style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.08em;font-size:11px;color:#8a5a2b;margin:0 0 8px">Vista previa del mensaje</p>
+          <pre style="margin:0;white-space:pre-wrap;font-family:'Lora',serif;font-size:13px;line-height:1.5;color:#3A1418">{{ waPreview }}</pre>
+        </div>
+      </div>
+    </sc-if>
+  </div>
+  <div style="padding:16px 22px;border-top:2px solid #7A1228">
+    <p style="margin:0 0 10px;display:flex;justify-content:space-between;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-size:14px;color:#7A1228"><span>Unidades</span><span style="font-weight:700">{{ cartCount }}</span></p>
+    <button onClick="{{ sendCart }}" style="width:100%;background:{{ sendBg }};color:#FAF2DC;border:none;padding:16px;border-radius:999px;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:15px;cursor:{{ sendCursor }};display:flex;align-items:center;justify-content:center;gap:10px"><span style="width:19px;height:19px;display:block">{{ waGlyph }}</span> {{ sendLabel }}</button>
+    <p style="margin:10px 0 0;text-align:center;font-size:12px;color:#8a5a2b">Sin pago online · cierras el pedido por WhatsApp · recoges en tienda</p>
+  </div>
+</aside>
+
+<!-- ===================== MODAL DE RECOGIDA ===================== -->
+<div onClick="{{ closePickup }}" style="position:fixed;inset:0;z-index:90;background:rgba(58,20,24,.55);display:flex;align-items:center;justify-content:center;padding:18px;transition:opacity .28s ease;opacity:{{ pickupModalOpacity }};pointer-events:{{ pickupModalEvents }}">
+  <div onClick="{{ stop }}" style="width:min(480px,96vw);max-height:92vh;overflow-y:auto;background:#FFF6E0;border:2px solid #7A1228;border-radius:20px;box-shadow:0 24px 60px rgba(58,20,24,.4);transition:transform .3s cubic-bezier(.34,1.4,.5,1);transform:{{ pickupModalScale }}">
+    <div style="display:flex;align-items:center;gap:12px;padding:18px 22px;border-bottom:2px solid #7A1228;background:#F4A9B4;color:#7A1228;border-radius:18px 18px 0 0">
+      <span style="width:40px;height:40px;display:block;flex:0 0 auto">{{ nanaMini }}</span>
+      <div style="flex:1">
+        <p style="margin:0;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.1em;font-size:11px;opacity:.85">Último paso</p>
+        <h3 style="margin:0;font-family:'Lilita One','Arial Black','Oswald',sans-serif;font-size:22px;line-height:1">¿Cuándo lo recoges?</h3>
+      </div>
+      <button onClick="{{ closePickup }}" style="background:none;border:none;color:#7A1228;font-size:28px;cursor:pointer;line-height:1;padding:0;transition:transform .2s ease" style-hover="transform:rotate(90deg)">×</button>
+    </div>
+    <div style="padding:22px">
+      <div style="background:#F3E8CC;border:1.5px dashed #C0875A;border-radius:12px;padding:12px 15px;margin-bottom:18px">
+        <p style="margin:0;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.06em;font-size:11.5px;font-weight:600;color:#8a5a2b">Nuestro horario</p>
+        <p style="margin:4px 0 0;font-size:14px;line-height:1.5;color:#3A1418">Martes a Viernes · <strong>11:00–13:30</strong> y <strong>17:30–20:00</strong><br>Sábado · <strong>11:00–13:30</strong></p>
+      </div>
+
+      <p style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.08em;font-size:12px;font-weight:600;color:#7A1228;margin:0 0 8px">1 · Elige el día y el mes <span style="color:#8a5a2b">· 2026</span></p>
+      <div style="display:flex;gap:10px">
+        <select name="dia-recogida" value="{{ pickupDayVal }}" onChange="{{ pickDay }}" style="flex:1;min-width:0;border:2px solid #7A1228;border-radius:12px;padding:13px 14px;font-family:'Lora',serif;font-size:16px;background:#fff;color:#3A1418;cursor:pointer">
+          <option value="">Día</option>
+          <sc-for list="{{ dayOpts }}" as="d" hint-placeholder-count="31">
+            <option value="{{ d.value }}">{{ d.label }}</option>
+          </sc-for>
+        </select>
+        <select name="mes-recogida" value="{{ pickupMonthVal }}" onChange="{{ pickMonth }}" style="flex:1.4;min-width:0;border:2px solid #7A1228;border-radius:12px;padding:13px 14px;font-family:'Lora',serif;font-size:16px;background:#fff;color:#3A1418;cursor:pointer">
+          <option value="">Mes</option>
+          <sc-for list="{{ monthOpts }}" as="m" hint-placeholder-count="12">
+            <option value="{{ m.value }}">{{ m.label }}</option>
+          </sc-for>
+        </select>
+      </div>
+      <sc-if value="{{ pickupConfirmed }}" hint-placeholder-val="{{ false }}">
+        <p style="margin:12px 0 0;display:flex;align-items:center;gap:8px;background:#E8EFE3;border:1.5px solid #94A487;border-radius:10px;padding:11px 14px;font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.04em;font-size:12.5px;color:#566b4c"><span style="width:16px;height:16px;display:inline-flex;flex:0 0 auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>{{ pickupOpenMsg }}</p>
+      </sc-if>
+      <sc-if value="{{ pickupConfirmed }}" hint-placeholder-val="{{ false }}">
+        <p style="margin:10px 0 0;font-size:13.5px;line-height:1.5;color:#8a5a2b">La <strong>hora exacta la concretamos por WhatsApp</strong> dentro de nuestro horario.</p>
+      </sc-if>
+
+      <div style="display:flex;align-items:center;gap:12px;margin:20px 0">
+        <span style="flex:1;height:1px;background:#C0875A"></span>
+        <span style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:#8a5a2b">o bien</span>
+        <span style="flex:1;height:1px;background:#C0875A"></span>
+      </div>
+      <button onClick="{{ chooseNegotiate }}" style="width:100%;font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.05em;font-size:13px;padding:13px;border-radius:12px;cursor:pointer;border:2px solid #7A1228;background:{{ negotiateBg }};color:{{ negotiateColor }};transition:transform .15s ease" style-hover="transform:translateY(-2px)">Prefiero acordar la fecha por WhatsApp</button>
+
+      <sc-if value="{{ hasPickupError }}" hint-placeholder-val="{{ false }}">
+        <p style="margin:16px 0 0;background:#F6DCE2;border-left:4px solid #F4A9B4;border-radius:8px;padding:11px 14px;font-size:14px;line-height:1.45;color:#7A1228">{{ pickupErrorMsg }}</p>
+      </sc-if>
+
+      <button onClick="{{ confirmPickup }}" style="width:100%;margin-top:20px;background:#94A487;color:#FAF2DC;border:none;padding:16px;border-radius:999px;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:transform .18s ease,background .18s ease" style-hover="background:#82917A;transform:translateY(-2px)"><span style="width:19px;height:19px;display:block">{{ waGlyph }}</span> Confirmar y enviar por WhatsApp</button>
+      <p style="margin:12px 0 0;text-align:center;font-size:12px;color:#8a5a2b">Sin pago online · cierras el pedido por WhatsApp · recoges en tienda</p>
+    </div>
+  </div>
+
+  <!-- popup: día no válido -->
+  <div onClick="{{ closeDayPopup }}" style="position:fixed;inset:0;z-index:95;display:flex;align-items:center;justify-content:center;padding:22px;background:rgba(58,20,24,.55);transition:opacity .25s ease;opacity:{{ dayPopupOpacity }};pointer-events:{{ dayPopupEvents }}">
+    <div onClick="{{ stop }}" style="width:min(380px,94vw);background:#FFF6E0;border:2px solid #7A1228;border-radius:20px;box-shadow:0 24px 60px rgba(58,20,24,.4);overflow:hidden;transition:transform .28s cubic-bezier(.34,1.4,.5,1);transform:{{ dayPopupScale }}">
+      <div style="background:#F4A9B4;padding:18px 22px;display:flex;align-items:center;gap:12px">
+        <span style="width:42px;height:42px;flex:0 0 auto;border-radius:50%;background:#7A1228;color:#FAF2DC;display:flex;align-items:center;justify-content:center;font-family:'Lilita One',cursive;font-size:24px">!</span>
+        <h3 style="margin:0;font-family:'Lilita One','Arial Black',cursive;font-size:20px;color:#7A1228;line-height:1.05">Ese día estamos cerrados</h3>
+      </div>
+      <div style="padding:20px 22px">
+        <p style="margin:0 0 14px;font-size:15px;line-height:1.55;color:#3A1418">El <strong>{{ badDayName }}</strong> no abrimos. Preparamos recogidas de <strong>martes a sábado</strong> (el sábado solo por la mañana).</p>
+        <div style="background:#F3E8CC;border:1.5px dashed #C0875A;border-radius:12px;padding:13px 15px;margin-bottom:16px">
+          <p style="margin:0 0 6px;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.06em;font-size:11px;font-weight:600;color:#8a5a2b">Cómo hacerlo</p>
+          <p style="margin:0;font-size:14px;line-height:1.55;color:#3A1418">Vuelve a abrir el calendario y elige un <strong>martes, miércoles, jueves, viernes o sábado</strong> (el sábado solo por la mañana). Si necesitas otro día, pulsa «acordar la fecha por WhatsApp» y lo vemos contigo.</p>
+        </div>
+        <button onClick="{{ closeDayPopup }}" style="width:100%;background:#7A1228;color:#FAF2DC;border:none;padding:14px;border-radius:999px;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:14px;cursor:pointer" style-hover="background:#8E1B30">Elegir otro día</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- panel: abrir WhatsApp / copiar -->
+  <div onClick="{{ closeWAOverlay }}" style="position:fixed;inset:0;z-index:96;display:flex;align-items:center;justify-content:center;padding:22px;background:rgba(58,20,24,.55);transition:opacity .25s ease;opacity:{{ waOverlayOpacity }};pointer-events:{{ waOverlayEvents }}">
+    <div onClick="{{ stop }}" style="width:min(400px,94vw);background:#FFF6E0;border:2px solid #7A1228;border-radius:20px;box-shadow:0 24px 60px rgba(58,20,24,.4);overflow:hidden;transition:transform .28s cubic-bezier(.34,1.4,.5,1);transform:{{ waOverlayScale }}">
+      <div style="background:#94A487;padding:18px 22px;display:flex;align-items:center;gap:12px">
+        <span style="width:40px;height:40px;flex:0 0 auto;display:block">{{ waGlyph }}</span>
+        <h3 style="margin:0;font-family:'Lilita One','Arial Black','Oswald',sans-serif;font-size:20px;color:#FAF2DC;line-height:1.05">Tu pedido está listo</h3>
+      </div>
+      <div style="padding:20px 22px">
+        <p style="margin:0 0 16px;font-size:15px;line-height:1.55;color:#3A1418">Pulsa el botón para abrir WhatsApp con el pedido ya escrito. Si no se abre solo, copia el mensaje y pégalo en nuestro chat.</p>
+        <a href="{{ waUrl }}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:10px;background:#94A487;color:#FAF2DC;text-decoration:none;padding:16px;border-radius:999px;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:15px;box-shadow:0 5px 0 #6b7860;transition:transform .16s ease" style-hover="transform:translateY(-2px)"><span style="width:19px;height:19px;display:block">{{ waGlyph }}</span> Abrir WhatsApp</a>
+        <button onClick="{{ copyWAMsg }}" style="width:100%;margin-top:12px;background:transparent;color:#7A1228;border:2px solid #7A1228;padding:13px;border-radius:999px;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:13px;cursor:pointer;transition:background .16s ease" style-hover="background:#7A1228;color:#FAF2DC">{{ waCopyLabel }}</button>
+        <p style="margin:14px 0 0;text-align:center;font-size:12px;color:#8a5a2b">Número: +34 614 279 238</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<template id="__bundler_thumbnail">
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100" height="100" fill="#7A1228"/>
+    <circle cx="50" cy="54" r="26" fill="none" stroke="#FAF2DC" stroke-width="3"/>
+    <circle cx="42" cy="46" r="3" fill="#FAF2DC"/><circle cx="58" cy="44" r="2.4" fill="#FAF2DC"/>
+    <circle cx="54" cy="60" r="3" fill="#FAF2DC"/><circle cx="40" cy="61" r="2.4" fill="#FAF2DC"/>
+    <circle cx="61" cy="58" r="2" fill="#FAF2DC"/>
+  </svg>
+</template>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1280, &quot;height&quot;: 2400 },
+  &quot;heroVariant&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;centrado&quot;,&quot;split&quot;,&quot;editorial&quot;], &quot;default&quot;: &quot;centrado&quot;, &quot;tsType&quot;: &quot;string&quot; },
+  &quot;cardVariant&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;foto&quot;,&quot;ilustrado&quot;,&quot;overlay&quot;], &quot;default&quot;: &quot;foto&quot;, &quot;tsType&quot;: &quot;string&quot; },
+  &quot;cakeFlowVariant&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;pasos&quot;,&quot;una-pantalla&quot;], &quot;default&quot;: &quot;pasos&quot;, &quot;tsType&quot;: &quot;string&quot; }
+}">
+class Component extends DCLogic {
+  state = {
+    cat: 'Todo',
+    cart: {},
+    cartOpen: false,
+    navOpen: false,
+    cakeStep: 1,
+    cake: { comensales:'', comensalesCustom:'', edad:'', idea:'', bizcocho:'', buttercream:'', color:'', colorCustom:'' },
+    pickup: { day:'', month:'', negotiate:false },
+    pickupModal: false,
+    pickupOrigin: 'cart',
+    pickupError: '',
+    dayPopup: '',
+    waOverlay: false,
+    waUrl: '',
+    waCopied: false,
+  };
+
+  YEAR = 2026;
+  MONTHS = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  daysInMonth(m){ return new Date(this.YEAR, m, 0).getDate(); } // m = 1..12
+  // Horario real (Google): Mar–Sáb abierto, Dom/Lun cerrado.
+  OPEN_WD = [2,3,4,5,6];
+  isOpenDay(wd){ return this.OPEN_WD.includes(wd); }
+  pickupDateObj(){
+    const p = this.state.pickup;
+    if(!p.day || !p.month) return null;
+    return new Date(this.YEAR, Number(p.month)-1, Number(p.day), 12, 0, 0);
+  }
+  pickupComplete(){ const d=this.pickupDateObj(); return !!(d && this.isOpenDay(d.getDay())); }
+
+  WA = '34614279238'; // Número real de WhatsApp (formato internacional).
+
+  catalog = [
+    { id:'ck-clasica', cat:'Cookies', name:'Clásica', desc:'Vainilla con chips de chocolate. La de siempre, la que nunca falla.', tag:'libre', kw:'chocolate-chip,cookie', lock:21 },
+    { id:'ck-brownie', cat:'Cookies', name:'Brownie', desc:'Cacao puro, nueces, chocolate blanco y sal en escamas.', tag:'libre', kw:'brownie,cookie', lock:22 },
+    { id:'ck-redvelvet', cat:'Cookies', name:'Red Velvet', desc:'Vainilla y cacao suave, rellena de queso crema.', tag:'libre', kw:'red-velvet,cookie', lock:23 },
+    { id:'ck-lotus', cat:'Cookies', name:'Lotus Cheesecake', desc:'Especiada con canela y jengibre, rellena de queso crema y crema de Lotus, con Lotus triturada.', tag:'libre', kw:'biscoff,cookie', lock:24 },
+    { id:'ck-ferrero', cat:'Cookies', name:'Ferrero', desc:'Cacao suave rellena de Nutella y rebozada con avellanas.', tag:'libre', kw:'chocolate,hazelnut,cookie', lock:25 },
+    { id:'ck-peanut', cat:'Cookies', name:'Peanut Lover', desc:'Cacahuete y chocolate con leche, con cacahuetes caramelizados con miel y sal.', tag:'libre', kw:'peanut-butter,cookie', lock:26 },
+    { id:'ck-pina', cat:'Cookies', name:'Piña Colada', desc:'La especial de junio: coco, piña y un guiño tropical. Edición limitada.', tag:'mes', kw:'coconut,cookie', lock:27 },
+
+    { id:'mn-clasica', cat:'Mini cookies', name:'Mini Clásica', desc:'Bocaditos de vainilla con chips. Perfectas para compartir.', tag:'encargo', kw:'mini,cookie', lock:31 },
+    { id:'mn-brownie', cat:'Mini cookies', name:'Mini Brownie', desc:'Versión bite-size de nuestra brownie con nueces.', tag:'encargo', kw:'brownie,bite', lock:32 },
+    { id:'mn-pastas', cat:'Mini cookies', name:'Surtido de pastas de mantequilla', desc:'Pastas artesanas de mantequilla, surtido variado.', tag:'encargo', kw:'butter,biscuit', lock:33 },
+
+    { id:'tt-redvelvet', cat:'Tartas', name:'Red Velvet', desc:'Bizcocho rojo aterciopelado con frosting de queso crema.', tag:'encargo', kw:'red-velvet,cake', lock:41 },
+    { id:'tt-zanahoria', cat:'Tartas', name:'Zanahoria', desc:'Especiada y húmeda, con frosting de queso crema.', tag:'encargo', kw:'carrot,cake', lock:42 },
+    { id:'tt-chocolate', cat:'Tartas', name:'Chocolate', desc:'Intensa, para los que el chocolate nunca es suficiente.', tag:'encargo', kw:'chocolate,cake', lock:43 },
+    { id:'tt-queso', cat:'Tartas', name:'Tarta de Queso vasca', desc:'Nuestra estrella: cremosa por dentro, dorada por fuera.', tag:'encargo', kw:'basque,cheesecake', lock:44 },
+    { id:'tt-limon', cat:'Tartas', name:'Mousse de Limón', desc:'Ligera y fresca, con el punto justo de acidez.', tag:'encargo', kw:'lemon,cake', lock:45 },
+    { id:'tt-tiramisu', cat:'Tartas', name:'Tiramisú', desc:'Café, mascarpone y cacao. Un clásico italiano.', tag:'encargo', kw:'tiramisu', lock:46 },
+    { id:'tt-tresleches', cat:'Tartas', name:'Tres Leches', desc:'Bizcocho empapado, suave y jugoso.', tag:'encargo', kw:'tres-leches,cake', lock:47 },
+    { id:'tt-brownie', cat:'Tartas', name:'Brownie', desc:'Densa y chocolateada, en formato tarta.', tag:'encargo', kw:'brownie,cake', lock:48 },
+
+    { id:'ex-empanada', cat:'Extras', name:'Empanada Gallega', desc:'Masa artesana y relleno jugoso. Por encargo.', tag:'encargo', kw:'empanada', lock:51 },
+    { id:'ex-empanadillas', cat:'Extras', name:'Empanadillas Individuales', desc:'Tamaño individual, ideales para picar.', tag:'encargo', kw:'empanada,pastry', lock:52 },
+    { id:'ex-alfajores', cat:'Extras', name:'Alfajores Argentinos', desc:'Rellenos de dulce de leche, suaves y dulces.', tag:'encargo', kw:'alfajor', lock:53 },
+    { id:'ex-rollo', cat:'Extras', name:'Rollo de Canela', desc:'Esponjoso, con canela y glaseado.', tag:'encargo', kw:'cinnamon-roll', lock:54 },
+    { id:'ex-focaccia', cat:'Extras', name:'Focaccia', desc:'Masa aireada con aceite de oliva y romero.', tag:'encargo', kw:'focaccia', lock:55 },
+  ];
+
+  TAGS = {
+    libre:   { label:'Sin pedido mínimo', bg:'#F6DCE2', color:'#7A1228' },
+    encargo: { label:'Por encargo',        bg:'#F3E8CC', color:'#8a5a2b' },
+    mes:     { label:'Especial del mes',   bg:'#F4A9B4', color:'#3A1418' },
+  };
+
+  UNS = {
+    'ck-clasica':'1558961363-fa8fdf82db35','ck-brownie':'1612203985729-70726954388c',
+    'ck-redvelvet':'1586985289688-ca3cf47d3e6e','ck-lotus':'1499636136210-6f4ee915583e',
+    'ck-ferrero':'1548741487-18d363dc4469','ck-peanut':'1481391319762-47dff72954d9',
+    'ck-pina':'1551106652-a5bcf4b29ab6',
+    'mn-clasica':'1509365465985-25d11c17e812','mn-brownie':'1606313564200-e75d5e30476c',
+    'mn-pastas':'1490567674331-72de84996c8f',
+    'tt-redvelvet':'1586788224331-947f68671cf1','tt-zanahoria':'1621303837174-89787a7d4729',
+    'tt-chocolate':'1578985545062-69928b1d9587','tt-queso':'1567171466295-4afa63d45416',
+    'tt-limon':'1519915028121-7d3463d20b13','tt-tiramisu':'1571877227200-a0d98ea607e9',
+    'tt-tresleches':'1565958011703-44f9829ba187','tt-brownie':'1606313564200-e75d5e30476c',
+    'ex-empanada':'1604467707321-70d5ac45adff','ex-empanadillas':'1601000938259-9e92002320b3',
+    'ex-alfajores':'1612886623079-bb3886d8b685','ex-rollo':'1509365465985-25d11c17e812',
+    'ex-focaccia':'1601000938259-9e92002320b3',
+  };
+  imgUrl(it){ const id=this.UNS[it.id]; return id ? ('https://images.unsplash.com/photo-'+id+'?fm=jpg&q=70&w=640&h=480&fit=crop') : ('https://loremflickr.com/600/480/'+it.kw+'?lock='+it.lock); }
+  fallbackUrl(it){ return 'https://loremflickr.com/600/480/'+it.kw+'?lock='+it.lock; }
+
+  componentDidMount(){
+    const root = document.getElementById('nk-root');
+    if(!root || !('IntersectionObserver' in window)) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if(en.isIntersecting){
+          const els = [...en.target.parentElement.children].filter(c => c.hasAttribute('data-reveal'));
+          en.target.style.animationDelay = (Math.max(0, els.indexOf(en.target)) * 80) + 'ms';
+          en.target.classList.add('nk-in');
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    const sel = 'section > div > h2, #mes article, #menu article, #como article, #como > div > div, #tarta > div > div, footer > div > div';
+    requestAnimationFrame(() => {
+      root.querySelectorAll(sel).forEach(el => { el.setAttribute('data-reveal',''); io.observe(el); });
+    });
+  }
+
+  // ---- cart ----
+  add(id){ this.setState(s => ({ cart: { ...s.cart, [id]: (s.cart[id]||0) + 1 } })); }
+  inc(id){ this.add(id); }
+  dec(id){ this.setState(s => { const n=(s.cart[id]||0)-1; const c={...s.cart}; if(n<=0) delete c[id]; else c[id]=n; return { cart:c }; }); }
+  clearCart(){ this.setState({ cart:{} }); }
+  toggleCart(){ this.setState(s => ({ cartOpen: !s.cartOpen })); }
+  closeCart(){ this.setState({ cartOpen:false }); }
+  count(){ return Object.values(this.state.cart).reduce((a,b)=>a+b,0); }
+
+  cakeHasData(){ const c=this.state.cake; return !!(c.comensales||c.idea||c.bizcocho); }
+
+  buildMessage(){
+    const L = ['Hola Nana Karamel! Quiero hacer un pedido para recoger:',''];
+    const groups = ['Cookies','Mini cookies','Tartas','Extras'];
+    groups.forEach(g => {
+      const items = this.catalog.filter(i => i.cat===g && (this.state.cart[i.id]||0)>0);
+      if(items.length){
+        L.push(g.toUpperCase() + (g==='Cookies' ? '' : ' (encargo)'));
+        items.forEach(i => L.push('• ' + this.state.cart[i.id] + '× ' + i.name));
+        L.push('');
+      }
+    });
+    const c = this.state.cake;
+    if(this.cakeHasData()){
+      L.push('TARTA PERSONALIZADA (encargo)');
+      if(c.comensales) L.push('• Comensales: ' + this.comensalesText() + (c.edad ? ' · ' + c.edad : ''));
+      if(c.idea) L.push('• Idea: ' + c.idea);
+      if(c.bizcocho) L.push('• Bizcocho: ' + c.bizcocho);
+      if(c.buttercream) L.push('• Buttercream: ' + c.buttercream + (c.color ? ' · color ' + this.colorText() : ''));
+      L.push('• Foto de referencia: la adjunto aquí en el chat si la tengo.');
+      L.push('(Sin fondant ni impresiones; reservo con antelación.)');
+      L.push('');
+    }
+    L.push('Nombre: ___');
+    const p = this.state.pickup;
+    if(p.negotiate){
+      L.push('Recogida: prefiero acordar la fecha por WhatsApp.');
+    } else if(this.pickupComplete()){
+      L.push('Recogida deseada: ' + this.pickupPretty() + ' (hora a concretar por WhatsApp)');
+    } else {
+      L.push('Día de recogida: ___ (a concretar por WhatsApp)');
+    }
+    L.push('¿Algún mensaje en chocolate?: ___');
+    L.push('');
+    L.push('(enviado desde la web)');
+    return L.join('\n');
+  }
+
+  openWA(){
+    const url = 'https://wa.me/' + this.WA + '?text=' + encodeURIComponent(this.buildMessage());
+    this.setState({ waOverlay:true, waUrl:url, waCopied:false });
+    this.saveOrderToDB();   // additivo: guardar en BD; NUNCA bloquea ni rompe el flujo
+    try { window.open(url, '_blank', 'noopener'); } catch(_) {}
+  }
+  // --- Integración panel/BD (no destructiva): guarda el pedido si la API existe ---
+  buildOrderPayload(){
+    const items = [];
+    this.catalog.forEach(i => { const q = this.state.cart[i.id]||0; if(q>0) items.push({ id:i.id, name:i.name, qty:q, cat:i.cat }); });
+    const c = this.state.cake;
+    const tieneTarta = this.cakeHasData();
+    const p = this.state.pickup;
+    let fecha = '';
+    if(!p.negotiate && p.day && p.month){
+      fecha = '2026-' + String(p.month).padStart(2,'0') + '-' + String(p.day).padStart(2,'0');
+    }
+    const tipoResumen = items.map(i => i.qty+'× '+i.name).concat(tieneTarta ? ['Tarta personalizada'] : []).join(', ');
+    return {
+      origen: 'web',
+      estado: 'nuevo',
+      cliente: { nombre: '', telefono: '', email: '' },   // se completa por WhatsApp
+      tipo: tipoResumen || 'Pedido',
+      items,
+      tarta: tieneTarta ? { comensales:this.comensalesText(), publico:c.edad, idea:c.idea, bizcocho:c.bizcocho, buttercream:c.buttercream, color:this.colorText() } : null,
+      personalizacion: tieneTarta ? (c.idea||'') : '',
+      recogida: { fecha, hora:'', negociar: !!p.negotiate },
+      mensaje: this.buildMessage(),
+      created_at: new Date().toISOString(),
+    };
+  }
+  saveOrderToDB(){
+    try {
+      const payload = this.buildOrderPayload();
+      fetch('/api/orders', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload), keepalive:true }).catch(()=>{});
+    } catch(_) { /* si la API no existe o falla, el cliente no se entera */ }
+  }
+  copyWAMsg(){
+    const msg = this.buildMessage();
+    try {
+      navigator.clipboard.writeText(msg).then(() => this.setState({ waCopied:true }), () => this.fallbackCopy(msg));
+    } catch(_) { this.fallbackCopy(msg); }
+  }
+  fallbackCopy(msg){
+    try {
+      const ta=document.createElement('textarea'); ta.value=msg; ta.style.position='fixed'; ta.style.opacity='0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+      this.setState({ waCopied:true });
+    } catch(_) {}
+  }
+  closeWAOverlay(){ this.setState({ waOverlay:false }); }
+  sendCart(){ if(this.count()===0 && !this.cakeHasData()) return; this.openPickup('cart'); }
+
+  // ---- nav móvil ----
+  openNav(){ this.setState({ navOpen:true }); }
+  closeNav(){ this.setState({ navOpen:false }); }
+  navOrder(){ this.setState({ navOpen:false }); this.openPickup('cart'); }
+
+  // ---- modal de recogida ----
+  openPickup(origin){ this.setState({ pickupModal:true, pickupOrigin:origin, pickupError:'' }); }
+  closePickup(){ this.setState({ pickupModal:false }); }
+  dayName(d){ return ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'][d]; }
+  pickupPretty(){ const d=this.pickupDateObj(); if(!d) return ''; return this.dayName(d.getDay()) + ', ' + d.getDate() + ' de ' + this.MONTHS[d.getMonth()] + ' de ' + this.YEAR; }
+  validatePickup(){
+    const d = this.pickupDateObj();
+    if(d && !this.isOpenDay(d.getDay())){
+      this.setState({ dayPopup: this.dayName(d.getDay()) });
+    } else {
+      this.setState({ dayPopup:'', pickupError:'' });
+    }
+  }
+  pickDay(e){
+    const v = e.target.value;
+    this.setState(s => ({ pickup:{...s.pickup, day:v, negotiate:false} }), () => this.validatePickup());
+  }
+  pickMonth(e){
+    const v = e.target.value;
+    this.setState(s => {
+      let day = s.pickup.day;
+      if(v && day && Number(day) > this.daysInMonth(Number(v))) day = '';
+      return { pickup:{...s.pickup, month:v, day, negotiate:false} };
+    }, () => this.validatePickup());
+  }
+  closeDayPopup(){ this.setState(s => ({ dayPopup:'', pickup:{...s.pickup, day:'', month:''} })); }
+  chooseNegotiate(){ this.setState(s => ({ pickup:{...s.pickup, negotiate:true, day:'', month:''}, pickupError:'' })); }
+  confirmPickup(){
+    const p = this.state.pickup;
+    if(!p.negotiate && !this.pickupComplete()){
+      this.setState({ pickupError:'Elige el día y el mes, o marca «acordar por WhatsApp».' });
+      return;
+    }
+    this.setState({ pickupModal:false });
+    this.openWA();
+  }
+
+  // ---- cake flow ----
+  setCake(field, val){ this.setState(s => ({ cake: { ...s.cake, [field]: val } })); }
+  setPickup(field, val){ this.setState(s => ({ pickup: { ...s.pickup, [field]: val } })); }
+  fmtDate(d){ if(!d) return ''; const [y,m,da] = d.split('-'); return da + '/' + m + '/' + y; }
+  cakeStepValid(step){
+    const c = this.state.cake;
+    if(step===1){
+      const comOk = c.comensales && (c.comensales!=='Personalizado' || (c.comensalesCustom && c.comensalesCustom.trim()));
+      return !!(comOk && c.edad);
+    }
+    if(step===2) return !!(c.idea && c.idea.trim());
+    if(step===3){
+      const colOk = c.color!=='Otro' || (c.colorCustom && c.colorCustom.trim());
+      return !!(c.bizcocho && c.buttercream && colOk);
+    }
+    return true;
+  }
+  comensalesText(){ const c=this.state.cake; return c.comensales==='Personalizado' ? (c.comensalesCustom||'a concretar') : c.comensales; }
+  colorText(){ const c=this.state.cake; return c.color==='Otro' ? (c.colorCustom||'a concretar') : c.color; }
+  cakeNext(){ if(!this.cakeStepValid(this.state.cakeStep)) return; this.setState(s => ({ cakeStep: Math.min(3, s.cakeStep+1) })); }
+  cakeBack(){ this.setState(s => ({ cakeStep: Math.max(1, s.cakeStep-1) })); }
+  cakeFinish(){ if(!this.cakeStepValid(3)) return; this.openPickup('cake'); }
+
+  optGroup(field, labels){
+    const sel = this.state.cake[field];
+    return labels.map(label => ({
+      label,
+      bg: sel===label ? '#7A1228' : '#FAF2DC',
+      color: sel===label ? '#FAF2DC' : '#7A1228',
+      choose: () => this.setCake(field, label),
+    }));
+  }
+
+  // ---- svg ----
+  nana(){
+    const src = (typeof window!=='undefined' && window.NK_LOGO) ? window.NK_LOGO : 'logo.png';
+    return React.createElement('img', { src, alt:'Nana Karamel', width:'100%', height:'100%', style:{display:'block',width:'100%',height:'100%',objectFit:'cover',borderRadius:'50%'} });
+  }
+  nanaLine(){
+    const src = (typeof window!=='undefined' && window.NK_LINE) ? window.NK_LINE : 'logo-line.png';
+    return React.createElement('img', { src, alt:'Nana Karamel', style:{display:'block',width:'100%',height:'100%',objectFit:'contain'} });
+  }
+  nanaOld(){
+    return React.createElement('svg', { viewBox:'0 0 120 124', width:'100%', height:'100%', style:{display:'block'}, dangerouslySetInnerHTML:{ __html:
+      '<circle cx="60" cy="64" r="56" fill="#7A1228"/>'+
+      '<path d="M30 58 q-7 20 7 33 q-16-5-16-27 q0-9 9-6z" fill="#C0875A"/>'+
+      '<path d="M90 58 q7 20 -7 33 q16-5 16-27 q0-9 -9-6z" fill="#C0875A"/>'+
+      '<ellipse cx="60" cy="68" rx="30" ry="33" fill="#FAF2DC"/>'+
+      '<rect x="37" y="31" width="46" height="15" rx="5" fill="#FAF2DC" stroke="#3A1418" stroke-width="2.5"/>'+
+      '<circle cx="43" cy="27" r="12" fill="#FAF2DC" stroke="#3A1418" stroke-width="2.5"/>'+
+      '<circle cx="60" cy="22" r="14" fill="#FAF2DC" stroke="#3A1418" stroke-width="2.5"/>'+
+      '<circle cx="77" cy="27" r="12" fill="#FAF2DC" stroke="#3A1418" stroke-width="2.5"/>'+
+      '<rect x="37" y="40" width="46" height="7" fill="#FAF2DC"/>'+
+      '<g fill="none" stroke="#3A1418" stroke-width="2.5" stroke-linejoin="round">'+
+        '<path d="M40 66 q-1-10 11-10 q10 0 11 8 q-11 5-22 2z"/>'+
+        '<path d="M80 66 q1-10 -11-10 q-10 0-11 8 q11 5 22 2z"/>'+
+        '<path d="M62 63 h-4"/>'+
+      '</g>'+
+      '<circle cx="51" cy="63" r="2.6" fill="#3A1418"/>'+
+      '<circle cx="69" cy="63" r="2.6" fill="#3A1418"/>'+
+      '<circle cx="44" cy="77" r="5.5" fill="#F2A8B8"/>'+
+      '<circle cx="76" cy="77" r="5.5" fill="#F2A8B8"/>'+
+      '<path d="M50 83 q10 9 20 0" fill="none" stroke="#3A1418" stroke-width="2.5" stroke-linecap="round"/>'
+    }});
+  }
+  cookieSvg(){
+    return React.createElement('svg', { width:84, height:84, viewBox:'0 0 84 84', style:{display:'block'}, dangerouslySetInnerHTML:{ __html:
+      '<circle cx="42" cy="42" r="30" fill="none" stroke="#7A1228" stroke-width="2.5"/>'+
+      '<circle cx="34" cy="35" r="3.2" fill="#7A1228"/><circle cx="53" cy="33" r="2.6" fill="#7A1228"/>'+
+      '<circle cx="46" cy="50" r="3.2" fill="#7A1228"/><circle cx="33" cy="52" r="2.6" fill="#7A1228"/>'+
+      '<circle cx="57" cy="48" r="2.2" fill="#7A1228"/><circle cx="42" cy="40" r="2" fill="#7A1228"/>'
+    }});
+  }
+  cakeSvg(){
+    return React.createElement('svg', { width:88, height:88, viewBox:'0 0 88 88', style:{display:'block'}, dangerouslySetInnerHTML:{ __html:
+      '<g fill="none" stroke="#7A1228" stroke-width="2.5" stroke-linejoin="round">'+
+      '<path d="M20 44 h48 v22 a4 4 0 0 1 -4 4 h-40 a4 4 0 0 1 -4 -4 z"/>'+
+      '<path d="M20 52 q11 6 24 0 q13-6 24 0"/>'+
+      '<path d="M44 24 v14"/></g>'+
+      '<circle cx="44" cy="22" r="3.2" fill="#E79A2B"/>'
+    }});
+  }
+  waGlyphSvg(){
+    return React.createElement('svg', { viewBox:'0 0 32 32', width:'100%', height:'100%', fill:'currentColor', style:{display:'block'}, dangerouslySetInnerHTML:{ __html:
+      '<path d="M16 3C9.4 3 4 8.3 4 14.9c0 2.3.7 4.5 1.9 6.4L4 29l8-2.1c1.8 1 3.9 1.5 6 1.5 6.6 0 12-5.3 12-11.9S22.6 3 16 3zm0 21.7c-1.9 0-3.7-.5-5.3-1.5l-.4-.2-4 1 1.1-3.9-.3-.4c-1.1-1.7-1.7-3.6-1.7-5.6C5.1 9.4 9.9 4.8 16 4.8s10.9 4.6 10.9 10.1S22.1 24.7 16 24.7zm6-7.6c-.3-.2-1.9-1-2.2-1.1-.3-.1-.5-.2-.8.2-.2.3-.9 1.1-1.1 1.3-.2.2-.4.2-.7.1-1.9-.9-3.1-1.7-4.4-3.8-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.6-.1-.2-.8-1.9-1.1-2.6-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.2 3.3 1.4 3.6c.2.2 2.5 3.8 6 5.3 2.3 1 3.1.9 4 .8.6 0 1.9-.8 2.1-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"/>'
+    }});
+  }
+  bagGlyphSvg(){
+    return React.createElement('svg', { viewBox:'0 0 32 32', width:'100%', height:'100%', fill:'none', stroke:'currentColor', strokeWidth:2.4, strokeLinejoin:'round', style:{display:'block'}, dangerouslySetInnerHTML:{ __html:
+      '<path d="M7 11h18l-1.5 16a2 2 0 0 1-2 1.8H10.5a2 2 0 0 1-2-1.8z"/><path d="M11 13V9a5 5 0 0 1 10 0v4"/>'
+    }});
+  }
+
+  renderVals(){
+    const heroV = this.props.heroVariant || 'centrado';
+    const cardV = this.props.cardVariant || 'foto';
+    const flowV = this.props.cakeFlowVariant || 'pasos';
+    const cats = ['Todo','Cookies','Mini cookies','Tartas','Extras'];
+
+    const decorate = (it) => {
+      const t = this.TAGS[it.tag];
+      const qty = this.state.cart[it.id] || 0;
+      const isCake = it.cat==='Tartas';
+      return {
+        ...it,
+        img: this.imgUrl(it),
+        art: isCake ? this.cakeSvg() : this.cookieSvg(),
+        tagLabel: t.label, tagBg: t.bg, tagColor: t.color,
+        qty,
+        inCart: qty>0, notInCart: qty===0,
+        showPhoto: cardV!=='ilustrado',
+        showName: cardV!=='overlay',
+        overlayName: cardV==='overlay',
+        onErr: (e) => { e.target.style.display='none'; },
+        add: () => this.add(it.id), inc: () => this.inc(it.id), dec: () => this.dec(it.id),
+      };
+    };
+
+    const menuItems = this.catalog
+      .filter(i => this.state.cat==='Todo' ? true : i.cat===this.state.cat)
+      .map(decorate);
+
+    const categories = cats.map(k => ({
+      label: k, key: k,
+      bg: this.state.cat===k ? '#7A1228' : '#FAF2DC',
+      color: this.state.cat===k ? '#FAF2DC' : '#7A1228',
+      choose: () => this.setState({ cat:k }),
+    }));
+
+    const cartLines = this.catalog
+      .filter(i => (this.state.cart[i.id]||0) > 0)
+      .map(i => ({
+        id:i.id, name:i.name, qty:this.state.cart[i.id], catLabel:i.cat,
+        inc: () => this.inc(i.id), dec: () => this.dec(i.id),
+      }));
+
+    const count = this.count();
+    const cakeData = this.cakeHasData();
+    const canSend = count>0 || cakeData;
+    const step = this.state.cakeStep;
+    const showStep = (n) => flowV==='una-pantalla' ? true : step===n;
+
+    const stepDots = [1,2,3].map(n => ({ bg: n<=step ? '#7A1228' : '#e4cfa0' }));
+
+    return {
+      // variants
+      heroSplit: heroV==='split', heroCentrado: heroV==='centrado', heroEditorial: heroV==='editorial',
+      flowPasos: flowV==='pasos', flowUnaPantalla: flowV==='una-pantalla',
+
+      // svg
+      nanaMini: this.nana(), nanaLine: this.nanaLine(), cookieArt: this.cookieSvg(), cakeArt: this.cakeSvg(),
+      waGlyph: this.waGlyphSvg(), bagGlyph: this.bagGlyphSvg(),
+
+      wordmark: (typeof window!=='undefined'&&window.NK_WORDMARK)?window.NK_WORDMARK:'',
+      heroImg: 'https://images.unsplash.com/photo-1571165841024-2ce92069301d?fm=jpg&q=70&w=1100&auto=format&fit=crop',
+      onImgError: (e) => { e.target.style.display='none'; },
+
+      // featured
+      featuredCookie: { ...decorate(this.catalog.find(i => i.id==='ck-pina')), onErr: (e)=>{ e.target.style.display='none'; } },
+      featuredTarta: { ...decorate(this.catalog.find(i => i.id==='tt-queso')), onErr: (e)=>{ e.target.style.display='none'; } },
+
+      // menu
+      categories, menuItems,
+
+      // cake
+      cake: this.state.cake,
+      comensalesOpts: this.optGroup('comensales', ['5–6','10–12','15–20','+20','Personalizado']),
+      edadOpts: this.optGroup('edad', ['Niños','Adultos','Mixto']),
+      bizcochoOpts: this.optGroup('bizcocho', ['Chocolate','Vainilla','Limón','Red Velvet','Zanahoria']),
+      buttercreamOpts: this.optGroup('buttercream', ['Vainilla (coloreable)','Chocolate']),
+      colorOpts: this.optGroup('color', ['Granate','Rosa','Mostaza','Crema','Sorpréndeme','Otro']),
+      showComensalesCustom: this.state.cake.comensales==='Personalizado',
+      showColorCustom: this.state.cake.color==='Otro',
+      setComensalesCustom: (e) => this.setCake('comensalesCustom', e.target.value),
+      setColorCustom: (e) => this.setCake('colorCustom', e.target.value),
+      setIdea: (e) => this.setCake('idea', e.target.value),
+      cakeNext: () => this.cakeNext(), cakeBack: () => this.cakeBack(), cakeFinish: () => this.cakeFinish(),
+      showStep1: showStep(1), showStep2: showStep(2), showStep3: showStep(3),
+      stepDots,
+      showNext: flowV==='pasos' && step<3,
+      showFinish: flowV==='una-pantalla' || step===3,
+      nextOpacity: this.cakeStepValid(step) ? 1 : .45,
+      backOpacity: step>1 ? 1 : .35,
+      finishOpacity: this.cakeStepValid(3) ? 1 : .45,
+
+      // cart
+      cartCount: count,
+      cartLines,
+      cartEmpty: count===0, cartHasItems: count>0,
+      toggleCart: () => this.toggleCart(), closeCart: () => this.closeCart(), clearCart: () => this.clearCart(),
+      panelX: this.state.cartOpen ? '0%' : '102%',
+      overlayOpacity: this.state.cartOpen ? 1 : 0,
+      overlayEvents: this.state.cartOpen ? 'auto' : 'none',
+      waPreview: this.buildMessage(),
+      sendCart: () => this.sendCart(),
+      sendLabel: canSend ? 'Enviar pedido por WhatsApp' : 'Añade algo primero',
+      sendBg: canSend ? '#25683b' : '#b9a98f',
+      sendCursor: canSend ? 'pointer' : 'not-allowed',
+      today: new Date().toISOString().slice(0,10),
+      pickupDate: this.state.pickup.date,
+      pickupTime: this.state.pickup.time,
+      pickupNegotiate: this.state.pickup.negotiate,
+      pickupShowFields: !this.state.pickup.negotiate,
+      setPickupDate: (e) => this.setPickup('date', e.target.value),
+      setPickupTime: (e) => this.setPickup('time', e.target.value),
+      toggleNegotiate: (e) => this.setState(s => ({ pickup: { ...s.pickup, negotiate: e.target.checked } })),
+      pedirWA: () => this.openPickup('cart'),
+
+      // nav móvil
+      openNav: () => this.openNav(),
+      closeNav: () => this.closeNav(),
+      navOrder: () => this.navOrder(),
+      navX: this.state.navOpen ? '0%' : '105%',
+      navScrimOpacity: this.state.navOpen ? 1 : 0,
+      navEvents: this.state.navOpen ? 'auto' : 'none',
+
+      // modal de recogida
+      pickupModal: this.state.pickupModal,
+      pickupModalOpacity: this.state.pickupModal ? 1 : 0,
+      pickupModalEvents: this.state.pickupModal ? 'auto' : 'none',
+      pickupModalScale: this.state.pickupModal ? 'scale(1)' : 'scale(.94)',
+      closePickup: () => this.closePickup(),
+      stop: (e) => e.stopPropagation(),
+      pickDate: (e) => this.pickDate(e),
+      confirmPickup: () => this.confirmPickup(),
+      chooseNegotiate: () => this.chooseNegotiate(),
+      pickupErrorMsg: this.state.pickupError,
+      hasPickupError: !!this.state.pickupError,
+      showDayPopup: !!this.state.dayPopup,
+      dayPopupOpacity: this.state.dayPopup ? 1 : 0,
+      dayPopupEvents: this.state.dayPopup ? 'auto' : 'none',
+      dayPopupScale: this.state.dayPopup ? 'scale(1)' : 'scale(.9)',
+      badDayName: this.state.dayPopup,
+      closeDayPopup: () => this.closeDayPopup(),
+      waOverlay: this.state.waOverlay,
+      waOverlayOpacity: this.state.waOverlay ? 1 : 0,
+      waOverlayEvents: this.state.waOverlay ? 'auto' : 'none',
+      waOverlayScale: this.state.waOverlay ? 'scale(1)' : 'scale(.9)',
+      waUrl: this.state.waUrl,
+      waCopied: this.state.waCopied,
+      waCopyLabel: this.state.waCopied ? '✓ Mensaje copiado' : 'Copiar mensaje',
+      copyWAMsg: () => this.copyWAMsg(),
+      closeWAOverlay: () => this.closeWAOverlay(),
+      pickupNegotiateChosen: this.state.pickup.negotiate,
+      pickupDayVal: this.state.pickup.day,
+      pickupMonthVal: this.state.pickup.month,
+      dayOpts: Array.from({length: this.state.pickup.month ? this.daysInMonth(Number(this.state.pickup.month)) : 31}, (_,i) => ({ value:String(i+1), label:String(i+1) })),
+      monthOpts: this.MONTHS.map((m,i) => ({ value:String(i+1), label:(m.charAt(0).toUpperCase()+m.slice(1)) })),
+      pickDay: (e) => this.pickDay(e),
+      pickMonth: (e) => this.pickMonth(e),
+      pickupConfirmed: !this.state.pickup.negotiate && this.pickupComplete(),
+      pickupOpenMsg: (!this.state.pickup.negotiate && this.pickupComplete()) ? ('Abierto · ' + this.pickupPretty()) : '',
+      negotiateBg: this.state.pickup.negotiate ? '#7A1228' : '#FAF2DC',
+      negotiateColor: this.state.pickup.negotiate ? '#FAF2DC' : '#7A1228',
+
+      // misc
+      steps: [
+        { n:'1', title:'Elige y arma tu pedido', body:'Suma cookies del menú o configura tu tarta. Sin pago online.' },
+        { n:'2', title:'Envíalo por WhatsApp', body:'Te confirmamos disponibilidad, tamaños y día de recogida.' },
+        { n:'3', title:'Recoge en tienda', body:'Pasas a por él en Av. Monforte de Lemos 170. No hacemos envíos.' },
+      ],
+      year: new Date().getFullYear(),
+    };
+  }
+}
+</script>
+</body>
+</html>

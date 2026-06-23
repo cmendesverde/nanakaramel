@@ -1,0 +1,28 @@
+[
+  { "id":"ck-clasica",    "nombre":"", "categoria":"cookie",       "descripcion":"", "precio":0, "unidad":"ud", "img":"/img/productos/ck-clasica.webp",    "destacado":true,  "disponible":true },
+  { "id":"ck-brownie",    "nombre":"", "categoria":"cookie",       "descripcion":"", "precio":0, "unidad":"ud", "img":"/img/productos/ck-brownie.webp",    "destacado":false, "disponible":true },
+  { "id":"ck-redvelvet",  "nombre":"", "categoria":"cookie",       "descripcion":"", "precio":0, "unidad":"ud", "img":"/img/productos/ck-redvelvet.webp",  "destacado":false, "disponible":true },
+  { "id":"ck-lotus",      "nombre":"", "categoria":"cookie",       "descripcion":"", "precio":0, "unidad":"ud", "img":"/img/productos/ck-lotus.webp",      "destacado":false, "disponible":true },
+  { "id":"ck-ferrero",    "nombre":"", "categoria":"cookie",       "descripcion":"", "precio":0, "unidad":"ud", "img":"/img/productos/ck-ferrero.webp",    "destacado":false, "disponible":true },
+  { "id":"ck-peanut",     "nombre":"", "categoria":"cookie",       "descripcion":"", "precio":0, "unidad":"ud", "img":"/img/productos/ck-peanut.webp",     "destacado":false, "disponible":true },
+  { "id":"ck-pina",       "nombre":"", "categoria":"cookie",       "descripcion":"", "precio":0, "unidad":"ud", "img":"/img/productos/ck-pina.webp",       "destacado":false, "disponible":true },
+
+  { "id":"mn-clasica",    "nombre":"", "categoria":"mini-cookie",  "descripcion":"", "precio":0, "unidad":"ud", "img":"/img/productos/mn-clasica.webp",    "destacado":false, "disponible":true },
+  { "id":"mn-brownie",    "nombre":"", "categoria":"mini-cookie",  "descripcion":"", "precio":0, "unidad":"ud", "img":"/img/productos/mn-brownie.webp",    "destacado":false, "disponible":true },
+  { "id":"mn-pastas",     "nombre":"", "categoria":"mini-cookie",  "descripcion":"", "precio":0, "unidad":"ud", "img":"/img/productos/mn-pastas.webp",     "destacado":false, "disponible":true },
+
+  { "id":"tt-redvelvet",  "nombre":"", "categoria":"tarta",        "descripcion":"", "precio":0, "unidad":"ud", "img":"/img/productos/tt-redvelvet.webp",  "destacado":true,  "disponible":true },
+  { "id":"tt-zanahoria",  "nombre":"", "categoria":"tarta",        "descripcion":"", "precio":0, "unidad":"ud", "img":"/img/productos/tt-zanahoria.webp",  "destacado":false, "disponible":true },
+  { "id":"tt-chocolate",  "nombre":"", "categoria":"tarta",        "descripcion":"", "precio":0, "unidad":"ud", "img":"/img/productos/tt-chocolate.webp",  "destacado":false, "disponible":true },
+  { "id":"tt-queso",      "nombre":"", "categoria":"tarta",        "descripcion":"", "precio":0, "unidad":"ud", "img":"/img/productos/tt-queso.webp",      "destacado":true,  "disponible":true },
+  { "id":"tt-limon",      "nombre":"", "categoria":"tarta",        "descripcion":"", "precio":0, "unidad":"ud", "img":"/img/productos/tt-limon.webp",      "destacado":false, "disponible":true },
+  { "id":"tt-tiramisu",   "nombre":"", "categoria":"tarta",        "descripcion":"", "precio":0, "unidad":"ud", "img":"/img/productos/tt-tiramisu.webp",   "destacado":false, "disponible":true },
+  { "id":"tt-tresleches", "nombre":"", "categoria":"tarta",        "descripcion":"", "precio":0, "unidad":"ud", "img":"/img/productos/tt-tresleches.webp", "destacado":false, "disponible":true },
+  { "id":"tt-brownie",    "nombre":"", "categoria":"tarta",        "descripcion":"", "precio":0, "unidad":"ud", "img":"/img/productos/tt-brownie.webp",    "destacado":false, "disponible":true },
+
+  { "id":"ex-empanada",   "nombre":"", "categoria":"extra",        "descripcion":"", "precio":0, "unidad":"ud", "img":"/img/productos/ex-empanada.webp",   "destacado":false, "disponible":true },
+  { "id":"ex-empanadillas","nombre":"","categoria":"extra",        "descripcion":"", "precio":0, "unidad":"ud", "img":"/img/productos/ex-empanadillas.webp","destacado":false, "disponible":true },
+  { "id":"ex-alfajores",  "nombre":"", "categoria":"extra",        "descripcion":"", "precio":0, "unidad":"ud", "img":"/img/productos/ex-alfajores.webp",  "destacado":false, "disponible":true },
+  { "id":"ex-rollo",      "nombre":"", "categoria":"extra",        "descripcion":"", "precio":0, "unidad":"ud", "img":"/img/productos/ex-rollo.webp",      "destacado":false, "disponible":true },
+  { "id":"ex-focaccia",   "nombre":"", "categoria":"extra",        "descripcion":"", "precio":0, "unidad":"ud", "img":"/img/productos/ex-focaccia.webp",   "destacado":false, "disponible":true }
+]

@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Oswald:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="favicon.png">
+<script src="logo-data.js"></script>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#EFE7D6;color:#2A1418;font-family:'Lora',Georgia,serif;-webkit-font-smoothing:antialiased}
+  ::selection{background:#F2A8B8;color:#7A1228}
+  .nk-scroll::-webkit-scrollbar{height:10px;width:10px}
+  .nk-scroll::-webkit-scrollbar-thumb{background:#cdbf9d;border-radius:99px}
+  @media (max-width:720px){
+    .nk-tabs{gap:4px !important}
+    .nk-tab span{display:none}
+    .nk-kpis{grid-template-columns:1fr 1fr !important}
+    .nk-search{display:none !important}
+  }
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column">
+
+<!-- ===== TOPBAR ===== -->
+<header style="position:sticky;top:0;z-index:40;background:#7A1228;color:#FAF2DC">
+  <div style="max-width:1280px;margin:0 auto;padding:11px 18px;display:flex;align-items:center;gap:16px">
+    <div style="display:flex;align-items:center;gap:11px;flex:0 0 auto">
+      <span style="width:40px;height:40px;display:block;border-radius:50%;overflow:hidden;background:#FAF2DC;background-image:url({{ logoSrc }});background-size:cover;background-position:center"></span>
+      <div style="line-height:1.1">
+        <p style="margin:0;font-family:'Lilita One',cursive;font-size:18px;white-space:nowrap">Nana Karamel</p>
+        <p style="margin:1px 0 0;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.16em;font-size:10px;opacity:.8">Panel de pedidos</p>
+      </div>
+    </div>
+    <div class="nk-search" style="flex:1;display:flex;justify-content:center;min-width:0">
+      <div style="position:relative;width:100%;max-width:340px">
+        <span style="position:absolute;left:13px;top:50%;transform:translateY(-50%);opacity:.5;display:flex"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg></span>
+        <input value="{{ query }}" onInput="{{ setQuery }}" placeholder="Buscar nombre o teléfono…" style="width:100%;border:none;border-radius:999px;padding:10px 14px 10px 38px;font-family:'Lora',serif;font-size:14px;background:rgba(250,242,220,.16);color:#FAF2DC;outline:none" />
+      </div>
+    </div>
+    <button onClick="{{ openNew }}" style="flex:0 0 auto;background:#F4A9B4;color:#7A1228;border:none;padding:10px 16px;border-radius:999px;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:12.5px;cursor:pointer;display:inline-flex;align-items:center;gap:7px" style-hover="background:#f7bcc8">+ Pedido</button>
+  </div>
+  <!-- tabs -->
+  <div style="max-width:1280px;margin:0 auto;padding:0 12px">
+    <div class="nk-tabs" style="display:flex;gap:6px">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
+        <button onClick="{{ t.go }}" class="nk-tab" style="background:{{ t.bg }};color:{{ t.color }};border:none;border-radius:11px 11px 0 0;padding:11px 18px;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:12.5px;cursor:pointer;display:inline-flex;align-items:center;gap:8px">
+          <span style="display:flex">{{ t.icon }}</span><span>{{ t.label }}</span>
+        </button>
+      </sc-for>
+    </div>
+  </div>
+</header>
+
+<main style="flex:1;max-width:1280px;width:100%;margin:0 auto;padding:20px 16px 60px">
+
+<!-- ============ INICIO ============ -->
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+  <div>
+    <h2 style="font-family:'Lilita One',cursive;font-size:26px;color:#7A1228;margin:0 0 4px">Hola 👋 esto es lo de hoy</h2>
+    <p style="margin:0 0 20px;font-size:14.5px;color:#7c6a52">{{ todayLabel }}</p>
+    <div class="nk-kpis" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+      <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="8">
+        <div onClick="{{ k.go }}" style="background:#fff;border:2px solid {{ k.border }};border-radius:14px;padding:15px 16px;cursor:pointer;box-shadow:0 3px 0 #e4d8bb">
+          <p style="margin:0;font-family:'Lilita One',cursive;font-size:30px;color:{{ k.color }};line-height:1">{{ k.value }}</p>
+          <p style="margin:5px 0 0;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-size:11.5px;color:#7c6a52">{{ k.label }}</p>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:18px;margin-top:22px" class="nk-scroll">
+      <div style="background:#fff;border:2px solid #e4d8bb;border-radius:16px;padding:18px">
+        <h3 style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.06em;font-size:14px;color:#7A1228;margin:0 0 14px">Recogidas de hoy</h3>
+        <sc-if value="{{ hasToday }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-direction:column;gap:9px">
+            <sc-for list="{{ todayOrders }}" as="o" hint-placeholder-count="3">
+              <div onClick="{{ o.open }}" style="display:flex;align-items:center;gap:12px;padding:11px 13px;border:1.5px solid #eee2c8;border-radius:12px;cursor:pointer;background:#fdfaf2" style-hover="border-color:#C0875A">
+                <span style="width:8px;height:38px;border-radius:99px;background:{{ o.statusColor }};flex:0 0 auto"></span>
+                <div style="flex:1;min-width:0">
+                  <p style="margin:0;font-weight:600;font-size:15px">{{ o.cliente }}</p>
+                  <p style="margin:1px 0 0;font-size:12.5px;color:#7c6a52">{{ o.tipoLabel }} · {{ o.horaLabel }}</p>
+                </div>
+                <span style="font-family:'Oswald',sans-serif;font-weight:600;font-size:14px;color:#7A1228">{{ o.importeLabel }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ noToday }}" hint-placeholder-val="{{ false }}">
+          <p style="margin:0;font-size:14px;color:#9a8a70;font-style:italic">No hay recogidas para hoy.</p>
+        </sc-if>
+      </div>
+      <div style="background:#7A1228;color:#FAF2DC;border-radius:16px;padding:18px">
+        <p style="margin:0;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.06em;font-size:12.5px;opacity:.8">Facturación de este mes</p>
+        <p style="margin:8px 0 0;font-family:'Lilita One',cursive;font-size:42px;line-height:1">{{ revenueLabel }}</p>
+        <p style="margin:6px 0 18px;font-size:13px;opacity:.8">{{ revenueCount }} pedidos contabilizados</p>
+        <div style="height:1px;background:rgba(250,242,220,.2);margin-bottom:14px"></div>
+        <p style="margin:0;font-size:13.5px;line-height:1.6">Pendientes de preparar: <strong>{{ pendingCount }}</strong><br>Listos para entregar: <strong>{{ readyCount }}</strong></p>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<!-- ============ KANBAN ============ -->
+<sc-if value="{{ isKanban }}" hint-placeholder-val="{{ false }}">
+  <div>
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px">
+      <h2 style="font-family:'Lilita One',cursive;font-size:24px;color:#7A1228;margin:0">Pedidos</h2>
+      <div style="display:flex;gap:7px;flex-wrap:wrap">
+        <sc-for list="{{ statusFilters }}" as="f" hint-placeholder-count="8">
+          <button onClick="{{ f.toggle }}" style="background:{{ f.bg }};color:{{ f.color }};border:1.5px solid {{ f.border }};border-radius:999px;padding:6px 12px;font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.04em;font-size:11px;cursor:pointer">{{ f.label }}</button>
+        </sc-for>
+      </div>
+    </div>
+    <p style="margin:0 0 14px;font-size:12.5px;color:#9a8a70">Arrastra una tarjeta entre columnas para cambiar su estado · o tócala para abrir su ficha</p>
+    <div class="nk-scroll" style="display:flex;gap:14px;overflow-x:auto;padding-bottom:14px;align-items:flex-start">
+      <sc-for list="{{ columns }}" as="col" hint-placeholder-count="7">
+        <div onDragOver="{{ col.onDragOver }}" onDrop="{{ col.onDrop }}" style="flex:0 0 268px;width:268px;background:#fff;border:2px solid {{ col.border }};border-radius:14px;display:flex;flex-direction:column;max-height:72vh">
+          <div style="padding:12px 14px;border-bottom:2px solid {{ col.border }};display:flex;align-items:center;justify-content:space-between;border-radius:12px 12px 0 0;background:{{ col.headBg }}">
+            <span style="font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.04em;font-size:12.5px;color:{{ col.color }}">{{ col.label }}</span>
+            <span style="min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:{{ col.color }};color:#fff;font-family:'Oswald',sans-serif;font-weight:700;font-size:12px;display:inline-flex;align-items:center;justify-content:center">{{ col.count }}</span>
+          </div>
+          <div class="nk-scroll" style="padding:10px;display:flex;flex-direction:column;gap:9px;overflow-y:auto">
+            <sc-for list="{{ col.cards }}" as="c" hint-placeholder-count="2">
+              <div draggable="true" onDragStart="{{ c.onDragStart }}" onClick="{{ c.open }}" style="background:#fdfaf2;border:1.5px solid #eee2c8;border-left:5px solid {{ c.statusColor }};border-radius:10px;padding:11px 12px;cursor:pointer" style-hover="border-color:#C0875A">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+                  <p style="margin:0;font-weight:600;font-size:14.5px;line-height:1.15">{{ c.cliente }}</p>
+                  <span style="font-family:'Oswald',sans-serif;font-weight:700;font-size:13px;color:#7A1228;flex:0 0 auto">{{ c.importeLabel }}</span>
+                </div>
+                <p style="margin:5px 0 0;font-size:12.5px;color:#5d4f3c;line-height:1.35">{{ c.tipoLabel }}</p>
+                <div style="display:flex;align-items:center;gap:10px;margin-top:8px;font-size:11.5px;color:#9a8a70">
+                  <span style="display:inline-flex;align-items:center;gap:4px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>{{ c.fechaLabel }}</span>
+                  <span style="display:inline-flex;align-items:center;gap:4px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h14l-2 7H7zM5 4l-1-2"/><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/></svg>{{ c.phone }}</span>
+                </div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ col.empty }}" hint-placeholder-val="{{ false }}">
+              <p style="margin:6px 4px;font-size:12.5px;color:#bcae93;font-style:italic">Vacío</p>
+            </sc-if>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</sc-if>
+
+<!-- ============ CALENDARIO ============ -->
+<sc-if value="{{ isCalendar }}" hint-placeholder-val="{{ false }}">
+  <div>
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
+      <h2 style="font-family:'Lilita One',cursive;font-size:24px;color:#7A1228;margin:0;flex:1;text-transform:capitalize">{{ monthLabel }}</h2>
+      <button onClick="{{ prevMonth }}" style="width:40px;height:40px;border-radius:11px;border:2px solid #7A1228;background:#fff;color:#7A1228;font-size:20px;cursor:pointer">‹</button>
+      <button onClick="{{ todayMonth }}" style="height:40px;padding:0 14px;border-radius:11px;border:2px solid #7A1228;background:#fff;color:#7A1228;font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;font-size:12px;cursor:pointer">Hoy</button>
+      <button onClick="{{ nextMonth }}" style="width:40px;height:40px;border-radius:11px;border:2px solid #7A1228;background:#fff;color:#7A1228;font-size:20px;cursor:pointer">›</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:6px">
+      <sc-for list="{{ weekdays }}" as="w" hint-placeholder-count="7">
+        <p style="margin:0;text-align:center;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.04em;font-size:11px;color:#9a8a70">{{ w }}</p>
+      </sc-for>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px">
+      <sc-for list="{{ calendarDays }}" as="d" hint-placeholder-count="35">
+        <div style="min-height:96px;background:{{ d.bg }};border:1.5px solid {{ d.border }};border-radius:10px;padding:6px 6px;display:flex;flex-direction:column;gap:3px;opacity:{{ d.opacity }}">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <span style="font-family:'Oswald',sans-serif;font-weight:600;font-size:12.5px;color:{{ d.numColor }}">{{ d.num }}</span>
+            <sc-if value="{{ d.conflict }}" hint-placeholder-val="{{ false }}">
+              <span title="Conflicto de horario" style="display:inline-flex;color:#D97706"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 2 1 21h22z"/><path d="M12 9v5M12 17.5v.5"/></svg></span>
+            </sc-if>
+          </div>
+          <sc-for list="{{ d.orders }}" as="o" hint-placeholder-count="0">
+            <button onClick="{{ o.open }}" style="text-align:left;border:none;background:{{ o.chipBg }};color:{{ o.chipColor }};border-radius:6px;padding:3px 6px;font-size:11px;cursor:pointer;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:'Lora',serif">{{ o.horaLabel }} {{ o.cliente }}</button>
+          </sc-for>
+        </div>
+      </sc-for>
+    </div>
+    <p style="margin:14px 0 0;font-size:12px;color:#9a8a70;display:inline-flex;align-items:center;gap:6px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2.2"><path d="M12 2 1 21h22z"/><path d="M12 9v5"/></svg> El triángulo indica dos o más recogidas a la misma hora.</p>
+  </div>
+</sc-if>
+
+<!-- ============ CLIENTES ============ -->
+<sc-if value="{{ isClients }}" hint-placeholder-val="{{ false }}">
+  <div>
+    <h2 style="font-family:'Lilita One',cursive;font-size:24px;color:#7A1228;margin:0 0 16px">Clientes</h2>
+    <sc-if value="{{ hasClients }}" hint-placeholder-val="{{ true }}">
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:13px">
+        <sc-for list="{{ clients }}" as="cl" hint-placeholder-count="4">
+          <div onClick="{{ cl.open }}" style="background:#fff;border:2px solid #e4d8bb;border-radius:14px;padding:16px;cursor:pointer;box-shadow:0 3px 0 #e4d8bb" style-hover="border-color:#C0875A">
+            <div style="display:flex;align-items:center;gap:11px;margin-bottom:12px">
+              <span style="width:42px;height:42px;border-radius:50%;background:#F6E2E6;color:#7A1228;display:flex;align-items:center;justify-content:center;font-family:'Lilita One',cursive;font-size:18px;flex:0 0 auto">{{ cl.initials }}</span>
+              <div style="min-width:0">
+                <p style="margin:0;font-weight:600;font-size:15.5px;line-height:1.1">{{ cl.nombre }}</p>
+                <p style="margin:2px 0 0;font-size:12.5px;color:#7c6a52">{{ cl.telefono }}</p>
+              </div>
+            </div>
+            <div style="display:flex;gap:8px">
+              <div style="flex:1;background:#fdfaf2;border:1px solid #eee2c8;border-radius:9px;padding:8px;text-align:center">
+                <p style="margin:0;font-family:'Lilita One',cursive;font-size:19px;color:#7A1228">{{ cl.count }}</p>
+                <p style="margin:0;font-size:10px;color:#9a8a70;text-transform:uppercase;letter-spacing:.04em">Pedidos</p>
+              </div>
+              <div style="flex:1;background:#fdfaf2;border:1px solid #eee2c8;border-radius:9px;padding:8px;text-align:center">
+                <p style="margin:0;font-family:'Lilita One',cursive;font-size:19px;color:#7A1228">{{ cl.totalLabel }}</p>
+                <p style="margin:0;font-size:10px;color:#9a8a70;text-transform:uppercase;letter-spacing:.04em">Gastado</p>
+              </div>
+            </div>
+            <p style="margin:10px 0 0;font-size:12px;color:#7c6a52">Último: {{ cl.lastLabel }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+    <sc-if value="{{ noClients }}" hint-placeholder-val="{{ false }}">
+      <p style="margin:0;font-size:14px;color:#9a8a70;font-style:italic">Aún no hay clientes registrados.</p>
+    </sc-if>
+  </div>
+</sc-if>
+
+</main>
+</div>
+
+<!-- ============ FICHA DE PEDIDO ============ -->
+<div onClick="{{ closeFicha }}" style="position:fixed;inset:0;z-index:70;background:rgba(42,20,24,.5);display:flex;align-items:flex-end;justify-content:center;transition:opacity .25s;opacity:{{ fichaOpacity }};pointer-events:{{ fichaEvents }}">
+  <div onClick="{{ stop }}" class="nk-scroll" style="width:min(560px,100%);max-height:92vh;overflow-y:auto;background:#FAF2DC;border-radius:22px 22px 0 0;box-shadow:0 -16px 50px rgba(0,0,0,.3);transform:translateY({{ fichaY }});transition:transform .3s cubic-bezier(.32,1.2,.5,1)">
+    <div style="position:sticky;top:0;background:{{ fichaStatusColor }};color:#fff;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;z-index:2">
+      <div>
+        <p style="margin:0;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.08em;font-size:11px;opacity:.85">{{ fichaStatusLabel }}</p>
+        <p style="margin:2px 0 0;font-family:'Lilita One',cursive;font-size:22px;line-height:1">{{ fichaCliente }}</p>
+      </div>
+      <button onClick="{{ closeFicha }}" style="background:rgba(255,255,255,.2);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:22px;cursor:pointer;line-height:1">×</button>
+    </div>
+    <div style="padding:18px 20px 28px">
+      <!-- acciones rápidas -->
+      <p style="margin:0 0 8px;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.06em;font-size:11.5px;color:#7c6a52">Cambiar estado</p>
+      <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:18px">
+        <sc-for list="{{ fichaActions }}" as="a" hint-placeholder-count="6">
+          <button onClick="{{ a.do }}" style="background:{{ a.bg }};color:{{ a.color }};border:1.5px solid {{ a.border }};border-radius:999px;padding:8px 13px;font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.03em;font-size:11px;cursor:pointer">{{ a.label }}</button>
+        </sc-for>
+      </div>
+
+      <!-- datos cliente -->
+      <div style="background:#fff;border:1.5px solid #eee2c8;border-radius:13px;padding:14px 16px;margin-bottom:12px">
+        <p style="margin:0 0 9px;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.06em;font-size:11.5px;color:#7A1228">Cliente</p>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:14px">
+          <p style="margin:0"><strong>{{ fichaCliente }}</strong></p>
+          <a href="{{ fichaWaLink }}" target="_blank" rel="noopener" style="color:#1f8a5b;text-decoration:none;display:inline-flex;align-items:center;gap:7px">{{ fichaTel }} · escribir por WhatsApp →</a>
+          <p style="margin:0;color:#5d4f3c">{{ fichaEmail }}</p>
+        </div>
+      </div>
+
+      <!-- pedido -->
+      <div style="background:#fff;border:1.5px solid #eee2c8;border-radius:13px;padding:14px 16px;margin-bottom:12px">
+        <p style="margin:0 0 9px;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.06em;font-size:11.5px;color:#7A1228">Pedido</p>
+        <div style="display:flex;flex-direction:column;gap:6px;font-size:14px">
+          <sc-for list="{{ fichaItems }}" as="it" hint-placeholder-count="3">
+            <div style="display:flex;justify-content:space-between;gap:10px">
+              <span>{{ it.line }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <sc-if value="{{ fichaHasPerso }}" hint-placeholder-val="{{ false }}">
+          <p style="margin:10px 0 0;font-size:13.5px;color:#5d4f3c;line-height:1.5;border-top:1px dashed #e4d8bb;padding-top:10px"><strong>Personalización:</strong> {{ fichaPerso }}</p>
+        </sc-if>
+        <sc-if value="{{ fichaHasNotes }}" hint-placeholder-val="{{ false }}">
+          <p style="margin:8px 0 0;font-size:13.5px;color:#5d4f3c;line-height:1.5"><strong>Notas:</strong> {{ fichaNotes }}</p>
+        </sc-if>
+      </div>
+
+      <!-- recogida + importe -->
+      <div style="display:flex;gap:12px;margin-bottom:12px;flex-wrap:wrap">
+        <div style="flex:1;min-width:150px;background:#fff;border:1.5px solid #eee2c8;border-radius:13px;padding:14px 16px">
+          <p style="margin:0 0 9px;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.06em;font-size:11.5px;color:#7A1228">Recogida</p>
+          <p style="margin:0;font-size:15px;font-weight:600">{{ fichaFecha }}</p>
+          <p style="margin:2px 0 0;font-size:13.5px;color:#5d4f3c">{{ fichaHora }}</p>
+        </div>
+        <div style="flex:1;min-width:150px;background:#fff;border:1.5px solid #eee2c8;border-radius:13px;padding:14px 16px">
+          <p style="margin:0 0 9px;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.06em;font-size:11.5px;color:#7A1228">Importe final (€)</p>
+          <input value="{{ fichaImporteFinal }}" onInput="{{ setImporteFinal }}" inputmode="decimal" placeholder="{{ fichaImporteEst }}" style="width:100%;border:1.5px solid #C0875A;border-radius:9px;padding:9px 11px;font-family:'Oswald',sans-serif;font-weight:600;font-size:16px;color:#7A1228;background:#fdfaf2" />
+          <p style="margin:6px 0 0;font-size:11.5px;color:#9a8a70">Estimado web: {{ fichaImporteEst }}</p>
+        </div>
+      </div>
+
+      <!-- editar notas -->
+      <div style="background:#fff;border:1.5px solid #eee2c8;border-radius:13px;padding:14px 16px;margin-bottom:16px">
+        <p style="margin:0 0 8px;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.06em;font-size:11.5px;color:#7A1228">Nota interna</p>
+        <textarea value="{{ fichaInternalNote }}" onInput="{{ setInternalNote }}" placeholder="Añade una nota para la producción…" style="width:100%;min-height:64px;resize:vertical;border:1.5px solid #C0875A;border-radius:9px;padding:10px 12px;font-family:'Lora',serif;font-size:14px;background:#fdfaf2;color:#2A1418"></textarea>
+      </div>
+
+      <!-- historial -->
+      <div style="margin-bottom:18px">
+        <p style="margin:0 0 8px;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.06em;font-size:11.5px;color:#7c6a52">Historial</p>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <sc-for list="{{ fichaHistory }}" as="h" hint-placeholder-count="2">
+            <div style="display:flex;align-items:center;gap:9px;font-size:12.5px;color:#5d4f3c">
+              <span style="width:8px;height:8px;border-radius:50%;background:{{ h.color }};flex:0 0 auto"></span>
+              <span style="flex:1">{{ h.label }}</span>
+              <span style="color:#9a8a70">{{ h.when }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <!-- acciones destructivas / extra -->
+      <div style="display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid #e4d8bb;padding-top:14px">
+        <button onClick="{{ duplicateOrder }}" style="background:#fff;color:#7A1228;border:1.5px solid #7A1228;border-radius:999px;padding:10px 15px;font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.04em;font-size:11.5px;cursor:pointer">Duplicar</button>
+        <button onClick="{{ anularOrder }}" style="background:#fff;color:#B91C1C;border:1.5px solid #e3b3b3;border-radius:999px;padding:10px 15px;font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.04em;font-size:11.5px;cursor:pointer">Anular</button>
+        <button onClick="{{ deleteOrder }}" style="background:#B91C1C;color:#fff;border:none;border-radius:999px;padding:10px 15px;font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.04em;font-size:11.5px;cursor:pointer;margin-left:auto">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ NUEVO PEDIDO MANUAL ============ -->
+<div onClick="{{ closeNew }}" style="position:fixed;inset:0;z-index:75;background:rgba(42,20,24,.5);display:flex;align-items:center;justify-content:center;padding:16px;transition:opacity .25s;opacity:{{ newOpacity }};pointer-events:{{ newEvents }}">
+  <div onClick="{{ stop }}" class="nk-scroll" style="width:min(460px,100%);max-height:90vh;overflow-y:auto;background:#FAF2DC;border:2px solid #7A1228;border-radius:20px;box-shadow:0 24px 60px rgba(0,0,0,.35);transform:scale({{ newScale }});transition:transform .28s cubic-bezier(.34,1.4,.5,1)">
+    <div style="background:#7A1228;color:#FAF2DC;padding:15px 20px;display:flex;align-items:center;justify-content:space-between;border-radius:18px 18px 0 0">
+      <h3 style="margin:0;font-family:'Lilita One',cursive;font-size:20px">Nuevo pedido manual</h3>
+      <button onClick="{{ closeNew }}" style="background:none;border:none;color:#FAF2DC;font-size:26px;cursor:pointer;line-height:1">×</button>
+    </div>
+    <div style="padding:18px 20px 22px;display:flex;flex-direction:column;gap:12px">
+      <div><label style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-size:11px;color:#7c6a52;display:block;margin-bottom:5px">Nombre del cliente *</label><input value="{{ nf.nombre }}" onInput="{{ nfSet.nombre }}" style="width:100%;border:1.5px solid #C0875A;border-radius:10px;padding:11px 13px;font-family:'Lora',serif;font-size:15px;background:#fff" /></div>
+      <div style="display:flex;gap:10px">
+        <div style="flex:1"><label style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-size:11px;color:#7c6a52;display:block;margin-bottom:5px">Teléfono</label><input value="{{ nf.telefono }}" onInput="{{ nfSet.telefono }}" inputmode="tel" style="width:100%;border:1.5px solid #C0875A;border-radius:10px;padding:11px 13px;font-family:'Lora',serif;font-size:15px;background:#fff" /></div>
+        <div style="flex:1"><label style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-size:11px;color:#7c6a52;display:block;margin-bottom:5px">Importe (€)</label><input value="{{ nf.importe }}" onInput="{{ nfSet.importe }}" inputmode="decimal" style="width:100%;border:1.5px solid #C0875A;border-radius:10px;padding:11px 13px;font-family:'Lora',serif;font-size:15px;background:#fff" /></div>
+      </div>
+      <div><label style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-size:11px;color:#7c6a52;display:block;margin-bottom:5px">Pedido (qué lleva)</label><textarea value="{{ nf.tipo }}" onInput="{{ nfSet.tipo }}" placeholder="Ej.: Tarta de queso vasca 10-12 + 6 cookies" style="width:100%;min-height:60px;resize:vertical;border:1.5px solid #C0875A;border-radius:10px;padding:11px 13px;font-family:'Lora',serif;font-size:14px;background:#fff"></textarea></div>
+      <div style="display:flex;gap:10px">
+        <div style="flex:1"><label style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-size:11px;color:#7c6a52;display:block;margin-bottom:5px">Fecha recogida</label><input type="date" value="{{ nf.fecha }}" onInput="{{ nfSet.fecha }}" style="width:100%;border:1.5px solid #C0875A;border-radius:10px;padding:10px 12px;font-family:'Lora',serif;font-size:14px;background:#fff" /></div>
+        <div style="flex:1"><label style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-size:11px;color:#7c6a52;display:block;margin-bottom:5px">Hora</label><input value="{{ nf.hora }}" onInput="{{ nfSet.hora }}" placeholder="11:30" style="width:100%;border:1.5px solid #C0875A;border-radius:10px;padding:11px 13px;font-family:'Lora',serif;font-size:14px;background:#fff" /></div>
+      </div>
+      <sc-if value="{{ newError }}" hint-placeholder-val="{{ false }}">
+        <p style="margin:0;background:#F7E0E0;border-left:4px solid #B91C1C;border-radius:8px;padding:9px 12px;font-size:13px;color:#7A1228">{{ newErrorMsg }}</p>
+      </sc-if>
+      <button onClick="{{ saveNew }}" style="background:#1f8a5b;color:#fff;border:none;border-radius:999px;padding:14px;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:14px;cursor:pointer;margin-top:4px">Guardar pedido</button>
+    </div>
+  </div>
+</div>
+
+<template id="__bundler_thumbnail">
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100" height="100" fill="#7A1228"/>
+    <rect x="24" y="26" width="14" height="48" rx="3" fill="#FAF2DC"/>
+    <rect x="43" y="26" width="14" height="48" rx="3" fill="#F4A9B4"/>
+    <rect x="62" y="26" width="14" height="48" rx="3" fill="#94A487"/>
+  </svg>
+</template>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  STATUSES = [
+    { key:'nuevo',       label:'Nuevo',                color:'#2563EB', bg:'#E8EEFC', head:'#EEF3FD', border:'#C7D8F7' },
+    { key:'confirmado',  label:'Confirmado',           color:'#7A1228', bg:'#F6E2E6', head:'#FBEDF0', border:'#EBC4CD' },
+    { key:'pagado',      label:'Pagado',               color:'#15803D', bg:'#E3F2E9', head:'#EDF7F0', border:'#C2E2CF' },
+    { key:'elaboracion', label:'En elaboración',       color:'#D97706', bg:'#FBEEDD', head:'#FDF4E8', border:'#F2D6AC' },
+    { key:'listo',       label:'Listo para entregar',  color:'#0E7490', bg:'#DEF0F4', head:'#EAF6F9', border:'#B7DEE7' },
+    { key:'entregado',   label:'Entregado',            color:'#6B7280', bg:'#ECEDEF', head:'#F3F4F5', border:'#D4D7DB' },
+    { key:'anulado',     label:'Anulado',              color:'#B91C1C', bg:'#F7E0E0', head:'#FBECEC', border:'#E8C0C0' },
+  ];
+
+  state = {
+    view: 'home',
+    query: '',
+    statusFilter: '',      // '' = todos
+    orders: [],
+    selectedId: null,
+    calYear: 2026, calMonth: 5,  // junio 2026 (0-indexed)
+    newOpen: false,
+    newForm: { nombre:'', telefono:'', importe:'', tipo:'', fecha:'', hora:'' },
+    newError: '',
+    fichaImporteFinal: '',
+    fichaInternalNote: '',
+  };
+
+  STORE_KEY = 'nk_admin_orders_v1';
+  TODAY = '2026-06-22';
+
+  componentDidMount(){
+    let loaded = null;
+    try { const raw = localStorage.getItem(this.STORE_KEY); if(raw) loaded = JSON.parse(raw); } catch(_){}
+    if(!loaded || !loaded.length) loaded = this.seed();
+    this.setState({ orders: loaded });
+    // Hook a la API real (Neon vía Vercel). Si no existe aún, se ignora.
+    this.syncFromApi();
+  }
+
+  async syncFromApi(){
+    try {
+      const res = await fetch('/api/orders', { headers:{ 'Accept':'application/json' } });
+      if(!res.ok) return;
+      const data = await res.json();
+      if(Array.isArray(data) && data.length){
+        const norm = data.map(d => this.normalize(d));
+        this.setState({ orders: norm });
+        this.persist(norm);
+      }
+    } catch(_){ /* API no disponible todavía: seguimos con datos locales */ }
+  }
+
+  normalize(d){
+    return {
+      id: d.id || ('srv-' + Math.random().toString(36).slice(2,9)),
+      nombre: d.nombre || (d.cliente && d.cliente.nombre) || 'Sin nombre',
+      telefono: d.telefono || (d.cliente && d.cliente.telefono) || '',
+      email: d.email || (d.cliente && d.cliente.email) || '',
+      tipo: d.tipo || '',
+      items: d.items || d.productos || [],
+      personalizacion: d.personalizacion || '',
+      notas: d.notas || '',
+      notaInterna: d.nota_interna || d.notaInterna || '',
+      importeEst: Number(d.importe_estimado ?? d.importeEst ?? 0),
+      importeFinal: d.importe_final != null ? Number(d.importe_final) : (d.importeFinal != null ? Number(d.importeFinal) : null),
+      fecha: d.fecha || (d.recogida && d.recogida.fecha) || '',
+      hora: d.hora || (d.recogida && d.recogida.hora) || '',
+      estado: d.estado || 'nuevo',
+      historial: d.historial || [{ estado: d.estado || 'nuevo', ts: d.created_at || this.TODAY }],
+      createdAt: d.created_at || d.createdAt || this.TODAY,
+    };
+  }
+
+  seed(){
+    const mk = (o) => ({ personalizacion:'', notas:'', notaInterna:'', importeFinal:null, email:'',
+      historial:[{estado:o.estado, ts:o.createdAt}], items:[], ...o });
+    return [
+      mk({ id:'s1', nombre:'Lucía Fernández', telefono:'34611223344', email:'lucia@email.com', tipo:'Tarta de queso vasca (10-12) + 6 cookies', items:[{name:'Tarta de queso vasca',qty:1},{name:'Cookies surtidas',qty:6}], importeEst:42, fecha:'2026-06-22', hora:'12:00', estado:'nuevo', createdAt:'2026-06-21' }),
+      mk({ id:'s2', nombre:'Marcos Ruiz', telefono:'34622334455', tipo:'Tarta personalizada cumpleaños (15-20)', personalizacion:'Tonos pastel, flores, nombre "Olivia". Bizcocho chocolate, buttercream vainilla rosa.', items:[{name:'Tarta personalizada 15-20',qty:1}], importeEst:65, importeFinal:70, fecha:'2026-06-22', hora:'12:00', estado:'elaboracion', createdAt:'2026-06-19' }),
+      mk({ id:'s3', nombre:'Paula Gómez', telefono:'34633445566', email:'paula.g@email.com', tipo:'12 cookies Piña Colada', items:[{name:'Cookie Piña Colada',qty:12}], importeEst:30, importeFinal:30, fecha:'2026-06-22', hora:'18:00', estado:'listo', createdAt:'2026-06-18' }),
+      mk({ id:'s4', nombre:'Javier Moreno', telefono:'34644556677', tipo:'Red Velvet (15-20) + alfajores', items:[{name:'Tarta Red Velvet',qty:1},{name:'Alfajores',qty:12}], importeEst:58, estado:'confirmado', fecha:'2026-06-24', hora:'11:30', createdAt:'2026-06-20' }),
+      mk({ id:'s5', nombre:'Ana Torres', telefono:'34655667788', email:'ana.t@email.com', tipo:'Empanada gallega + focaccia', items:[{name:'Empanada gallega',qty:1},{name:'Focaccia',qty:2}], importeEst:34, importeFinal:34, estado:'pagado', fecha:'2026-06-25', hora:'19:00', createdAt:'2026-06-21' }),
+      mk({ id:'s6', nombre:'Lucía Fernández', telefono:'34611223344', email:'lucia@email.com', tipo:'Brownie en formato tarta', items:[{name:'Tarta brownie',qty:1}], importeEst:28, importeFinal:28, estado:'entregado', fecha:'2026-06-12', hora:'12:30', createdAt:'2026-06-09' }),
+      mk({ id:'s7', nombre:'Diego Sanz', telefono:'34666778899', tipo:'Mousse de limón (10-12)', items:[{name:'Tarta mousse de limón',qty:1}], importeEst:36, estado:'nuevo', fecha:'2026-06-26', hora:'12:00', createdAt:'2026-06-22' }),
+      mk({ id:'s8', nombre:'Marta Vidal', telefono:'34677889900', tipo:'24 mini cookies surtidas', items:[{name:'Mini cookies surtidas',qty:24}], importeEst:26, estado:'confirmado', fecha:'2026-06-24', hora:'11:30', createdAt:'2026-06-21' }),
+    ];
+  }
+
+  persist(orders){ try { localStorage.setItem(this.STORE_KEY, JSON.stringify(orders || this.state.orders)); } catch(_){} }
+
+  // ---------- helpers ----------
+  st(key){ return this.STATUSES.find(s => s.key===key) || this.STATUSES[0]; }
+  money(n){ const v = Number(n||0); return (Number.isInteger(v) ? v : v.toFixed(2)) + ' €'; }
+  MES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  DOW = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+  fmtFecha(f){ if(!f) return '—'; const [y,m,d]=f.split('-'); return Number(d)+' '+(this.MES[Number(m)-1]||'').slice(0,3); }
+  fmtFechaLarga(f){ if(!f) return '—'; const dt=new Date(f+'T12:00:00'); return this.DOW[dt.getDay()]+', '+dt.getDate()+' de '+this.MES[dt.getMonth()]; }
+  orderAmount(o){ return o.importeFinal != null && o.importeFinal !== '' ? Number(o.importeFinal) : Number(o.importeEst||0); }
+
+  matchesQuery(o){
+    const q = this.state.query.trim().toLowerCase();
+    if(!q) return true;
+    return (o.nombre||'').toLowerCase().includes(q) || (o.telefono||'').includes(q);
+  }
+  visibleOrders(){ return this.state.orders.filter(o => this.matchesQuery(o)); }
+
+  // ---------- mutations ----------
+  update(id, patch, histStatus){
+    const orders = this.state.orders.map(o => {
+      if(o.id!==id) return o;
+      const next = { ...o, ...patch };
+      if(histStatus){ next.historial = [...(o.historial||[]), { estado: histStatus, ts: this.TODAY }]; }
+      return next;
+    });
+    this.setState({ orders }); this.persist(orders); this.pushApi(id, patch);
+  }
+  async pushApi(id, patch){
+    try { await fetch('/api/orders/'+id, { method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify(patch) }); } catch(_){}
+  }
+  setStatus(id, status){ this.update(id, { estado: status }, status); }
+  selectOrder(id){ const o=this.state.orders.find(x=>x.id===id); this.setState({ selectedId:id, fichaImporteFinal: (o && o.importeFinal!=null)?String(o.importeFinal):'', fichaInternalNote:(o&&o.notaInterna)||'' }); }
+  closeFicha(){ this.commitFicha(); this.setState({ selectedId:null }); }
+  commitFicha(){
+    const id=this.state.selectedId; if(!id) return;
+    const patch={};
+    const imp=this.state.fichaImporteFinal; if(imp!==''){ const n=parseFloat(String(imp).replace(',','.')); if(!isNaN(n)) patch.importeFinal=n; }
+    patch.notaInterna=this.state.fichaInternalNote||'';
+    this.update(id, patch);
+  }
+  duplicateOrder(){
+    const o=this.state.orders.find(x=>x.id===this.state.selectedId); if(!o) return;
+    const copy={ ...o, id:'d'+Date.now(), estado:'nuevo', importeFinal:null, historial:[{estado:'nuevo',ts:this.TODAY}], createdAt:this.TODAY };
+    const orders=[copy, ...this.state.orders]; this.setState({ orders, selectedId:null }); this.persist(orders);
+  }
+  anularOrder(){ const id=this.state.selectedId; if(id){ this.setStatus(id,'anulado'); this.setState({selectedId:null}); } }
+  deleteOrder(){
+    const id=this.state.selectedId; if(!id) return;
+    const orders=this.state.orders.filter(o=>o.id!==id); this.setState({ orders, selectedId:null }); this.persist(orders);
+    try { fetch('/api/orders/'+id, { method:'DELETE' }); } catch(_){}
+  }
+
+  // ---------- nuevo manual ----------
+  openNew(){ this.setState({ newOpen:true, newError:'', newForm:{ nombre:'', telefono:'', importe:'', tipo:'', fecha:'', hora:'' } }); }
+  closeNew(){ this.setState({ newOpen:false }); }
+  nfSet(field, v){ this.setState(s => ({ newForm:{ ...s.newForm, [field]: v } })); }
+  saveNew(){
+    const f=this.state.newForm;
+    if(!f.nombre.trim()){ this.setState({ newError:'Pon al menos el nombre del cliente.' }); return; }
+    const o={ id:'m'+Date.now(), nombre:f.nombre.trim(), telefono:f.telefono.trim(), email:'', tipo:f.tipo.trim()||'Pedido manual',
+      items:[], personalizacion:'', notas:'', notaInterna:'', importeEst:parseFloat(String(f.importe).replace(',','.'))||0, importeFinal:null,
+      fecha:f.fecha, hora:f.hora.trim(), estado:'nuevo', historial:[{estado:'nuevo',ts:this.TODAY}], createdAt:this.TODAY };
+    const orders=[o, ...this.state.orders]; this.setState({ orders, newOpen:false }); this.persist(orders);
+    try { fetch('/api/orders', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(o) }); } catch(_){}
+  }
+
+  // ---------- calendar nav ----------
+  prevMonth(){ this.setState(s => { let m=s.calMonth-1,y=s.calYear; if(m<0){m=11;y--;} return {calMonth:m,calYear:y}; }); }
+  nextMonth(){ this.setState(s => { let m=s.calMonth+1,y=s.calYear; if(m>11){m=0;y++;} return {calMonth:m,calYear:y}; }); }
+  todayMonth(){ this.setState({ calYear:2026, calMonth:5 }); }
+
+  renderVals(){
+    const view = this.state.view;
+    const vis = this.visibleOrders();
+    const icon = (p) => React.createElement('svg', { width:15, height:15, viewBox:'0 0 24 24', fill:'none', stroke:'currentColor', strokeWidth:2, strokeLinecap:'round', strokeLinejoin:'round', dangerouslySetInnerHTML:{__html:p} });
+
+    const tabsDef = [
+      { key:'home',     label:'Inicio',     p:'<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>' },
+      { key:'kanban',   label:'Pedidos',    p:'<rect x="3" y="4" width="5" height="16" rx="1"/><rect x="10" y="4" width="5" height="11" rx="1"/><rect x="17" y="4" width="4" height="8" rx="1"/>' },
+      { key:'calendar', label:'Calendario', p:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/>' },
+      { key:'clients',  label:'Clientes',   p:'<circle cx="9" cy="8" r="3"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5"/><path d="M16 4a3 3 0 0 1 0 6M21 20c0-2-1-3.5-3-4.3"/>' },
+    ];
+    const tabs = tabsDef.map(t => ({
+      label:t.label, icon:icon(t.p),
+      bg: view===t.key ? '#EFE7D6' : 'rgba(250,242,220,.12)',
+      color: view===t.key ? '#7A1228' : '#FAF2DC',
+      go: () => this.setState({ view:t.key }),
+    }));
+
+    // ----- KPIs -----
+    const cnt = (k) => this.state.orders.filter(o=>o.estado===k).length;
+    const todayOrders = this.state.orders.filter(o => o.fecha===this.TODAY && o.estado!=='anulado').sort((a,b)=>(a.hora||'').localeCompare(b.hora||''));
+    const monthRevOrders = this.state.orders.filter(o => o.estado==='entregado' && (o.fecha||'').slice(0,7)==='2026-06');
+    const revenue = monthRevOrders.reduce((s,o)=>s+this.orderAmount(o),0);
+    const kpis = [
+      { key:'nuevo', label:'Nuevos', value:cnt('nuevo'), color:'#2563EB', border:'#C7D8F7' },
+      { key:'confirmado', label:'Confirmados', value:cnt('confirmado'), color:'#7A1228', border:'#EBC4CD' },
+      { key:'today', label:'Para hoy', value:todayOrders.length, color:'#D97706', border:'#F2D6AC' },
+      { key:'elaboracion', label:'En elaboración', value:cnt('elaboracion'), color:'#D97706', border:'#F2D6AC' },
+      { key:'listo', label:'Listos', value:cnt('listo'), color:'#0E7490', border:'#B7DEE7' },
+      { key:'entregado', label:'Entregados (mes)', value:monthRevOrders.length, color:'#6B7280', border:'#D4D7DB' },
+      { key:'pendientes', label:'Pendientes', value:this.state.orders.filter(o=>['nuevo','confirmado','pagado','elaboracion'].includes(o.estado)).length, color:'#7A1228', border:'#EBC4CD' },
+      { key:'mes', label:'Facturado mes', value:this.money(revenue), color:'#15803D', border:'#C2E2CF' },
+    ].map(k => ({ ...k, go: () => this.setState({ view: k.key==='today'||k.key==='mes'||k.key==='pendientes' ? 'kanban' : 'kanban' }) }));
+
+    // ----- Kanban -----
+    const statusFilters = [{ key:'', label:'Todos' }, ...this.STATUSES].map(s => {
+      const active = this.state.statusFilter===s.key;
+      const stc = s.key ? s : { color:'#7A1228', bg:'#F6E2E6', border:'#EBC4CD' };
+      return { label:s.label, bg: active?(stc.color):'#fff', color: active?'#fff':(s.key?stc.color:'#7A1228'), border: s.key?stc.border:'#EBC4CD', toggle: () => this.setState({ statusFilter: this.state.statusFilter===s.key?'':s.key }) };
+    });
+    const colSource = this.state.statusFilter ? this.STATUSES.filter(s=>s.key===this.state.statusFilter) : this.STATUSES;
+    const columns = colSource.map(s => {
+      const cards = vis.filter(o => o.estado===s.key).sort((a,b)=>(a.fecha||'').localeCompare(b.fecha||''))
+        .map(o => ({
+          cliente:o.nombre, phone:o.telefono||'—', tipoLabel:o.tipo||'—',
+          fechaLabel:this.fmtFecha(o.fecha), importeLabel:this.money(this.orderAmount(o)), statusColor:s.color,
+          open: () => this.selectOrder(o.id),
+          onDragStart: (e) => { this.dragId=o.id; try{e.dataTransfer.effectAllowed='move';}catch(_){ } },
+        }));
+      return { label:s.label, color:s.color, border:s.border, headBg:s.head, count:cards.length, cards, empty:cards.length===0,
+        onDragOver:(e)=>e.preventDefault(), onDrop:()=>{ if(this.dragId){ this.setStatus(this.dragId, s.key); this.dragId=null; } } };
+    });
+
+    // ----- Calendar -----
+    const y=this.state.calYear, m=this.state.calMonth;
+    const first=new Date(y,m,1); const lead=(first.getDay()+6)%7; // lunes primero
+    const dim=new Date(y,m+1,0).getDate();
+    const byDate={};
+    this.state.orders.filter(o=>o.estado!=='anulado'&&o.fecha).forEach(o=>{ (byDate[o.fecha]=byDate[o.fecha]||[]).push(o); });
+    const calendarDays=[];
+    for(let i=0;i<lead;i++) calendarDays.push({ num:'', inMonth:false, bg:'transparent', border:'transparent', numColor:'#bbb', opacity:0.4, orders:[], conflict:false });
+    for(let d=1; d<=dim; d++){
+      const ds=y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+      const dayOrders=(byDate[ds]||[]).sort((a,b)=>(a.hora||'').localeCompare(b.hora||''));
+      const hours=dayOrders.map(o=>o.hora).filter(Boolean);
+      const conflict=hours.some((h,i)=>hours.indexOf(h)!==i);
+      const isToday=ds===this.TODAY;
+      calendarDays.push({
+        num:d, inMonth:true, isToday, opacity:1,
+        bg: isToday?'#FBEDF0':'#fff', border: isToday?'#7A1228':'#eee2c8', numColor: isToday?'#7A1228':'#5d4f3c',
+        conflict,
+        orders: dayOrders.map(o=>{ const s=this.st(o.estado); return { horaLabel:o.hora||'', cliente:o.nombre.split(' ')[0], chipBg:s.bg, chipColor:s.color, open:()=>this.selectOrder(o.id) }; }),
+      });
+    }
+
+    // ----- Clients -----
+    const map={};
+    this.state.orders.forEach(o=>{
+      const key=o.telefono||o.nombre;
+      if(!map[key]) map[key]={ nombre:o.nombre, telefono:o.telefono||'—', email:o.email||'', count:0, total:0, last:'' };
+      const c=map[key]; c.count++; if(o.estado!=='anulado') c.total+=this.orderAmount(o);
+      if(!c.last || (o.fecha||'')>c.last) c.last=o.fecha||'';
+      if(o.email && !c.email) c.email=o.email;
+    });
+    const clients=Object.values(map).sort((a,b)=>b.total-a.total).map(c=>({
+      nombre:c.nombre, telefono:c.telefono, email:c.email,
+      initials:(c.nombre||'?').split(' ').slice(0,2).map(w=>w[0]||'').join('').toUpperCase(),
+      count:c.count, totalLabel:this.money(c.total), lastLabel:c.last?this.fmtFechaLarga(c.last):'—',
+      open: () => { this.setState({ query:c.nombre, view:'kanban' }); },
+    }));
+
+    // ----- Ficha -----
+    const sel=this.state.orders.find(o=>o.id===this.state.selectedId);
+    let ficha={ fichaStatusLabel:'', fichaStatusColor:'#7A1228', fichaCliente:'', fichaTel:'', fichaEmail:'', fichaWaLink:'#', fichaItems:[], fichaHasPerso:false, fichaPerso:'', fichaHasNotes:false, fichaNotes:'', fichaFecha:'', fichaHora:'', fichaImporteEst:'', fichaActions:[], fichaHistory:[] };
+    if(sel){
+      const s=this.st(sel.estado);
+      const nextActions=[
+        { to:'confirmado', label:'Confirmar' }, { to:'pagado', label:'Pagado' },
+        { to:'elaboracion', label:'A elaboración' }, { to:'listo', label:'Listo' }, { to:'entregado', label:'Entregado' },
+      ];
+      ficha={
+        fichaStatusLabel:s.label, fichaStatusColor:s.color, fichaCliente:sel.nombre,
+        fichaTel:sel.telefono||'—', fichaEmail:sel.email||'Sin email',
+        fichaWaLink: sel.telefono ? ('https://wa.me/'+sel.telefono) : '#',
+        fichaItems: (sel.items&&sel.items.length? sel.items.map(it=>({line:it.qty+'× '+it.name})) : [{line:sel.tipo||'—'}]),
+        fichaHasPerso: !!sel.personalizacion, fichaPerso:sel.personalizacion,
+        fichaHasNotes: !!sel.notas, fichaNotes:sel.notas,
+        fichaFecha:this.fmtFechaLarga(sel.fecha), fichaHora:sel.hora?('a las '+sel.hora):'Hora por confirmar',
+        fichaImporteEst:this.money(sel.importeEst),
+        fichaActions: nextActions.map(a=>{ const stc=this.st(a.to); const active=sel.estado===a.to; return { label:a.label, bg:active?stc.color:stc.bg, color:active?'#fff':stc.color, border:stc.border, do:()=>this.setStatus(sel.id,a.to) }; }),
+        fichaHistory: (sel.historial||[]).map(h=>{ const stc=this.st(h.estado); return { label:stc.label, color:stc.color, when:this.fmtFecha(h.ts) }; }),
+      };
+    }
+
+    const nf=this.state.newForm;
+
+    return {
+      logoSrc: (typeof window!=='undefined'&&(window.NK_LOGO_RED||window.NK_LOGO))?(window.NK_LOGO_RED||window.NK_LOGO):'logo.png',
+      tabs,
+      query:this.state.query, setQuery:(e)=>this.setState({query:e.target.value}),
+      openNew:()=>this.openNew(),
+      isHome:view==='home', isKanban:view==='kanban', isCalendar:view==='calendar', isClients:view==='clients',
+
+      // home
+      todayLabel: this.fmtFechaLarga(this.TODAY).replace(/^./, c=>c.toUpperCase()),
+      kpis,
+      todayOrders: todayOrders.map(o=>{ const s=this.st(o.estado); return { cliente:o.nombre, tipoLabel:o.tipo||'—', horaLabel:o.hora||'sin hora', importeLabel:this.money(this.orderAmount(o)), statusColor:s.color, open:()=>this.selectOrder(o.id) }; }),
+      hasToday: todayOrders.length>0, noToday: todayOrders.length===0,
+      revenueLabel:this.money(revenue), revenueCount:monthRevOrders.length,
+      pendingCount:this.state.orders.filter(o=>['nuevo','confirmado','pagado','elaboracion'].includes(o.estado)).length,
+      readyCount:cnt('listo'),
+
+      // kanban
+      statusFilters, columns,
+
+      // calendar
+      monthLabel:this.MES[m]+' '+y, weekdays:['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'],
+      calendarDays, prevMonth:()=>this.prevMonth(), nextMonth:()=>this.nextMonth(), todayMonth:()=>this.todayMonth(),
+
+      // clients
+      clients, hasClients:clients.length>0, noClients:clients.length===0,
+
+      // ficha
+      ...ficha,
+      fichaOpacity: sel?1:0, fichaEvents: sel?'auto':'none', fichaY: sel?'0%':'100%',
+      closeFicha:()=>this.closeFicha(), stop:(e)=>e.stopPropagation(),
+      fichaImporteFinal:this.state.fichaImporteFinal, setImporteFinal:(e)=>this.setState({fichaImporteFinal:e.target.value}),
+      fichaInternalNote:this.state.fichaInternalNote, setInternalNote:(e)=>this.setState({fichaInternalNote:e.target.value}),
+      duplicateOrder:()=>this.duplicateOrder(), anularOrder:()=>this.anularOrder(), deleteOrder:()=>this.deleteOrder(),
+
+      // nuevo
+      newOpacity:this.state.newOpen?1:0, newEvents:this.state.newOpen?'auto':'none', newScale:this.state.newOpen?'1':'.92',
+      closeNew:()=>this.closeNew(), nf,
+      nfSet:{ nombre:(e)=>this.nfSet('nombre',e.target.value), telefono:(e)=>this.nfSet('telefono',e.target.value), importe:(e)=>this.nfSet('importe',e.target.value), tipo:(e)=>this.nfSet('tipo',e.target.value), fecha:(e)=>this.nfSet('fecha',e.target.value), hora:(e)=>this.nfSet('hora',e.target.value) },
+      saveNew:()=>this.saveNew(), newError:!!this.state.newError, newErrorMsg:this.state.newError,
+    };
+  }
+}
+</script>
+</body>
+</html>
