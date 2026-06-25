@@ -6,3 +6,6 @@ node_modules/
 # capturas de verificacion
 *.png
 !img/**/*.png
+!favicon-32.png
+!apple-touch-icon.png
+!icon-512.png
