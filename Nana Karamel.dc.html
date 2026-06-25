@@ -324,7 +324,14 @@
       <sc-if value="{{ showStep1 }}" hint-placeholder-val="{{ true }}">
         <div style="animation:nkrise .4s ease both">
           <p style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.14em;font-size:13px;font-weight:600;color:#C0875A;margin:0 0 4px">Paso 1 de 3</p>
-          <h3 style="font-family:'Lilita One','Arial Black','Oswald',sans-serif;font-size:26px;color:#7A1228;margin:0 0 16px">¿Para cuántos?</h3>
+          <h3 style="font-family:'Lilita One','Arial Black','Oswald',sans-serif;font-size:26px;color:#7A1228;margin:0 0 16px">La base</h3>
+          <p style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.1em;font-size:12.5px;font-weight:600;color:#8a5a2b;margin:0 0 10px">Forma</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px">
+            <sc-for list="{{ formaOpts }}" as="o" hint-placeholder-count="3">
+              <button onClick="{{ o.choose }}" style="font-family:'Oswald',sans-serif;font-weight:600;font-size:15px;padding:11px 18px;border-radius:12px;cursor:pointer;border:2px solid #7A1228;background:{{ o.bg }};color:{{ o.color }}">{{ o.label }}</button>
+            </sc-for>
+          </div>
+          <p style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.1em;font-size:12.5px;font-weight:600;color:#8a5a2b;margin:0 0 10px">¿Para cuántos?</p>
           <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px">
             <sc-for list="{{ comensalesOpts }}" as="o" hint-placeholder-count="5">
               <button onClick="{{ o.choose }}" style="font-family:'Oswald',sans-serif;font-weight:600;font-size:15px;padding:12px 20px;border-radius:12px;cursor:pointer;border:2px solid #7A1228;background:{{ o.bg }};color:{{ o.color }}">{{ o.label }}</button>
@@ -344,22 +351,33 @@
       </sc-if>
 
       <!-- PASO 2 -->
-      <sc-if value="{{ showStep2 }}" hint-placeholder-val="{{ false }}">
+      <sc-if value="{{ showStep3 }}" hint-placeholder-val="{{ false }}">
         <div style="animation:nkrise .4s ease both">
-          <p style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.14em;font-size:13px;font-weight:600;color:#C0875A;margin:0 0 4px">Paso 2 de 3</p>
+          <p style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.14em;font-size:13px;font-weight:600;color:#C0875A;margin:0 0 4px">Paso 3 de 3</p>
           <h3 style="font-family:'Lilita One','Arial Black','Oswald',sans-serif;font-size:26px;color:#7A1228;margin:0 0 16px">Cuéntame tu idea</h3>
           <textarea name="idea-tarta" onChange="{{ setIdea }}" value="{{ cake.idea }}" placeholder="Ej.: cumpleaños vintage en tonos pastel, con flores y el nombre 'Lola'…" style="width:100%;min-height:120px;resize:vertical;border:2px solid #7A1228;border-radius:12px;padding:14px;font-family:'Lora',serif;font-size:16px;background:#fff;color:#3A1418"></textarea>
           <div style="margin-top:14px;display:flex;align-items:flex-start;gap:11px;background:#E8EFE3;border:1.5px solid #94A487;border-radius:12px;padding:13px 16px">
             <span style="width:22px;height:22px;flex:0 0 auto;display:block;color:#566b4c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 8h4l2-2.5h6L17 8h4v11H3z"/><circle cx="12" cy="13" r="3.5"/></svg></span>
             <p style="margin:0;font-size:13.5px;line-height:1.55;color:#3A1418">¿Tienes una <strong>foto de referencia</strong>? Adjúntala directamente en el chat de WhatsApp al enviar el pedido — la usamos como inspiración, no la copiamos.</p>
           </div>
+          <div style="height:18px"></div>
+          <p style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.1em;font-size:12.5px;font-weight:600;color:#8a5a2b;margin:0 0 4px">Extras y decoración</p>
+          <p style="font-family:'Lora',serif;font-size:13px;color:#8a5a2b;margin:0 0 10px">Elige los que quieras (opcional).</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <sc-for list="{{ extrasOpts }}" as="o" hint-placeholder-count="7">
+              <button onClick="{{ o.choose }}" style="font-family:'Oswald',sans-serif;font-weight:600;font-size:15px;padding:11px 18px;border-radius:12px;cursor:pointer;border:2px solid #7A1228;background:{{ o.bg }};color:{{ o.color }}">{{ o.label }}</button>
+            </sc-for>
+          </div>
+          <sc-if value="{{ showExtrasOtro }}" hint-placeholder-val="{{ false }}">
+            <input name="extras-otro" onChange="{{ setExtrasOtro }}" value="{{ cake.extrasOtro }}" placeholder="Cuéntame qué otro detalle quieres" style="width:100%;max-width:480px;margin-top:12px;border:2px solid #7A1228;border-radius:12px;padding:12px 14px;font-family:'Lora',serif;font-size:16px;background:#fff;color:#3A1418" />
+          </sc-if>
         </div>
       </sc-if>
 
       <!-- PASO 3 -->
-      <sc-if value="{{ showStep3 }}" hint-placeholder-val="{{ false }}">
+      <sc-if value="{{ showStep2 }}" hint-placeholder-val="{{ false }}">
         <div style="animation:nkrise .4s ease both">
-          <p style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.14em;font-size:13px;font-weight:600;color:#C0875A;margin:0 0 4px">Paso 3 de 3</p>
+          <p style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.14em;font-size:13px;font-weight:600;color:#C0875A;margin:0 0 4px">Paso 2 de 3</p>
           <h3 style="font-family:'Lilita One','Arial Black','Oswald',sans-serif;font-size:26px;color:#7A1228;margin:0 0 16px">El sabor</h3>
           <p style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.1em;font-size:12.5px;font-weight:600;color:#8a5a2b;margin:0 0 10px">Bizcocho</p>
           <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px">
@@ -367,13 +385,13 @@
               <button onClick="{{ o.choose }}" style="font-family:'Oswald',sans-serif;font-weight:600;font-size:15px;padding:11px 18px;border-radius:12px;cursor:pointer;border:2px solid #7A1228;background:{{ o.bg }};color:{{ o.color }}">{{ o.label }}</button>
             </sc-for>
           </div>
-          <p style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.1em;font-size:12.5px;font-weight:600;color:#8a5a2b;margin:0 0 10px">Buttercream</p>
+          <p style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.1em;font-size:12.5px;font-weight:600;color:#8a5a2b;margin:0 0 10px">Crema exterior</p>
           <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px">
             <sc-for list="{{ buttercreamOpts }}" as="o" hint-placeholder-count="2">
               <button onClick="{{ o.choose }}" style="font-family:'Oswald',sans-serif;font-weight:600;font-size:15px;padding:11px 18px;border-radius:12px;cursor:pointer;border:2px solid #7A1228;background:{{ o.bg }};color:{{ o.color }}">{{ o.label }}</button>
             </sc-for>
           </div>
-          <p style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.1em;font-size:12.5px;font-weight:600;color:#8a5a2b;margin:0 0 10px">Color del buttercream</p>
+          <p style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.1em;font-size:12.5px;font-weight:600;color:#8a5a2b;margin:0 0 10px">Color de la crema</p>
           <div style="display:flex;gap:10px;flex-wrap:wrap">
             <sc-for list="{{ colorOpts }}" as="o" hint-placeholder-count="6">
               <button onClick="{{ o.choose }}" style="font-family:'Oswald',sans-serif;font-weight:600;font-size:15px;padding:11px 18px;border-radius:12px;cursor:pointer;border:2px solid #7A1228;background:{{ o.bg }};color:{{ o.color }}">{{ o.label }}</button>
@@ -382,6 +400,13 @@
           <sc-if value="{{ showColorCustom }}" hint-placeholder-val="{{ false }}">
             <input name="color-custom" onChange="{{ setColorCustom }}" value="{{ cake.colorCustom }}" placeholder="Dime el color o la combinación que quieres (ej. lila + dorado)" style="width:100%;max-width:480px;margin-top:12px;border:2px solid #7A1228;border-radius:12px;padding:12px 14px;font-family:'Lora',serif;font-size:16px;background:#fff;color:#3A1418" />
           </sc-if>
+          <div style="height:8px"></div>
+          <p style="font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.1em;font-size:12.5px;font-weight:600;color:#8a5a2b;margin:0 0 10px">Relleno</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <sc-for list="{{ rellenoOpts }}" as="o" hint-placeholder-count="7">
+              <button onClick="{{ o.choose }}" style="font-family:'Oswald',sans-serif;font-weight:600;font-size:15px;padding:11px 18px;border-radius:12px;cursor:pointer;border:2px solid #7A1228;background:{{ o.bg }};color:{{ o.color }}">{{ o.label }}</button>
+            </sc-for>
+          </div>
         </div>
       </sc-if>
 
@@ -511,11 +536,14 @@
               <p style="font-family:'Lobster Two',Georgia,serif;font-size:22px;color:#7A1228;margin:0;line-height:1.05">{{ l.name }}</p>
               <p style="margin:2px 0 0;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-size:11px;color:#8a5a2b">{{ l.catLabel }}</p><p style="margin:3px 0 0;font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;color:#7A1228">{{ l.priceLine }}</p>
             </div>
-            <div style="display:flex;align-items:center;gap:8px">
+            <sc-if value="{{ l.isStepper }}" hint-placeholder-val="{{ true }}"><div style="display:flex;align-items:center;gap:8px">
               <button onClick="{{ l.dec }}" style="width:30px;height:30px;border-radius:50%;border:none;background:#F3E8CC;color:#7A1228;font-size:18px;cursor:pointer">–</button>
               <span style="font-family:'Oswald',sans-serif;font-weight:700;font-size:16px;color:#7A1228;min-width:18px;text-align:center">{{ l.qty }}</span>
               <button onClick="{{ l.inc }}" style="width:30px;height:30px;border-radius:50%;border:none;background:#F3E8CC;color:#7A1228;font-size:18px;cursor:pointer">+</button>
-            </div>
+            </div></sc-if>
+            <sc-if value="{{ l.isCake }}" hint-placeholder-val="{{ false }}">
+              <button onClick="{{ l.removeCake }}" style="background:none;border:1.5px solid #7A1228;color:#7A1228;border-radius:999px;padding:7px 16px;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-size:12px;font-weight:600;cursor:pointer">Quitar</button>
+            </sc-if>
           </div>
         </sc-for>
         <button onClick="{{ clearCart }}" style="margin-top:14px;background:none;border:none;color:#8a5a2b;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.06em;font-size:12px;cursor:pointer;text-decoration:underline">Vaciar pedido</button>
@@ -652,7 +680,7 @@ class Component extends DCLogic {
     cartOpen: false,
     navOpen: false,
     cakeStep: 1,
-    cake: { comensales:'', comensalesCustom:'', edad:'', idea:'', bizcocho:'', buttercream:'', color:'', colorCustom:'' },
+    cake: { comensales:'', comensalesCustom:'', edad:'', idea:'', bizcocho:'', buttercream:'', color:'', colorCustom:'', forma:'', relleno:'', extras:[], extrasOtro:'' },
     pickup: { day:'', month:'', negotiate:false },
     pickupModal: false,
     pickupOrigin: 'cart',
@@ -769,7 +797,7 @@ class Component extends DCLogic {
   cartSubtotal(){ return this.catalog.reduce((s,it)=>{ const q=this.state.cart[it.id]||0; const u=q?this.lineUnitPrice(it):null; return u==null?s:s+u*q; },0); }
   money(n){ return n.toFixed(2).replace('.',',') + ' €'; }
 
-  cakeHasData(){ const c=this.state.cake; return !!(c.comensales||c.idea||c.bizcocho); }
+  cakeHasData(){ const c=this.state.cake; return !!(c.comensales||c.idea||c.bizcocho||c.forma||c.relleno||(c.extras&&c.extras.length)); }
 
   buildMessage(){
     const L = ['Hola Nana Karamel! Quiero hacer un pedido para recoger:',''];
@@ -785,12 +813,15 @@ class Component extends DCLogic {
     const c = this.state.cake;
     if(this.cakeHasData()){
       L.push('TARTA PERSONALIZADA (encargo)');
+      if(c.forma) L.push('• Forma: ' + c.forma);
       if(c.comensales) L.push('• Comensales: ' + this.comensalesText() + (c.edad ? ' · ' + c.edad : ''));
-      if(c.idea) L.push('• Idea: ' + c.idea);
       if(c.bizcocho) L.push('• Bizcocho: ' + c.bizcocho);
-      if(c.buttercream) L.push('• Buttercream: ' + c.buttercream + (c.color ? ' · color ' + this.colorText() : ''));
+      if(c.buttercream) L.push('• Crema exterior: ' + c.buttercream + (c.color ? ' · color ' + this.colorText() : ''));
+      if(c.relleno) L.push('• Relleno: ' + c.relleno);
+      if(c.idea) L.push('• Idea/dedicatoria: ' + c.idea);
+      const _ex=(c.extras||[]).map(x => x==='Otro' ? ('Otro: ' + ((c.extrasOtro||'').trim()||'(a indicar)')) : x);
+      if(_ex.length) L.push('• Extras: ' + _ex.join(', '));
       L.push('• Foto de referencia: la adjunto aquí en el chat si la tengo.');
-      L.push('• Mensaje en chocolate (opcional, +5 €): ___');
       L.push('(Sin fondant ni impresiones; reservo con antelación.)');
       L.push('');
     }
@@ -916,12 +947,11 @@ class Component extends DCLogic {
     const c = this.state.cake;
     if(step===1){
       const comOk = c.comensales && (c.comensales!=='Personalizado' || (c.comensalesCustom && c.comensalesCustom.trim()));
-      return !!(comOk && c.edad);
+      return !!(c.forma && comOk && c.edad);
     }
-    if(step===2) return !!(c.idea && c.idea.trim());
-    if(step===3){
+    if(step===2){
       const colOk = c.color!=='Otro' || (c.colorCustom && c.colorCustom.trim());
-      return !!(c.bizcocho && c.buttercream && colOk);
+      return !!(c.bizcocho && c.buttercream && colOk && c.relleno);
     }
     return true;
   }
@@ -930,6 +960,7 @@ class Component extends DCLogic {
   cakeNext(){ if(!this.cakeStepValid(this.state.cakeStep)) return; this.setState(s => ({ cakeStep: Math.min(3, s.cakeStep+1) })); }
   cakeBack(){ this.setState(s => ({ cakeStep: Math.max(1, s.cakeStep-1) })); }
   cakeFinish(){ if(!this.cakeStepValid(3)) return; this.openPickup('cake'); }
+  clearCake(){ this.setState({ cake: { comensales:'', comensalesCustom:'', edad:'', idea:'', bizcocho:'', buttercream:'', color:'', colorCustom:'', forma:'', relleno:'', extras:[], extrasOtro:'' }, cakeStep:1 }); }
 
   optGroup(field, labels){
     const sel = this.state.cake[field];
@@ -939,6 +970,22 @@ class Component extends DCLogic {
       color: sel===label ? '#FAF2DC' : '#7A1228',
       choose: () => this.setCake(field, label),
     }));
+  }
+  extraGroup(labels){
+    const sel = this.state.cake.extras || [];
+    return labels.map(label => ({
+      label,
+      bg: sel.includes(label) ? '#7A1228' : '#FAF2DC',
+      color: sel.includes(label) ? '#FAF2DC' : '#7A1228',
+      choose: () => this.toggleExtra(label),
+    }));
+  }
+  toggleExtra(label){
+    this.setState(s => {
+      const cur = s.cake.extras || [];
+      const next = cur.includes(label) ? cur.filter(x => x!==label) : [...cur, label];
+      return { cake: { ...s.cake, extras: next } };
+    });
   }
 
   // ---- svg ----
@@ -1045,7 +1092,7 @@ class Component extends DCLogic {
     const ckUnits = this.cookieUnits();
     const _ofc = this.catalog.find(x=>x.cat==='Cookies'&&typeof x.oferta==='number');
     const ofPrice = _ofc?_ofc.oferta:3.75, ofMin = _ofc?_ofc.ofertaMin:5;
-    const cartLines = this.catalog
+    let cartLines = this.catalog
       .filter(i => (this.state.cart[i.id]||0) > 0)
       .map(i => {
         const qty=this.state.cart[i.id];
@@ -1053,7 +1100,7 @@ class Component extends DCLogic {
         const isOf = i.cat==='Cookies' && typeof i.oferta==='number' && i.ofertaMin && ckUnits>=i.ofertaMin;
         return { id:i.id, name:i.name, qty, catLabel:i.cat,
           priceLine: u==null ? '' : (this.money(u)+'/ud · '+this.money(u*qty)+(isOf?' · oferta de pack':'')),
-          inc: () => this.inc(i.id), dec: () => this.dec(i.id) };
+          inc: () => this.inc(i.id), dec: () => this.dec(i.id), isStepper:true, isCake:false };
       });
     let packNote='', packShow=false, packColor='#25683b';
     if(ckUnits>=ofMin){ packNote='✓ Oferta de pack: todas las cookies a '+this.money(ofPrice)+'/ud'; packShow=true; packColor='#25683b'; }
@@ -1061,6 +1108,7 @@ class Component extends DCLogic {
 
     const count = this.count();
     const cakeData = this.cakeHasData();
+    if(cakeData){ cartLines = [{ id:'__cake', name:'Tarta personalizada', qty:1, catLabel:'Por encargo · a confirmar', priceLine:'Precio a confirmar por WhatsApp', isStepper:false, isCake:true, removeCake:()=>this.clearCake() }, ...cartLines]; }
     const subtotal = this.cartSubtotal();
     const canSend = count>0 || cakeData;
     const step = this.state.cakeStep;
@@ -1093,13 +1141,18 @@ class Component extends DCLogic {
       comensalesOpts: this.optGroup('comensales', ['5–6','10–12','15–20','+20','Personalizado']),
       edadOpts: this.optGroup('edad', ['Niños','Adultos','Mixto']),
       bizcochoOpts: this.optGroup('bizcocho', ['Chocolate','Vainilla','Limón','Red Velvet','Zanahoria']),
-      buttercreamOpts: this.optGroup('buttercream', ['Vainilla (coloreable)','Chocolate']),
+      buttercreamOpts: this.optGroup('buttercream', ['Vainilla','Coco','Fresa','Frambuesa','Rosas','Limón','Chocolate suave']),
       colorOpts: this.optGroup('color', ['Granate','Rosa','Mostaza','Crema','Sorpréndeme','Otro']),
+      formaOpts: this.optGroup('forma', ['Redonda','Cuadrada','Corazón']),
+      rellenoOpts: this.optGroup('relleno', ['Mismo que la crema','Ganache chocolate','Ganache choco blanco','Choco blanco y café','Curd de limón','Compota de fresa','Compota de frambuesa']),
       showComensalesCustom: this.state.cake.comensales==='Personalizado',
       showColorCustom: this.state.cake.color==='Otro',
       setComensalesCustom: (e) => this.setCake('comensalesCustom', e.target.value),
       setColorCustom: (e) => this.setCake('colorCustom', e.target.value),
       setIdea: (e) => this.setCake('idea', e.target.value),
+      extrasOpts: this.extraGroup(['Mensaje de chocolate (+5 €)','Mensaje escrito a mano','Sprinkles coloridos','Perlas blancas','Perlas doradas','Sprinkles de estrellas','Otro']),
+      showExtrasOtro: (this.state.cake.extras||[]).includes('Otro'),
+      setExtrasOtro: (e) => this.setCake('extrasOtro', e.target.value),
       cakeNext: () => this.cakeNext(), cakeBack: () => this.cakeBack(), cakeFinish: () => this.cakeFinish(),
       showStep1: showStep(1), showStep2: showStep(2), showStep3: showStep(3),
       stepDots,
@@ -1115,7 +1168,7 @@ class Component extends DCLogic {
       cartHasPrice: subtotal>0,
       packNote, packShow, packColor,
       cartLines,
-      cartEmpty: count===0, cartHasItems: count>0,
+      cartEmpty: count===0 && !cakeData, cartHasItems: count>0 || cakeData,
       toggleCart: () => this.toggleCart(), closeCart: () => this.closeCart(), clearCart: () => this.clearCart(),
       panelX: this.state.cartOpen ? '0%' : '102%',
       overlayOpacity: this.state.cartOpen ? 1 : 0,
