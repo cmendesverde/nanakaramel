@@ -609,6 +609,7 @@
   </div>
 
   <!-- panel: abrir WhatsApp / copiar -->
+  <div onClick="{{ closePackPromo }}" style="position:fixed;inset:0;z-index:97;display:flex;align-items:center;justify-content:center;padding:22px;background:rgba(58,20,24,.55);transition:opacity .25s ease;opacity:{{ packPromoOpacity }};pointer-events:{{ packPromoEvents }}"><div onClick="{{ stop }}" style="width:min(380px,94vw);background:#FFF6E0;border:2px solid #7A1228;border-radius:20px;box-shadow:0 24px 60px rgba(58,20,24,.4);overflow:hidden;transition:transform .28s cubic-bezier(.34,1.4,.5,1);transform:{{ packPromoScale }}"><div style="background:#7A1228;padding:18px 22px;text-align:center"><p style="margin:0;font-family:'Lilita One',sans-serif;font-size:24px;color:#FFF6E0;line-height:1.05">¡Lleva 5 y ahorra!</p></div><div style="padding:22px"><p style="margin:0 0 18px;font-family:'Lora',Georgia,serif;font-size:16px;color:#3A1418;line-height:1.5;text-align:center">A partir de <b>5 cookies</b>, todas te salen a <b>3,75 €/ud</b> en vez de 3,95 €. Combina los sabores que quieras.</p><button onClick="{{ closePackPromo }}" style="width:100%;background:#7A1228;color:#FFF6E0;border:none;border-radius:12px;padding:14px;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-size:15px;font-weight:600;cursor:pointer">¡Seguir añadiendo!</button></div></div></div>
   <div onClick="{{ closeWAOverlay }}" style="position:fixed;inset:0;z-index:96;display:flex;align-items:center;justify-content:center;padding:22px;background:rgba(58,20,24,.55);transition:opacity .25s ease;opacity:{{ waOverlayOpacity }};pointer-events:{{ waOverlayEvents }}">
     <div onClick="{{ stop }}" style="width:min(400px,94vw);background:#FFF6E0;border:2px solid #7A1228;border-radius:20px;box-shadow:0 24px 60px rgba(58,20,24,.4);overflow:hidden;transition:transform .28s cubic-bezier(.34,1.4,.5,1);transform:{{ waOverlayScale }}">
       <div style="background:#94A487;padding:18px 22px;display:flex;align-items:center;gap:12px">
@@ -647,6 +648,7 @@ class Component extends DCLogic {
   state = {
     cat: 'Todo',
     cart: {},
+    packPromo: false,
     cartOpen: false,
     navOpen: false,
     cakeStep: 1,
@@ -684,29 +686,29 @@ class Component extends DCLogic {
     { id:'ferrero',                    cat:'Cookies',           name:'Ferrero',                          desc:'Avellana y chocolate con leche, trocitos crujientes y un acabado dorado.',                      price:3.95, oferta:3.75, ofertaMin:5, tag:'libre', kw:'chocolate,hazelnut,cookie',  lock:25 },
     { id:'peanut-lover',               cat:'Cookies',           name:'Peanut Lover',                     desc:'Bañada en chocolate con cacahuetes caramelizados. Para los muy fans del cacahuete.',            price:3.95, oferta:3.75, ofertaMin:5, tag:'libre', kw:'peanut-butter,cookie',       lock:26 },
     { id:'sabor-del-mes',              cat:'Cookies',           name:'Piña Colada',                      desc:'Sabor del mes: piña colada. Glaseado de coco y piña para un capricho tropical.',                price:3.95, oferta:3.75, ofertaMin:5, tag:'mes',   kw:'coconut,cookie',             lock:27 },
-    { id:'mini-clasicas',              cat:'Mini cookies',      name:'Mini Clásicas',                    desc:'Bocaditos de vainilla con chips. Perfectas para compartir.',                                     tag:'encargo', kw:'mini,cookie',    lock:31 },
-    { id:'mini-brownie',               cat:'Mini cookies',      name:'Mini Brownie',                     desc:'Versión bite-size de nuestra brownie con nueces.',                                               tag:'encargo', kw:'brownie,bite',   lock:32 },
-    { id:'pastas-mantequilla-vainilla',cat:'Mini cookies',      name:'Pastas de Mantequilla \u00b7 Vainilla', desc:'Pastas artesanas de mantequilla con vainilla, x15.',                                   tag:'encargo', kw:'butter,biscuit', lock:34 },
-    { id:'pastas-mantequilla-cacao',   cat:'Mini cookies',      name:'Pastas de Mantequilla \u00b7 Cacao',   desc:'Pastas artesanas de mantequilla con cacao, x15.',                                        tag:'encargo', kw:'butter,biscuit', lock:35 },
-    { id:'surtido-pastas',             cat:'Mini cookies',      name:'Surtido de pastas de mantequilla', desc:'Pastas artesanas de mantequilla, surtido variado x30.',                                         tag:'encargo', kw:'butter,biscuit', lock:33 },
+    { id:'mini-clasicas',              cat:'Mini cookies',      name:'Mini Clásicas',                    desc:'Bocaditos de vainilla con chips. Perfectas para compartir.',                                     price:3.95, tag:'encargo', kw:'mini,cookie',    lock:31 },
+    { id:'mini-brownie',               cat:'Mini cookies',      name:'Mini Brownie',                     desc:'Versión bite-size de nuestra brownie con nueces.',                                               price:3.95, tag:'encargo', kw:'brownie,bite',   lock:32 },
+    { id:'pastas-mantequilla-vainilla',cat:'Mini cookies',      name:'Pastas de Mantequilla \u00b7 Vainilla', desc:'Pastas artesanas de mantequilla con vainilla, x15.',                                   price:5.95, tag:'encargo', kw:'butter,biscuit', lock:34 },
+    { id:'pastas-mantequilla-cacao',   cat:'Mini cookies',      name:'Pastas de Mantequilla \u00b7 Cacao',   desc:'Pastas artesanas de mantequilla con cacao, x15.',                                        price:5.95, tag:'encargo', kw:'butter,biscuit', lock:35 },
+    { id:'surtido-pastas',             cat:'Mini cookies',      name:'Surtido de pastas de mantequilla', desc:'Pastas artesanas de mantequilla, surtido variado x30.',                                         price:15, tag:'encargo', kw:'butter,biscuit', lock:33 },
     { id:'tarta-zanahoria',            cat:'Tartas',            name:'Zanahoria',                        desc:'Especiada y húmeda, con frosting de queso crema.',                                              tag:'encargo', kw:'carrot,cake',          lock:42 },
     { id:'tarta-red-velvet',           cat:'Tartas',            name:'Red Velvet',                       desc:'Bizcocho rojo aterciopelado con frosting de queso crema.',                                      tag:'encargo', kw:'red-velvet,cake',      lock:41 },
     { id:'tarta-chocolate',            cat:'Tartas',            name:'Chocolate',                        desc:'Intensa, para los que el chocolate nunca es suficiente.',                                       tag:'encargo', kw:'chocolate,cake',       lock:43 },
     { id:'tarta-mousse-limon',         cat:'Tartas',            name:'Mousse de Limón',                  desc:'Ligera y fresca, con el punto justo de acidez.',                                                tag:'encargo', kw:'lemon,cake',           lock:45 },
     { id:'tarta-cafe-chocolate',       cat:'Tartas',            name:'Café y Chocolate',                 desc:'Intensa y aromática, para los amantes del café y el chocolate.',                                tag:'encargo', kw:'coffee,chocolate,cake', lock:49 },
     { id:'tarta-queso',                cat:'Tartas',            name:'Tarta de Queso vasca',             desc:'Nuestra estrella: cremosa por dentro, dorada por fuera.',                                       tag:'encargo', kw:'basque,cheesecake',    lock:44 },
-    { id:'porcion-zanahoria',          cat:'Tartas de Porci\u00f3n', name:'Tarta de Zanahoria (porci\u00f3n)', desc:'Porción individual de nuestra tarta de zanahoria. Especiada y húmeda.',            tag:'libre', kw:'carrot,cake,slice',    lock:61 },
-    { id:'porcion-red-velvet',         cat:'Tartas de Porci\u00f3n', name:'Red Velvet (porci\u00f3n)',       desc:'Porción de red velvet con frosting de queso crema.',                                    tag:'libre', kw:'red-velvet,cake,slice', lock:62 },
-    { id:'porcion-chocolate',          cat:'Tartas de Porci\u00f3n', name:'Tarta de Chocolate (porci\u00f3n)', desc:'Porción de nuestra tarta de chocolate intensa.',                                     tag:'libre', kw:'chocolate,cake,slice',  lock:63 },
-    { id:'porcion-tiramisu',           cat:'Tartas de Porci\u00f3n', name:'Tiramisú (porci\u00f3n)',         desc:'Café, mascarpone y cacao. Un clásico italiano en porción individual.',                  tag:'libre', kw:'tiramisu,slice',        lock:64 },
-    { id:'porcion-queso-mini',         cat:'Tartas de Porci\u00f3n', name:'Tarta de Queso Mini (porci\u00f3n)', desc:'Porción de tarta de queso vasca, cremosa y dorada.',                               tag:'libre', kw:'cheesecake,slice',      lock:65 },
-    { id:'extra-empanada-gallega',     cat:'Extras',            name:'Empanada Gallega',                 desc:'Masa artesana y relleno jugoso. Por encargo.',                                                  tag:'encargo', kw:'empanada',        lock:51 },
-    { id:'extra-empanadilla',          cat:'Extras',            name:'Empanadilla Individual',           desc:'Tamaño individual, ideales para picar.',                                                        tag:'encargo', kw:'empanada,pastry', lock:52 },
-    { id:'extra-alfajor',              cat:'Extras',            name:'Alfajor Argentino',                desc:'Rellenos de dulce de leche, suaves y dulces.',                                                  tag:'encargo', kw:'alfajor',         lock:53 },
-    { id:'extra-mini-alfajor',         cat:'Extras',            name:'Mini Alfajor Argentino',           desc:'Mini versión del alfajor clásico, rellenos de dulce de leche.',                                 tag:'encargo', kw:'alfajor,mini',    lock:56 },
-    { id:'extra-rollo-canela',         cat:'Extras',            name:'Rollo de Canela',                  desc:'Esponjoso, con canela y glaseado.',                                                             tag:'encargo', kw:'cinnamon-roll',   lock:54 },
-    { id:'extra-focaccia',             cat:'Extras',            name:'Focaccia',                         desc:'Masa aireada con aceite de oliva y romero.',                                                    tag:'encargo', kw:'focaccia',        lock:55 },
-    { id:'extra-brownie',              cat:'Extras',            name:'Brownie (bandeja)',                 desc:'Brownie artesano en bandeja para compartir. Con topping a elegir.',                             tag:'encargo', kw:'brownie,tray',    lock:57 },
+    { id:'porcion-zanahoria',          cat:'Tartas de Porci\u00f3n', name:'Tarta de Zanahoria (porci\u00f3n)', desc:'Porción individual de nuestra tarta de zanahoria. Especiada y húmeda.',            price:5.5, tag:'libre', kw:'carrot,cake,slice',    lock:61 },
+    { id:'porcion-red-velvet',         cat:'Tartas de Porci\u00f3n', name:'Red Velvet (porci\u00f3n)',       desc:'Porción de red velvet con frosting de queso crema.',                                    price:5.5, tag:'libre', kw:'red-velvet,cake,slice', lock:62 },
+    { id:'porcion-chocolate',          cat:'Tartas de Porci\u00f3n', name:'Tarta de Chocolate (porci\u00f3n)', desc:'Porción de nuestra tarta de chocolate intensa.',                                     price:5.5, tag:'libre', kw:'chocolate,cake,slice',  lock:63 },
+    { id:'porcion-tiramisu',           cat:'Tartas de Porci\u00f3n', name:'Tiramisú (porci\u00f3n)',         desc:'Café, mascarpone y cacao. Un clásico italiano en porción individual.',                  price:6.8, tag:'libre', kw:'tiramisu,slice',        lock:64 },
+    { id:'porcion-queso-mini',         cat:'Tartas de Porci\u00f3n', name:'Tarta de Queso Mini (porci\u00f3n)', desc:'Porción de tarta de queso vasca, cremosa y dorada.',                               price:6.8, tag:'libre', kw:'cheesecake,slice',      lock:65 },
+    { id:'extra-empanada-gallega',     cat:'Extras',            name:'Empanada Gallega',                 desc:'Masa artesana y relleno jugoso. Por encargo.',                                                  price:40, tag:'encargo', kw:'empanada',        lock:51 },
+    { id:'extra-empanadilla',          cat:'Extras',            name:'Empanadilla Individual',           desc:'Tamaño individual, ideales para picar.',                                                        price:4.3, tag:'encargo', kw:'empanada,pastry', lock:52 },
+    { id:'extra-alfajor',              cat:'Extras',            name:'Alfajor Argentino',                desc:'Rellenos de dulce de leche, suaves y dulces.',                                                  price:1.6, tag:'encargo', kw:'alfajor',         lock:53 },
+    { id:'extra-mini-alfajor',         cat:'Extras',            name:'Mini Alfajor Argentino',           desc:'Mini versión del alfajor clásico, rellenos de dulce de leche.',                                 price:3.5, tag:'encargo', kw:'alfajor,mini',    lock:56 },
+    { id:'extra-rollo-canela',         cat:'Extras',            name:'Rollo de Canela',                  desc:'Esponjoso, con canela y glaseado.',                                                             price:4.5, tag:'encargo', kw:'cinnamon-roll',   lock:54 },
+    { id:'extra-focaccia',             cat:'Extras',            name:'Focaccia',                         desc:'Masa aireada con aceite de oliva y romero.',                                                    price:18, tag:'encargo', kw:'focaccia',        lock:55 },
+    { id:'extra-brownie',              cat:'Extras',            name:'Brownie (bandeja)',                 desc:'Brownie artesano en bandeja para compartir. Con topping a elegir.',                             price:35, tag:'encargo', kw:'brownie,tray',    lock:57 },
   ];
 
   TAGS = {
@@ -749,7 +751,12 @@ class Component extends DCLogic {
   }
 
   // ---- cart ----
-  add(id){ this.setState(s => ({ cart: { ...s.cart, [id]: (s.cart[id]||0) + 1 } })); }
+  add(id){
+    const _it = this.catalog.find(x=>x.id===id);
+    const _firstCookie = _it && _it.cat==='Cookies' && this.cookieUnits()===0 && !this._packSeen;
+    this.setState(s => ({ cart: { ...s.cart, [id]: (s.cart[id]||0) + 1 } }));
+    if(_firstCookie){ this._packSeen = true; this.setState({ packPromo:true }); }
+  }
   inc(id){ this.add(id); }
   dec(id){ this.setState(s => { const n=(s.cart[id]||0)-1; const c={...s.cart}; if(n<=0) delete c[id]; else c[id]=n; return { cart:c }; }); }
   clearCart(){ this.setState({ cart:{} }); }
@@ -856,6 +863,7 @@ class Component extends DCLogic {
     } catch(_) {}
   }
   closeWAOverlay(){ this.setState({ waOverlay:false }); }
+  closePackPromo(){ this.setState({ packPromo:false }); }
   sendCart(){ if(this.count()===0 && !this.cakeHasData()) return; this.openPickup('cart'); }
 
   // ---- nav móvil ----
@@ -1157,11 +1165,15 @@ class Component extends DCLogic {
       waOverlayOpacity: this.state.waOverlay ? 1 : 0,
       waOverlayEvents: this.state.waOverlay ? 'auto' : 'none',
       waOverlayScale: this.state.waOverlay ? 'scale(1)' : 'scale(.9)',
+      packPromoOpacity: this.state.packPromo ? 1 : 0,
+      packPromoEvents: this.state.packPromo ? 'auto' : 'none',
+      packPromoScale: this.state.packPromo ? 'scale(1)' : 'scale(.9)',
       waUrl: this.state.waUrl,
       waCopied: this.state.waCopied,
       waCopyLabel: this.state.waCopied ? '✓ Mensaje copiado' : 'Copiar mensaje',
       copyWAMsg: () => this.copyWAMsg(),
       closeWAOverlay: () => this.closeWAOverlay(),
+      closePackPromo: () => this.closePackPromo(),
       pickupNegotiateChosen: this.state.pickup.negotiate,
       pickupDayVal: this.state.pickup.day,
       pickupMonthVal: this.state.pickup.month,
