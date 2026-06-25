@@ -1,0 +1,161 @@
+{
+  "tartas_sabores": [
+    {
+      "id": "tarta-zanahoria",
+      "nombre": "Tarta de Zanahoria",
+      "mensaje_chocolate": true,
+      "tamanos": {
+        "mediana": {
+          "precio": 40,
+          "porciones": "6-8"
+        },
+        "grande": {
+          "precio": 60,
+          "porciones": "12-15"
+        }
+      }
+    },
+    {
+      "id": "tarta-red-velvet",
+      "nombre": "Red Velvet",
+      "mensaje_chocolate": true,
+      "tamanos": {
+        "mediana": {
+          "precio": 40,
+          "porciones": "6-8"
+        },
+        "grande": {
+          "precio": 60,
+          "porciones": "12-15"
+        }
+      }
+    },
+    {
+      "id": "tarta-chocolate",
+      "nombre": "Tarta de Chocolate",
+      "mensaje_chocolate": true,
+      "tamanos": {
+        "mediana": {
+          "precio": 40,
+          "porciones": "6-8"
+        },
+        "grande": {
+          "precio": 60,
+          "porciones": "12-15"
+        }
+      }
+    },
+    {
+      "id": "tarta-mousse-limon",
+      "nombre": "Tarta Mousse de Limón",
+      "mensaje_chocolate": true,
+      "tamanos": {
+        "mediana": {
+          "precio": 45,
+          "porciones": "8-10"
+        }
+      }
+    },
+    {
+      "id": "tarta-cafe-chocolate",
+      "nombre": "Tarta de Café y Chocolate",
+      "mensaje_chocolate": true,
+      "tamanos": {
+        "mediana": {
+          "precio": 45,
+          "porciones": "6-8"
+        }
+      }
+    },
+    {
+      "id": "tarta-queso",
+      "nombre": "Tarta de Queso",
+      "mensaje_chocolate": false,
+      "tamanos": {
+        "mediana": {
+          "precio": 30,
+          "porciones": "6-8"
+        },
+        "grande": {
+          "precio": 60,
+          "porciones": "10-12"
+        }
+      }
+    }
+  ],
+  "extras": {
+    "mensaje_chocolate": {
+      "precio": 5,
+      "nota": "Opción dentro de cada tarta que lo admite (no es producto suelto)."
+    }
+  },
+  "vintage_personalizadas": {
+    "forma": [
+      "Redonda",
+      "Cuadrada",
+      "Corazón"
+    ],
+    "bizcocho": [
+      "Vainilla",
+      "Limón",
+      "Red Velvet",
+      "Chocolate",
+      "Zanahoria"
+    ],
+    "crema_exterior": [
+      {
+        "sabor": "Vainilla",
+        "coloreable": true,
+        "base": "Blanco crema"
+      },
+      {
+        "sabor": "Coco",
+        "coloreable": true,
+        "base": "Blanco crema"
+      },
+      {
+        "sabor": "Fresa",
+        "coloreable": true,
+        "base": "Rosa pastel"
+      },
+      {
+        "sabor": "Frambuesa",
+        "coloreable": true,
+        "base": "Rosa pastel"
+      },
+      {
+        "sabor": "Rosas",
+        "coloreable": true,
+        "base": "Rosa pastel"
+      },
+      {
+        "sabor": "Limón",
+        "coloreable": true,
+        "base": "Amarillo pastel"
+      },
+      {
+        "sabor": "Chocolate Suave",
+        "coloreable": false,
+        "base": "Marrón oscuro"
+      }
+    ],
+    "relleno": [
+      "Mismo sabor que la crema exterior",
+      "Ganache de chocolate suave",
+      "Ganache de chocolate blanco",
+      "Ganache de chocolate blanco y café",
+      "Curd de limón",
+      "Compota de fresas",
+      "Compota de frambuesas"
+    ],
+    "extras_multiseleccion": [
+      "Mensaje de Chocolate",
+      "Mensaje escrito a mano",
+      "Sprinkles coloridos",
+      "Perlas blancas",
+      "Perlas doradas",
+      "Sprinkles de estrellas",
+      "Otro (texto libre)"
+    ]
+  }
+}

@@ -216,7 +216,7 @@
       <article style="background:#FFF6E0;color:#3A1418;border-radius:16px;overflow:hidden;display:flex;flex-direction:column">
         <div style="position:relative;aspect-ratio:16/10;background:linear-gradient(135deg,#E7D2A4,#F3E8CC)">
           <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:.5">{{ cookieArt }}</div>
-          <div role="img" aria-label="{{ featuredCookie.name }}" style="position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1551106652-a5bcf4b29ab6?fm=jpg&q=70&w=640&h=420&fit=crop');background-size:cover;background-position:center"></div>
+          <div role="img" aria-label="{{ featuredCookie.name }}" style="position:absolute;inset:0;background-image:url({{ featuredCookie.img }});background-size:cover;background-position:center"></div>
           <span style="position:absolute;top:14px;left:14px;background:#F4A9B4;color:#3A1418;font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:12px;padding:6px 13px;border-radius:999px">Cookie del mes</span>
         </div>
         <div style="padding:22px 24px;flex:1;display:flex;flex-direction:column">
@@ -274,7 +274,13 @@
           <sc-if value="{{ item.showName }}" hint-placeholder-val="{{ true }}">
             <h3 style="font-family:'Lobster Two',Georgia,serif;font-size:29px;color:#7A1228;margin:0 0 6px;line-height:1">{{ item.name }}</h3>
           </sc-if>
-          <p style="margin:0 0 16px;font-size:14.5px;line-height:1.5;color:#3A1418;flex:1">{{ item.desc }}</p>
+          <p style="margin:0 0 12px;font-size:14.5px;line-height:1.5;color:#3A1418;flex:1">{{ item.desc }}</p>
+          <sc-if value="{{ item.showPrice }}" hint-placeholder-val="{{ false }}">
+            <div style="margin:0 0 10px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap">
+              <span style="font-family:'Oswald',sans-serif;font-weight:700;font-size:19px;color:#7A1228">{{ item.priceLabel }}</span>
+              <span style="font-family:'Oswald',sans-serif;font-size:12px;color:#8a5a2b;background:#F3E8CC;padding:2px 9px;border-radius:999px">{{ item.ofertaLabel }}</span>
+            </div>
+          </sc-if>
           <!-- add control -->
           <sc-if value="{{ item.inCart }}" hint-placeholder-val="{{ false }}">
             <div class="nk-addbtn" style="display:flex;align-items:center;justify-content:center;gap:16px;background:#F3E8CC;border:2px solid #7A1228;border-radius:999px;padding:4px">
@@ -503,7 +509,7 @@
           <div style="display:flex;gap:12px;align-items:center;padding:13px 0;border-bottom:1px solid #e4cfa0">
             <div style="flex:1;min-width:0">
               <p style="font-family:'Lobster Two',Georgia,serif;font-size:22px;color:#7A1228;margin:0;line-height:1.05">{{ l.name }}</p>
-              <p style="margin:2px 0 0;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-size:11px;color:#8a5a2b">{{ l.catLabel }}</p>
+              <p style="margin:2px 0 0;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-size:11px;color:#8a5a2b">{{ l.catLabel }}</p><p style="margin:3px 0 0;font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;color:#7A1228">{{ l.priceLine }}</p>
             </div>
             <div style="display:flex;align-items:center;gap:8px">
               <button onClick="{{ l.dec }}" style="width:30px;height:30px;border-radius:50%;border:none;background:#F3E8CC;color:#7A1228;font-size:18px;cursor:pointer">–</button>
@@ -522,6 +528,8 @@
   </div>
   <div style="padding:16px 22px;border-top:2px solid #7A1228">
     <p style="margin:0 0 10px;display:flex;justify-content:space-between;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-size:14px;color:#7A1228"><span>Unidades</span><span style="font-weight:700">{{ cartCount }}</span></p>
+    <sc-if value="{{ cartHasPrice }}" hint-placeholder-val="{{ true }}"><p style="margin:0 0 10px;display:flex;justify-content:space-between;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-size:14px;color:#7A1228"><span>Subtotal aprox.</span><span style="font-weight:700">{{ cartSubtotal }}</span></p></sc-if>
+    <sc-if value="{{ packShow }}" hint-placeholder-val="{{ true }}"><p style="margin:0 0 10px;font-family:'Oswald',sans-serif;font-size:12px;font-weight:700;color:{{ packColor }};text-align:center">{{ packNote }}</p></sc-if>
     <button onClick="{{ sendCart }}" style="width:100%;background:{{ sendBg }};color:#FAF2DC;border:none;padding:16px;border-radius:999px;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:15px;cursor:{{ sendCursor }};display:flex;align-items:center;justify-content:center;gap:10px"><span style="width:19px;height:19px;display:block">{{ waGlyph }}</span> {{ sendLabel }}</button>
     <p style="margin:10px 0 0;text-align:center;font-size:12px;color:#8a5a2b">Sin pago online · cierras el pedido por WhatsApp · recoges en tienda</p>
   </div>
@@ -669,32 +677,36 @@ class Component extends DCLogic {
   WA = '34614279238'; // Número real de WhatsApp (formato internacional).
 
   catalog = [
-    { id:'ck-clasica', cat:'Cookies', name:'Clásica', desc:'Vainilla con chips de chocolate. La de siempre, la que nunca falla.', tag:'libre', kw:'chocolate-chip,cookie', lock:21 },
-    { id:'ck-brownie', cat:'Cookies', name:'Brownie', desc:'Cacao puro, nueces, chocolate blanco y sal en escamas.', tag:'libre', kw:'brownie,cookie', lock:22 },
-    { id:'ck-redvelvet', cat:'Cookies', name:'Red Velvet', desc:'Vainilla y cacao suave, rellena de queso crema.', tag:'libre', kw:'red-velvet,cookie', lock:23 },
-    { id:'ck-lotus', cat:'Cookies', name:'Lotus Cheesecake', desc:'Especiada con canela y jengibre, rellena de queso crema y crema de Lotus, con Lotus triturada.', tag:'libre', kw:'biscoff,cookie', lock:24 },
-    { id:'ck-ferrero', cat:'Cookies', name:'Ferrero', desc:'Cacao suave rellena de Nutella y rebozada con avellanas.', tag:'libre', kw:'chocolate,hazelnut,cookie', lock:25 },
-    { id:'ck-peanut', cat:'Cookies', name:'Peanut Lover', desc:'Cacahuete y chocolate con leche, con cacahuetes caramelizados con miel y sal.', tag:'libre', kw:'peanut-butter,cookie', lock:26 },
-    { id:'ck-pina', cat:'Cookies', name:'Piña Colada', desc:'La especial de junio: coco, piña y un guiño tropical. Edición limitada.', tag:'mes', kw:'coconut,cookie', lock:27 },
-
-    { id:'mn-clasica', cat:'Mini cookies', name:'Mini Clásica', desc:'Bocaditos de vainilla con chips. Perfectas para compartir.', tag:'encargo', kw:'mini,cookie', lock:31 },
-    { id:'mn-brownie', cat:'Mini cookies', name:'Mini Brownie', desc:'Versión bite-size de nuestra brownie con nueces.', tag:'encargo', kw:'brownie,bite', lock:32 },
-    { id:'mn-pastas', cat:'Mini cookies', name:'Surtido de pastas de mantequilla', desc:'Pastas artesanas de mantequilla, surtido variado.', tag:'encargo', kw:'butter,biscuit', lock:33 },
-
-    { id:'tt-redvelvet', cat:'Tartas', name:'Red Velvet', desc:'Bizcocho rojo aterciopelado con frosting de queso crema.', tag:'encargo', kw:'red-velvet,cake', lock:41 },
-    { id:'tt-zanahoria', cat:'Tartas', name:'Zanahoria', desc:'Especiada y húmeda, con frosting de queso crema.', tag:'encargo', kw:'carrot,cake', lock:42 },
-    { id:'tt-chocolate', cat:'Tartas', name:'Chocolate', desc:'Intensa, para los que el chocolate nunca es suficiente.', tag:'encargo', kw:'chocolate,cake', lock:43 },
-    { id:'tt-queso', cat:'Tartas', name:'Tarta de Queso vasca', desc:'Nuestra estrella: cremosa por dentro, dorada por fuera.', tag:'encargo', kw:'basque,cheesecake', lock:44 },
-    { id:'tt-limon', cat:'Tartas', name:'Mousse de Limón', desc:'Ligera y fresca, con el punto justo de acidez.', tag:'encargo', kw:'lemon,cake', lock:45 },
-    { id:'tt-tiramisu', cat:'Tartas', name:'Tiramisú', desc:'Café, mascarpone y cacao. Un clásico italiano.', tag:'encargo', kw:'tiramisu', lock:46 },
-    { id:'tt-tresleches', cat:'Tartas', name:'Tres Leches', desc:'Bizcocho empapado, suave y jugoso.', tag:'encargo', kw:'tres-leches,cake', lock:47 },
-    { id:'tt-brownie', cat:'Tartas', name:'Brownie', desc:'Densa y chocolateada, en formato tarta.', tag:'encargo', kw:'brownie,cake', lock:48 },
-
-    { id:'ex-empanada', cat:'Extras', name:'Empanada Gallega', desc:'Masa artesana y relleno jugoso. Por encargo.', tag:'encargo', kw:'empanada', lock:51 },
-    { id:'ex-empanadillas', cat:'Extras', name:'Empanadillas Individuales', desc:'Tamaño individual, ideales para picar.', tag:'encargo', kw:'empanada,pastry', lock:52 },
-    { id:'ex-alfajores', cat:'Extras', name:'Alfajores Argentinos', desc:'Rellenos de dulce de leche, suaves y dulces.', tag:'encargo', kw:'alfajor', lock:53 },
-    { id:'ex-rollo', cat:'Extras', name:'Rollo de Canela', desc:'Esponjoso, con canela y glaseado.', tag:'encargo', kw:'cinnamon-roll', lock:54 },
-    { id:'ex-focaccia', cat:'Extras', name:'Focaccia', desc:'Masa aireada con aceite de oliva y romero.', tag:'encargo', kw:'focaccia', lock:55 },
+    { id:'clasica',                    cat:'Cookies',           name:'Clásica',                         desc:'La de siempre: masa dorada y tierna con chispas de chocolate, recién horneada cada mañana.',   price:3.95, oferta:3.75, ofertaMin:5, tag:'libre', kw:'chocolate-chip,cookie',      lock:21 },
+    { id:'brownie',                    cat:'Cookies',           name:'Brownie',                          desc:'Chocolate intenso estilo brownie, con hilo de chocolate blanco y un toque de sal en escamas.', price:3.95, oferta:3.75, ofertaMin:5, tag:'libre', kw:'brownie,cookie',             lock:22 },
+    { id:'red-velvet',                 cat:'Cookies',           name:'Red Velvet',                       desc:'Terciopelo rojo con un hilo de queso crema. Suave, jugosa y muy golosa.',                       price:3.95, oferta:3.75, ofertaMin:5, tag:'libre', kw:'red-velvet,cookie',          lock:23 },
+    { id:'lotus-cheesecake',           cat:'Cookies',           name:'Lotus Cheesecake',                 desc:'Crema de queso y galleta Lotus caramelizada. Dulce y crujiente a partes iguales.',              price:3.95, oferta:3.75, ofertaMin:5, tag:'libre', kw:'biscoff,cookie',             lock:24 },
+    { id:'ferrero',                    cat:'Cookies',           name:'Ferrero',                          desc:'Avellana y chocolate con leche, trocitos crujientes y un acabado dorado.',                      price:3.95, oferta:3.75, ofertaMin:5, tag:'libre', kw:'chocolate,hazelnut,cookie',  lock:25 },
+    { id:'peanut-lover',               cat:'Cookies',           name:'Peanut Lover',                     desc:'Bañada en chocolate con cacahuetes caramelizados. Para los muy fans del cacahuete.',            price:3.95, oferta:3.75, ofertaMin:5, tag:'libre', kw:'peanut-butter,cookie',       lock:26 },
+    { id:'sabor-del-mes',              cat:'Cookies',           name:'Piña Colada',                      desc:'Sabor del mes: piña colada. Glaseado de coco y piña para un capricho tropical.',                price:3.95, oferta:3.75, ofertaMin:5, tag:'mes',   kw:'coconut,cookie',             lock:27 },
+    { id:'mini-clasicas',              cat:'Mini cookies',      name:'Mini Clásicas',                    desc:'Bocaditos de vainilla con chips. Perfectas para compartir.',                                     tag:'encargo', kw:'mini,cookie',    lock:31 },
+    { id:'mini-brownie',               cat:'Mini cookies',      name:'Mini Brownie',                     desc:'Versión bite-size de nuestra brownie con nueces.',                                               tag:'encargo', kw:'brownie,bite',   lock:32 },
+    { id:'pastas-mantequilla-vainilla',cat:'Mini cookies',      name:'Pastas de Mantequilla \u00b7 Vainilla', desc:'Pastas artesanas de mantequilla con vainilla, x15.',                                   tag:'encargo', kw:'butter,biscuit', lock:34 },
+    { id:'pastas-mantequilla-cacao',   cat:'Mini cookies',      name:'Pastas de Mantequilla \u00b7 Cacao',   desc:'Pastas artesanas de mantequilla con cacao, x15.',                                        tag:'encargo', kw:'butter,biscuit', lock:35 },
+    { id:'surtido-pastas',             cat:'Mini cookies',      name:'Surtido de pastas de mantequilla', desc:'Pastas artesanas de mantequilla, surtido variado x30.',                                         tag:'encargo', kw:'butter,biscuit', lock:33 },
+    { id:'tarta-zanahoria',            cat:'Tartas',            name:'Zanahoria',                        desc:'Especiada y húmeda, con frosting de queso crema.',                                              tag:'encargo', kw:'carrot,cake',          lock:42 },
+    { id:'tarta-red-velvet',           cat:'Tartas',            name:'Red Velvet',                       desc:'Bizcocho rojo aterciopelado con frosting de queso crema.',                                      tag:'encargo', kw:'red-velvet,cake',      lock:41 },
+    { id:'tarta-chocolate',            cat:'Tartas',            name:'Chocolate',                        desc:'Intensa, para los que el chocolate nunca es suficiente.',                                       tag:'encargo', kw:'chocolate,cake',       lock:43 },
+    { id:'tarta-mousse-limon',         cat:'Tartas',            name:'Mousse de Limón',                  desc:'Ligera y fresca, con el punto justo de acidez.',                                                tag:'encargo', kw:'lemon,cake',           lock:45 },
+    { id:'tarta-cafe-chocolate',       cat:'Tartas',            name:'Café y Chocolate',                 desc:'Intensa y aromática, para los amantes del café y el chocolate.',                                tag:'encargo', kw:'coffee,chocolate,cake', lock:49 },
+    { id:'tarta-queso',                cat:'Tartas',            name:'Tarta de Queso vasca',             desc:'Nuestra estrella: cremosa por dentro, dorada por fuera.',                                       tag:'encargo', kw:'basque,cheesecake',    lock:44 },
+    { id:'porcion-zanahoria',          cat:'Tartas de Porci\u00f3n', name:'Tarta de Zanahoria (porci\u00f3n)', desc:'Porción individual de nuestra tarta de zanahoria. Especiada y húmeda.',            tag:'libre', kw:'carrot,cake,slice',    lock:61 },
+    { id:'porcion-red-velvet',         cat:'Tartas de Porci\u00f3n', name:'Red Velvet (porci\u00f3n)',       desc:'Porción de red velvet con frosting de queso crema.',                                    tag:'libre', kw:'red-velvet,cake,slice', lock:62 },
+    { id:'porcion-chocolate',          cat:'Tartas de Porci\u00f3n', name:'Tarta de Chocolate (porci\u00f3n)', desc:'Porción de nuestra tarta de chocolate intensa.',                                     tag:'libre', kw:'chocolate,cake,slice',  lock:63 },
+    { id:'porcion-tiramisu',           cat:'Tartas de Porci\u00f3n', name:'Tiramisú (porci\u00f3n)',         desc:'Café, mascarpone y cacao. Un clásico italiano en porción individual.',                  tag:'libre', kw:'tiramisu,slice',        lock:64 },
+    { id:'porcion-queso-mini',         cat:'Tartas de Porci\u00f3n', name:'Tarta de Queso Mini (porci\u00f3n)', desc:'Porción de tarta de queso vasca, cremosa y dorada.',                               tag:'libre', kw:'cheesecake,slice',      lock:65 },
+    { id:'extra-empanada-gallega',     cat:'Extras',            name:'Empanada Gallega',                 desc:'Masa artesana y relleno jugoso. Por encargo.',                                                  tag:'encargo', kw:'empanada',        lock:51 },
+    { id:'extra-empanadilla',          cat:'Extras',            name:'Empanadilla Individual',           desc:'Tamaño individual, ideales para picar.',                                                        tag:'encargo', kw:'empanada,pastry', lock:52 },
+    { id:'extra-alfajor',              cat:'Extras',            name:'Alfajor Argentino',                desc:'Rellenos de dulce de leche, suaves y dulces.',                                                  tag:'encargo', kw:'alfajor',         lock:53 },
+    { id:'extra-mini-alfajor',         cat:'Extras',            name:'Mini Alfajor Argentino',           desc:'Mini versión del alfajor clásico, rellenos de dulce de leche.',                                 tag:'encargo', kw:'alfajor,mini',    lock:56 },
+    { id:'extra-rollo-canela',         cat:'Extras',            name:'Rollo de Canela',                  desc:'Esponjoso, con canela y glaseado.',                                                             tag:'encargo', kw:'cinnamon-roll',   lock:54 },
+    { id:'extra-focaccia',             cat:'Extras',            name:'Focaccia',                         desc:'Masa aireada con aceite de oliva y romero.',                                                    tag:'encargo', kw:'focaccia',        lock:55 },
+    { id:'extra-brownie',              cat:'Extras',            name:'Brownie (bandeja)',                 desc:'Brownie artesano en bandeja para compartir. Con topping a elegir.',                             tag:'encargo', kw:'brownie,tray',    lock:57 },
   ];
 
   TAGS = {
@@ -703,23 +715,19 @@ class Component extends DCLogic {
     mes:     { label:'Especial del mes',   bg:'#F4A9B4', color:'#3A1418' },
   };
 
+  REAL_IMGS = new Set(['clasica','brownie','red-velvet','lotus-cheesecake','peanut-lover','ferrero','sabor-del-mes','porcion-red-velvet','porcion-chocolate','porcion-queso-mini','porcion-zanahoria','porcion-tiramisu']);
   UNS = {
-    'ck-clasica':'1558961363-fa8fdf82db35','ck-brownie':'1612203985729-70726954388c',
-    'ck-redvelvet':'1586985289688-ca3cf47d3e6e','ck-lotus':'1499636136210-6f4ee915583e',
-    'ck-ferrero':'1548741487-18d363dc4469','ck-peanut':'1481391319762-47dff72954d9',
-    'ck-pina':'1551106652-a5bcf4b29ab6',
-    'mn-clasica':'1509365465985-25d11c17e812','mn-brownie':'1606313564200-e75d5e30476c',
-    'mn-pastas':'1490567674331-72de84996c8f',
-    'tt-redvelvet':'1586788224331-947f68671cf1','tt-zanahoria':'1621303837174-89787a7d4729',
-    'tt-chocolate':'1578985545062-69928b1d9587','tt-queso':'1567171466295-4afa63d45416',
-    'tt-limon':'1519915028121-7d3463d20b13','tt-tiramisu':'1571877227200-a0d98ea607e9',
-    'tt-tresleches':'1565958011703-44f9829ba187','tt-brownie':'1606313564200-e75d5e30476c',
-    'ex-empanada':'1604467707321-70d5ac45adff','ex-empanadillas':'1601000938259-9e92002320b3',
-    'ex-alfajores':'1612886623079-bb3886d8b685','ex-rollo':'1509365465985-25d11c17e812',
-    'ex-focaccia':'1601000938259-9e92002320b3',
+    'mini-clasicas':'1509365465985-25d11c17e812','mini-brownie':'1606313564200-e75d5e30476c',
+    'surtido-pastas':'1490567674331-72de84996c8f',
+    'tarta-zanahoria':'1621303837174-89787a7d4729','tarta-red-velvet':'1586788224331-947f68671cf1',
+    'tarta-chocolate':'1578985545062-69928b1d9587','tarta-queso':'1567171466295-4afa63d45416',
+    'tarta-mousse-limon':'1519915028121-7d3463d20b13','tarta-cafe-chocolate':'1571877227200-a0d98ea607e9',
+    'extra-empanada-gallega':'1604467707321-70d5ac45adff','extra-empanadilla':'1601000938259-9e92002320b3',
+    'extra-alfajor':'1612886623079-bb3886d8b685','extra-rollo-canela':'1509365465985-25d11c17e812',
+    'extra-focaccia':'1601000938259-9e92002320b3',
   };
-  imgUrl(it){ const id=this.UNS[it.id]; return id ? ('https://images.unsplash.com/photo-'+id+'?fm=jpg&q=70&w=640&h=480&fit=crop') : ('https://loremflickr.com/600/480/'+it.kw+'?lock='+it.lock); }
-  fallbackUrl(it){ return 'https://loremflickr.com/600/480/'+it.kw+'?lock='+it.lock; }
+  imgUrl(it){ if(this.REAL_IMGS.has(it.id)) return '/img/productos/'+it.id+'.webp'; const id=this.UNS[it.id]; return id ? ('https://images.unsplash.com/photo-'+id+'?fm=jpg&q=70&w=640&h=480&fit=crop') : ('https://loremflickr.com/600/480/'+it.kw+'?lock='+it.lock); }
+  fallbackUrl(it){ if(this.REAL_IMGS.has(it.id)) return '/img/productos/'+it.id+'.jpg'; return 'https://loremflickr.com/600/480/'+it.kw+'?lock='+it.lock; }
 
   componentDidMount(){
     const root = document.getElementById('nk-root');
@@ -749,16 +757,21 @@ class Component extends DCLogic {
   closeCart(){ this.setState({ cartOpen:false }); }
   count(){ return Object.values(this.state.cart).reduce((a,b)=>a+b,0); }
 
+  cookieUnits(){ return this.catalog.filter(i=>i.cat==='Cookies').reduce((a,i)=>a+(this.state.cart[i.id]||0),0); }
+  lineUnitPrice(it){ if(typeof it.price!=='number') return null; if(it.cat==='Cookies' && typeof it.oferta==='number' && it.ofertaMin && this.cookieUnits()>=it.ofertaMin) return it.oferta; return it.price; }
+  cartSubtotal(){ return this.catalog.reduce((s,it)=>{ const q=this.state.cart[it.id]||0; const u=q?this.lineUnitPrice(it):null; return u==null?s:s+u*q; },0); }
+  money(n){ return n.toFixed(2).replace('.',',') + ' €'; }
+
   cakeHasData(){ const c=this.state.cake; return !!(c.comensales||c.idea||c.bizcocho); }
 
   buildMessage(){
     const L = ['Hola Nana Karamel! Quiero hacer un pedido para recoger:',''];
-    const groups = ['Cookies','Mini cookies','Tartas','Extras'];
+    const groups = ['Cookies','Mini cookies','Tartas de Porción','Tartas','Extras'];
     groups.forEach(g => {
       const items = this.catalog.filter(i => i.cat===g && (this.state.cart[i.id]||0)>0);
       if(items.length){
         L.push(g.toUpperCase() + (g==='Cookies' ? '' : ' (encargo)'));
-        items.forEach(i => L.push('• ' + this.state.cart[i.id] + '× ' + i.name));
+        items.forEach(i => { const q=this.state.cart[i.id]; const u=this.lineUnitPrice(i); L.push('• ' + q + '× ' + i.name + (u!=null ? (' — ' + this.money(u) + '/ud = ' + this.money(u*q)) : '')); });
         L.push('');
       }
     });
@@ -770,9 +783,14 @@ class Component extends DCLogic {
       if(c.bizcocho) L.push('• Bizcocho: ' + c.bizcocho);
       if(c.buttercream) L.push('• Buttercream: ' + c.buttercream + (c.color ? ' · color ' + this.colorText() : ''));
       L.push('• Foto de referencia: la adjunto aquí en el chat si la tengo.');
+      L.push('• Mensaje en chocolate (opcional, +5 €): ___');
       L.push('(Sin fondant ni impresiones; reservo con antelación.)');
       L.push('');
     }
+    const _ck=this.cookieUnits(); const _of=this.catalog.find(x=>x.cat==='Cookies'&&typeof x.oferta==='number');
+    if(_of && _ck>=_of.ofertaMin){ L.push('✨ Oferta de pack: ' + _ck + ' cookies a ' + this.money(_of.oferta) + '/ud'); L.push(''); }
+    const _sub = this.cartSubtotal();
+    if(_sub>0){ L.push('Subtotal aprox.: ' + this.money(_sub) + ' (lo confirmamos por WhatsApp)'); L.push(''); }
     L.push('Nombre: ___');
     const p = this.state.pickup;
     if(p.negotiate){
@@ -782,7 +800,6 @@ class Component extends DCLogic {
     } else {
       L.push('Día de recogida: ___ (a concretar por WhatsApp)');
     }
-    L.push('¿Algún mensaje en chocolate?: ___');
     L.push('');
     L.push('(enviado desde la web)');
     return L.join('\n');
@@ -980,12 +997,14 @@ class Component extends DCLogic {
     const heroV = this.props.heroVariant || 'centrado';
     const cardV = this.props.cardVariant || 'foto';
     const flowV = this.props.cakeFlowVariant || 'pasos';
-    const cats = ['Todo','Cookies','Mini cookies','Tartas','Extras'];
+    const cats = ['Todo','Cookies','Mini cookies','Tartas','Tartas de Porción','Extras'];
 
     const decorate = (it) => {
       const t = this.TAGS[it.tag];
       const qty = this.state.cart[it.id] || 0;
-      const isCake = it.cat==='Tartas';
+      const isCake = it.cat==='Tartas' || it.cat==='Tartas de Porción';
+      const hasPhoto = this.REAL_IMGS.has(it.id);
+      const hasPrice = it.price != null;
       return {
         ...it,
         img: this.imgUrl(it),
@@ -993,9 +1012,12 @@ class Component extends DCLogic {
         tagLabel: t.label, tagBg: t.bg, tagColor: t.color,
         qty,
         inCart: qty>0, notInCart: qty===0,
-        showPhoto: cardV!=='ilustrado',
+        showPhoto: hasPhoto,
         showName: cardV!=='overlay',
         overlayName: cardV==='overlay',
+        showPrice: hasPrice,
+        priceLabel: hasPrice ? it.price.toFixed(2).replace('.',',') + ' €' : '',
+        ofertaLabel: (hasPrice && it.oferta) ? it.oferta.toFixed(2).replace('.',',') + ' € desde ' + it.ofertaMin + ' uds' : '',
         onErr: (e) => { e.target.style.display='none'; },
         add: () => this.add(it.id), inc: () => this.inc(it.id), dec: () => this.dec(it.id),
       };
@@ -1012,15 +1034,26 @@ class Component extends DCLogic {
       choose: () => this.setState({ cat:k }),
     }));
 
+    const ckUnits = this.cookieUnits();
+    const _ofc = this.catalog.find(x=>x.cat==='Cookies'&&typeof x.oferta==='number');
+    const ofPrice = _ofc?_ofc.oferta:3.75, ofMin = _ofc?_ofc.ofertaMin:5;
     const cartLines = this.catalog
       .filter(i => (this.state.cart[i.id]||0) > 0)
-      .map(i => ({
-        id:i.id, name:i.name, qty:this.state.cart[i.id], catLabel:i.cat,
-        inc: () => this.inc(i.id), dec: () => this.dec(i.id),
-      }));
+      .map(i => {
+        const qty=this.state.cart[i.id];
+        const u=this.lineUnitPrice(i);
+        const isOf = i.cat==='Cookies' && typeof i.oferta==='number' && i.ofertaMin && ckUnits>=i.ofertaMin;
+        return { id:i.id, name:i.name, qty, catLabel:i.cat,
+          priceLine: u==null ? '' : (this.money(u)+'/ud · '+this.money(u*qty)+(isOf?' · oferta de pack':'')),
+          inc: () => this.inc(i.id), dec: () => this.dec(i.id) };
+      });
+    let packNote='', packShow=false, packColor='#25683b';
+    if(ckUnits>=ofMin){ packNote='✓ Oferta de pack: todas las cookies a '+this.money(ofPrice)+'/ud'; packShow=true; packColor='#25683b'; }
+    else if(ckUnits>=1){ const falta=ofMin-ckUnits; packNote='Añade '+falta+' cookie'+(falta>1?'s':'')+' más y todas bajan a '+this.money(ofPrice)+'/ud'; packShow=true; packColor='#b06a00'; }
 
     const count = this.count();
     const cakeData = this.cakeHasData();
+    const subtotal = this.cartSubtotal();
     const canSend = count>0 || cakeData;
     const step = this.state.cakeStep;
     const showStep = (n) => flowV==='una-pantalla' ? true : step===n;
@@ -1041,8 +1074,8 @@ class Component extends DCLogic {
       onImgError: (e) => { e.target.style.display='none'; },
 
       // featured
-      featuredCookie: { ...decorate(this.catalog.find(i => i.id==='ck-pina')), onErr: (e)=>{ e.target.style.display='none'; } },
-      featuredTarta: { ...decorate(this.catalog.find(i => i.id==='tt-queso')), onErr: (e)=>{ e.target.style.display='none'; } },
+      featuredCookie: { ...decorate(this.catalog.find(i => i.id==='sabor-del-mes')), onErr: (e)=>{ e.target.style.display='none'; } },
+      featuredTarta: { ...decorate(this.catalog.find(i => i.id==='tarta-queso')), onErr: (e)=>{ e.target.style.display='none'; } },
 
       // menu
       categories, menuItems,
@@ -1070,6 +1103,9 @@ class Component extends DCLogic {
 
       // cart
       cartCount: count,
+      cartSubtotal: this.money(subtotal),
+      cartHasPrice: subtotal>0,
+      packNote, packShow, packColor,
       cartLines,
       cartEmpty: count===0, cartHasItems: count>0,
       toggleCart: () => this.toggleCart(), closeCart: () => this.closeCart(), clearCart: () => this.clearCart(),
